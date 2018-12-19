@@ -1,0 +1,74 @@
+
+# Created by https://www.gitignore.io/api/windows,mac,vim
+# Edit at https://www.gitignore.io/?templates=windows,mac,vim
+
+#!! ERROR: mac is undefined. Use list command to see defined gitignore types !!#
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.gitignore.io/api/windows,mac,vim
+
+# Created by https://www.gitignore.io/api/gitbook
+# Edit at https://www.gitignore.io/?templates=gitbook
+
+### GitBook ###
+# Node rules:
+## Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+## Dependency directory
+## Commenting this out is preferred by some people, see
+## https://docs.npmjs.com/misc/faq#should-i-check-my-node_modules-folder-into-git
+node_modules
+
+# Book build output
+_book
+
+# eBook build output
+*.epub
+*.mobi
+*.pdf
+
+# End of https://www.gitignore.io/api/gitbook
