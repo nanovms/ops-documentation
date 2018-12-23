@@ -208,3 +208,8 @@ $ source ~/.profile
 ```sh
 $ go version
 ```
+
+## Next Steps
+
+Now that we have the prerequisites installed, the next step is to install Ops.
+Go to the [installation instructions](installation.md).
