@@ -22,7 +22,7 @@ distributions have different methods for doing so.
 $ sudo apt-get install build-essential
 ```
 
- 1. Check that `make` is properly installed by running the following
+ 2. Check that `make` is properly installed by running the following
     command...
 
 ```sh
@@ -45,7 +45,7 @@ $ sudo yum update
 $ sudo yum groupinstall "Development Tools"
 ```
 
- 1. Check that `make` is properly installed by running the following
+ 2. Check that `make` is properly installed by running the following
     command...
 
 ```sh
@@ -68,14 +68,14 @@ $ sudo apt-get update
 $ sudo apt-get install git
 ```
 
- 1. Next verify that `git` is installed by running the following command...
+ 2. Next verify that `git` is installed by running the following command...
 
 ```sh
 $ git --version
 git version 2.18.0
 ```
 
- 1. Configure your `git` username and email address. These details will be
+ 3. Configure your `git` username and email address. These details will be
 associated with any commit that may be made.
 
 ```sh
@@ -97,14 +97,14 @@ Or...
 $ sudo yum install git
 ```
 
- 1. Next verify that `git` is installed by running the following command...
+ 2. Next verify that `git` is installed by running the following command...
 
 ```sh
 $ git --version
 git version 2.18.0
 ```
 
- 1. Configure your `git` username and email address. These details will be
+ 3. Configure your `git` username and email address. These details will be
 associated with any commit that may be made.
 
 ```sh
@@ -124,10 +124,10 @@ $ sudo apt-get update
 $ sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev asciidoc xmlto docbook2x
 ```
 
- 1. To get the `git` source code, [download and extract
+ 2. To get the `git` source code, [download and extract
 it](https://www.kernel.org/pub/software/scm/git/).
 
- 1. Use the `make` command to build and install `git`.
+ 3. Use the `make` command to build and install `git`.
 
 ```sh
 $ make all doc info prefix=/usr
@@ -151,16 +151,16 @@ $ sudo yum install epel-release
 $ sudo yum install curl-devel expat-devel gettext-devel openssl-devel perl-devel zlib-devel asciidoc xmlto docbook2X
 ```
 
- 1. Symlink `docbook2X` to the filename that `git` build expects...
+ 2. Symlink `docbook2X` to the filename that `git` build expects...
 
 ```sh
 $ sudo ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
 ```
 
- 1. To get the `git` source code, [download and extract
+ 3. To get the `git` source code, [download and extract
 it](https://www.kernel.org/pub/software/scm/git/).
 
- 1. Use the `make` command to build and install `git`.
+ 4. Use the `make` command to build and install `git`.
 
 ```sh
 $ make all doc info prefix=/usr
@@ -182,7 +182,7 @@ $ tar -xvf go1.11.2.linux-amd64.tar.gz
 $ sudo mv go /usr/local
 ```
 
- 1. Next, we need to setup your Go path. Open up the following file with your
+ 2. Next, we need to setup your Go path. Open up the following file with your
     editor of choice.
 
 ```sh
@@ -202,7 +202,7 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 $ source ~/.profile
 ```
 
- 1. Now that go is installed, let's check and make sure it is working
+ 3. Now that go is installed, let's check and make sure it is working
     properly.
 
 ```sh
