@@ -4,15 +4,60 @@ Getting Started
 ## Supported Operating Systems
 
 Currently Ops support various forms of linux operating systems such as Ubuntu,
-and Fedora.
-
-**Note** MacOS is not yet supported.
+and Fedora and MacOS.
 
 ## Install Prerequisites
+If you plan on installing Ops using the install script vs source code, you
+only need to install QEMU. All other installs can be skipped on this page.
+
+### Install QEMU
+
+#### MacOs (homebrew)
+If you're running on a Mac, you do need to install QEMU. The easiest way to
+install QEMU is via homebrew.
+
+```sh
+$ brew install qemu
+```
+
+For alternate ways of installing QEMU, see their
+[website](https://www.qemu.org/). 
+
+#### Debian / Ubuntu (apt-get)
+
+ 1. To install `QMEU`, run the following command...
+
+```sh
+$ sudo apt-get install qemu
+```
+
+#### Fedora (dnf/yum)
+
+ 1. To install `qemu`, run the following command...
+
+```sh
+$ sudo dnf update
+$ sudo dnf install qemu
+```
+
+Or...
+
+```sh
+$ sudo yum update
+$ sudo yum install qemu
+```
 
 ### Install Make
 You'll also need to install the `make` command line tool. Various Linux
 distributions have different methods for doing so.
+
+#### MacOs
+
+ 1. To install `make`, run the following command line command...
+
+```sh
+$ xcode-select --install
+```
 
 #### Debian / Ubuntu (apt-get)
 
@@ -35,7 +80,7 @@ $ make --version
 
 ```sh
 $ sudo dnf update
-$ sudo dnf groupinstall "Development Tools"
+$ sudo dnf install "Development Tools"
 ```
 
 Or...
@@ -58,6 +103,15 @@ First we need to make sure you have `git` installed. You can find the official
 [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
 TODO: Write up git install directions for major versions of linux
+
+#### MacOs (homebrew)
+
+ 1. To install `git`, run the following command. Make sure you have
+    [homebrew](https://brew.sh/) installed first.
+
+```sh
+$ brew install git
+```
 
 #### Debian / Ubuntu (apt-get)
 
