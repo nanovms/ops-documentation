@@ -9,8 +9,10 @@ While both of these commands are used to execute code, there is a big
 difference when you would choose to run one rather than the other. For `ops
 run`, you would use this command to run compiled code. So, for example, any
 golang code that you may run, you'd use this command. Any code that is
-compiled at runtime, you would use `ops load`. An example of this is nodejs or
-python.
+compiled at runtime, you would use `ops load`. An example of languages where
+you'd use this are nodejs or php. Each supported language for `ops load`, will
+have a corresponding package. To see a list of available packages, run `ops
+list`.
 
 ## Run a NodeJS script
 
