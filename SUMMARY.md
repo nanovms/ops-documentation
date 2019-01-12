@@ -10,3 +10,10 @@
 * [Language Support](language_support.md)
 * [Packages](packages.md)
 
+### Developer
+* [Getting Started](prerequisites.md)
+    * [Install QEMU](prerequisites.md#qemu)
+    * [Install Make](prerequisites.md#make)
+    * [Install Git](prerequisites.md#git)
+    * [Install Golang](prerequisites.md#go)
+* [Install from Source](source-installation.md)
