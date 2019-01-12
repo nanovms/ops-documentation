@@ -32,7 +32,8 @@ $ ops load node_v11.15.0 -a ex.js
 ```
 
 You should see "Hello World!" printed on your screen and then the ops command
-exits.
+exits. For more examples using NodeJS, visit our [examples
+repository](https://github.com/nanovms/ops-examples/tree/master/nodejs)
 
 ## Run a Golang script
 
@@ -65,3 +66,6 @@ execute that binary within `ops` with the following command...
 ```sh
 $ ops run main
 ```
+
+For more examples using Golang, visit our [examples
+repository](https://github.com/nanovms/ops-examples/tree/master/golang)
