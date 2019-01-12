@@ -39,12 +39,12 @@ $ sudo apt-get install qemu
 
 ```sh
 $ sudo dnf update
-$ sudo dnf install qemu
+$ sudo dnf install qemu-kvm qemu-img
 ```
 
 Or...
 
 ```sh
 $ sudo yum update
-$ sudo yum install qemu
+$ sudo yum install qemu-kvm qemu-img
 ```
