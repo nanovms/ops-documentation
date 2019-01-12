@@ -1,4 +1,22 @@
 # Ops Documentation
 Documentation for [Nano VMs Ops](https://github.com/nanovms/ops)
 
-To get started, go to the [getting started](getting_started.md) section.
+## Setup
+To setup your development environment to write documentation, you'll need to
+install the `gitbook` cli. The simple way to do this is run 
+
+```sh
+$ npm install gitbook-cli -g
+```
+
+## Serving local documentation
+To view the documentation in the browser run the following command...
+
+```sh
+$ gitbook serve
+```
+
+Then open up your browser to `http://localhost:4000`
+
+For more information on how to use the `gitbook` cli tool, visit [their
+documentation](https://toolchain.gitbook.com/)
