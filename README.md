@@ -18,5 +18,6 @@ $ gitbook serve
 
 Then open up your browser to `http://localhost:4000`
 
-For more information on how to use the `gitbook` cli tool, visit [their
+For more information on how to use the `gitbook` cli tool as well as
+documentation on formating, configuration, etc, visit [their
 documentation](https://toolchain.gitbook.com/)
