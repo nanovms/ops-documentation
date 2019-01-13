@@ -1,6 +1,9 @@
 # Ops Documentation
 Documentation for [Nano VMs Ops](https://github.com/nanovms/ops)
 
+To view the full documentation online, visit
+[https://nanovms.gitbook.io/ops](https://nanovms.gitbook.io/ops/)
+
 ## Setup
 To setup your development environment to write documentation, you'll need to
 install the `gitbook` cli. The simple way to do this is run 
