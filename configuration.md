@@ -9,6 +9,9 @@ variables. This file follow the standard json format.
 ### Files
 An array of file locations to include into the image
 
+### Dirs
+An array of directory locations to include into the image
+
 ### Args
 The command to execute when running the image. The expected format is an
 array. See sample below for an example.
@@ -23,6 +26,7 @@ Below is a sample configuration file for a nodejs application.
 ```json
 {
 	"Files": ["ex.js"],
+    "Dirs": ["src"],
 	"Args": ["node", "ex.js"],
 	"Env": {
 		"NODE_DEBUG": "*",
