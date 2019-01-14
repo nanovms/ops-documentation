@@ -6,9 +6,9 @@
 * [Basic Usage](basic_usage.md)
 * [Configuration](configuration.md)
 * [Examples](examples.md)
-* [FAQ](faq.md)
 * [Networking](networking.md)
 * [Packages](packages.md)
+* [FAQ](faq.md)
 
 ### Developer
 * [Getting Started](prerequisites.md)
