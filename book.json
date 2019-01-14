@@ -1,6 +1,6 @@
 {
     "author": "Chad Barraford",
-    "gitbook": ">= 3.0.0",
+    "gitbook": "3.2.3",
     "structure": {
         "readme": "introduction.md"
     }
