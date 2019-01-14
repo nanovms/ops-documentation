@@ -4,6 +4,7 @@
 * [Getting Started](getting_started.md)
 * [Installation](installation.md)
 * [Basic Usage](basic_usage.md)
+* [Configuration](configuration.md)
 * [Examples](examples.md)
 * [FAQ](faq.md)
 * [Networking](networking.md)
