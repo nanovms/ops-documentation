@@ -5,7 +5,6 @@
 * [Installation](installation.md)
 * [Basic Usage](basic_usage.md)
 * [Examples](examples.md)
-* [About](about.md)
 * [FAQ](faq.md)
 * [Networking](networking.md)
 * [Language Support](language_support.md)
