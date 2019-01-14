@@ -8,7 +8,6 @@
 * [Examples](examples.md)
 * [FAQ](faq.md)
 * [Networking](networking.md)
-* [Language Support](language_support.md)
 * [Packages](packages.md)
 
 ### Developer
