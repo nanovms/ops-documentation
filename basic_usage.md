@@ -18,6 +18,8 @@ following command...
 $ ops list
 ```
 
+To read more about packages, go [here](packages.md)
+
 ## Running code
 
 When using `ops`, there are two basic commands that are used to execute some
