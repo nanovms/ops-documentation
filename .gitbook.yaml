@@ -1,3 +1,9 @@
 gitbook: "== 3.2.3"
 structure:
     readme: "introduction.md"
+redirects:
+    configuration/files: ./configuration.md#files
+    configuration/dirs: ./configuration.md#dirs
+    configuration/args: ./configuration.md#args
+    configuration/env: ./configuration.md#env
+    configuration/sample: ./configuration.md#sample
