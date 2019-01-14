@@ -6,7 +6,7 @@ variables. This file follow the standard json format.
 
 ### Configuration Attributes
 
-#### Files
+#### Files {#files}
 An array of file locations to include into the image
 
 ```json
@@ -15,7 +15,7 @@ An array of file locations to include into the image
 }
 ```
 
-#### Dirs
+#### Dirs {#dirs}
 An array of directory locations to include into the image
 
 ```json
@@ -24,7 +24,7 @@ An array of directory locations to include into the image
 }
 ```
 
-#### Args
+#### Args {#args}
 The command to execute when running the image. The expected format is an
 array. See sample below for an example.
 
@@ -33,7 +33,8 @@ array. See sample below for an example.
     "Args": ["node", "ex.js"]
 }
 ```
-#### Env
+
+#### Env {#env}
 A dictionary/object of environment variables.
 
 ```json
@@ -45,7 +46,7 @@ A dictionary/object of environment variables.
 }
 ```
 
-### Sample Configuration File
+### Sample Configuration File {#sample}
 Below is a sample configuration file for a nodejs application.
 
 ```json
