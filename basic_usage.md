@@ -1,6 +1,25 @@
 Basic Usage
 ================
 
+## Getting the version
+To check which version of `ops` you are currently running, run the following
+command...
+
+```sh
+$ ops version
+```
+
+## Listing available official packages
+The ops team officially maintains specific versions of specific languages,
+known as packages. To get a list of all currently supported packages, run the
+following command...
+
+```sh
+$ ops list
+```
+
+## Running code
+
 When using `ops`, there are two basic commands that are used to execute some
 code. Those are `ops load` and `ops run`.
 
