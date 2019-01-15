@@ -20,8 +20,28 @@ An array of directory locations to include into the image
 
 ```json
 {
-    "Dirs": ["src"]
+    "Dirs": ["myapp/static"]
 }
+```
+
+_File layout on local host machine_
+```
+-myapp
+    app
+    -static
+        -example.html
+        -stylesheet 
+            -main.css
+```
+
+_File  layout on VM_
+```
+/myapp
+    app
+    /static
+        -example.html
+        /stylesheet
+            -main.css
 ```
 
 #### Args {#args}
