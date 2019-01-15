@@ -56,9 +56,9 @@ You should see "Hello World!" printed on your screen and then the ops command
 exits. For more examples using NodeJS, visit our [examples
 repository](https://github.com/nanovms/ops-examples/tree/master/nodejs)
 
-## Run a Golang script
+## Run a Golang Program
 
-Next, we are going to run a basic golang script. Create a file called
+Next, we are going to run a basic golang program. Create a file called
 `main.go` and edit the file.
 
 Add the following to the contents of that file...
