@@ -4,6 +4,10 @@ Documentation for [Nano VMs Ops](https://github.com/nanovms/ops)
 Ops is rethinking cloud infrastructure by using unikernals instead of
 containerization like docker.
 
+**IMPORTANT NOTE** Ops is currently in a technical preview stage of its
+development. It is subject to significant changes and refactoring. Not
+recommended for production environments at this time.
+
 #### What are Unikernels?
 
 Unikernels are specialised, single-address-space machine images constructed by using library operating systems.
