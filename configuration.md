@@ -30,7 +30,7 @@ array. See sample below for an example.
 
 ```json
 {
-    "Args": ["node", "ex.js"]
+    "Args": ["ex.js"]
 }
 ```
 
@@ -53,7 +53,7 @@ Below is a sample configuration file for a nodejs application.
 {
 	"Files": ["ex.js"],
     "Dirs": ["src"],
-	"Args": ["node", "ex.js"],
+	"Args": [""ex.js"],
 	"Env": {
 		"NODE_DEBUG": "*",
 		"NODE_DEBUG_NATIVE": "*"
