@@ -16,6 +16,8 @@ only need to install QEMU. All other prerequisite installs can be skipped on
 this page.
 
 ### Install QEMU {#qemu}
+Ensure that you install a version of QEMU that is equal to or greater than
+version 2.5
 
 ##### MacOS (homebrew) {#qemu-macos}
 If you're running on a Mac, you do need to install QEMU. The easiest way to

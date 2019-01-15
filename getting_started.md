@@ -13,6 +13,8 @@ Currently Ops support various forms of linux operating systems.
 ## Install Prerequisites
 
 ### Install QEMU {#qemu}
+Ensure that you install a version of QEMU that is equal to or greater than
+version 2.5
 
 ##### MacOS (homebrew) {#qemu-macos}
 If you're running on a Mac, you do need to install QEMU. The easiest way to
