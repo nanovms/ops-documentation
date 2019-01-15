@@ -81,7 +81,10 @@ This maps directories from a local source to a destination within the instance o
 TODO
 
 _**NOTE** is there a place where there is a list of debug flags people can put
-in somewhere?_
+in somewhere?
+
+Also, the debug flags seems to have it harded coded to a value of 't'. Is that
+correct? See https://github.com/nanovms/ops/blob/master/lepton/image.go#L144_
 
 #### Program {#program}
 TODO
