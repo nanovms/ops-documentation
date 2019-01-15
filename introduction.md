@@ -10,8 +10,7 @@ others.
 OPS is under active development by a full time team of kernel engineers.
 
 **IMPORTANT NOTE** Ops is currently in a technical preview stage of its
-development. It is subject to significant changes and refactoring. Not
-recommended for production environments at this time.
+development. It is subject to significant changes and refactoring.
 
 #### What are Unikernels?
 

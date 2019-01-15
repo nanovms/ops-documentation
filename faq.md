@@ -1,13 +1,9 @@
 Frequently Asked Questions (FAQ)
 ================================
 
-### Q: Is `ops` production ready?
-A: At this time `ops` is considered to be a technical preview and is not
-production ready.
-
 ### Q: Can I run `ops` inside a container? {#container}
-A: Yes, it is possible to run `ops` within a container such as docker or
-virtualbox.  Although, it is NOT recommended to do so, especially for
+A: Yes, it is possible to run `ops` within a container such as docker.
+Although, it is NOT recommended to do so, especially for
 production environments. You will likely run into performance related issues.
 
 ### Q: How do I run `ops` on a cloud provider with bridged networking?
