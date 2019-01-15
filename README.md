@@ -16,7 +16,7 @@ $ npm install gitbook-cli -g
 To view the documentation in the browser run the following command...
 
 ```sh
-$ gitbook serve
+$ make serve
 ```
 
 Then open up your browser to `http://localhost:4000`

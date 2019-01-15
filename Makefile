@@ -1,4 +1,7 @@
-.PHONY: test clean
+.PHONY: test clean serve
+
+serve:
+	gitbook serve
 
 # test that we can spin up an OS and install ops and run a basic command
 test:
