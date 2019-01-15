@@ -109,8 +109,6 @@ First we need to make sure you have `git` installed. You can find the official
 `git` installation instructions
 [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
-TODO: Write up git install directions for major versions of linux
-
 #### MacOS (homebrew)
 
  1. To install `git`, run the following command. Make sure you have
