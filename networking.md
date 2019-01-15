@@ -18,7 +18,8 @@ default.
 
 ## Bridged Network
 Bridged networking connects a virtual machine to a network using the host
-computer's Ethernet adapter. 
+computer's Ethernet adapter. For more information about bridged networking,
+see this [article](https://en.wikipedia.org/wiki/Bridging_%28networking%29).
 
 In addition to that, KVM hardware acceleration can only be achieved while
 utilizing this networking mode. Because of this, having an Ethernet connection
