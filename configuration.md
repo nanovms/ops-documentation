@@ -46,6 +46,51 @@ A dictionary/object of environment variables.
 }
 ```
 
+#### MapDirs {#mapdirs}
+TODO
+
+#### Debugflags {#debugflags}
+TODO
+
+#### Program {#program}
+TODO
+
+#### Version {#version}
+TODO
+
+#### Boot {#boot}
+TODO
+
+#### Kernel {#kernel}
+TODO
+
+#### DiskImage {#diskimage}
+TODO
+
+#### Mkfs {#mkfs}
+TODO
+
+#### NameServer {#nameserver}
+TODO
+
+#### RunConfig {#runconfig}
+TODO
+
+##### RunConfig.Imagename {#runconfig.image}
+TODO
+
+##### RunConfig.Ports {#runconfig.ports}
+TODO
+
+##### RunConfig.Verbose {#runconfig.verbose}
+TODO
+
+##### RunConfig.Memory {#runconfig.memory}
+TODO
+
+##### RunConfig.Bridged {#runconfig.bridged}
+TODO
+
 ### Sample Configuration File {#sample}
 Below is a sample configuration file for a nodejs application.
 
