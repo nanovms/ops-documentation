@@ -60,7 +60,7 @@ This maps directories from a local source to a destination within the instance o
 #### Debugflags {#debugflags}
 TODO
 
-_*NOTE** is there a place where there is a list of debug flags people can put
+_**NOTE** is there a place where there is a list of debug flags people can put
 in somewhere?)_
 
 #### Program {#program}
