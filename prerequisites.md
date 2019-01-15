@@ -229,7 +229,8 @@ $ sudo make install install-doc install-html install-man prefix=/usr
 ### Install Go {#go}
 
 It is a requirement to have go installed on your system. To do so, follow the
-documentation below.
+documentation below. `ops` requires that the minimum version of go that you
+install is v1.7.
 
 #### Build from Source
 
