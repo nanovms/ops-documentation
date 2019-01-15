@@ -61,7 +61,7 @@ This maps directories from a local source to a destination within the instance o
 TODO
 
 _**NOTE** is there a place where there is a list of debug flags people can put
-in somewhere?)_
+in somewhere?_
 
 #### Program {#program}
 TODO
