@@ -43,6 +43,7 @@ Basic Usage
 	```sh
 	$ ops load php_7.2.13 -a ex.php
 	```
+
 ### **Run a NodeJS script**
 
 * Create a file called `ex.php` with below content
