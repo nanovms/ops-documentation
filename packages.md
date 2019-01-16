@@ -16,5 +16,5 @@ $ ops list
 ### Removing local packages
 By default, downloaded packages are stored `~/.ops/bin/.packages`. If you'd
 like to remove a package from your hard drive, whether its to conserve space,
-or to force a re-download of the package, you can do it here via the `rm` cli
-tool.
+or to force a re-download of the package, you can do it here utilizing the
+`rm` cli tool.
