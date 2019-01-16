@@ -1,29 +1,62 @@
 Basic Usage
 ================
 
-## Getting the version
-To check which version of `ops` you are currently running, run the following
-command...
+## Build and Deploy Nanos Unikernel
 
-```sh
-$ ops version
-```
+### **Running GoLang hello world**
+* Create a file called `main.go` with below content
 
-## Listing available official packages
-The ops team officially maintains specific versions of specific languages,
-known as packages. To get a list of all currently supported packages, run the
-following command...
+	```golang
+	package main
 
-```sh
-$ ops list
-```
+	import "fmt"
 
-To read more about packages, go [here](packages.md)
+	func main() {
+		fmt.Println("Hello World!")
+	}
+	```
 
-## Running code
+* Build it
 
-When using `ops`, there are two basic commands that are used to execute some
-code. Those are `ops load` and `ops run`.
+	```sh
+	$ GOOS=linux go build main.go
+	```
+
+* Package and deploy
+
+	```sh
+	$ ops run main
+	```
+	For more examples using Golang, visit our [examples
+	repository](https://github.com/nanovms/ops-examples/tree/master/golang)
+
+### **Running PHP hello world**
+* Create a file called `ex.php` with below content
+
+	```php
+		<?php
+		phpinfo();
+		?>
+	```
+* Package and deploy
+
+	```sh
+	$ ops load php_7.2.13 -a ex.php
+	```
+### **Run a NodeJS script**
+
+* Create a file called `ex.php` with below content
+	```node
+	console.log("Hello World!");
+	```
+* Package and deploy
+
+	```sh
+	$ ops load node_v11.15.0 -a ex.js
+	```
+You should see "Hello World!" printed on your screen and then the ops command
+exits. For more examples using NodeJS, visit our [examples
+repository](https://github.com/nanovms/ops-examples/tree/master/nodejs)
 
 #### Load vs Run
 While both of these commands are used to execute code, there is a big
@@ -34,59 +67,3 @@ command. Any code that is compiled at runtime, you would use `ops load`. An
 example of languages where you'd use this are nodejs or php. Each supported
 language for `ops load`, will have a corresponding package. To see a list of
 available packages, run `ops list`.
-
-## Run a NodeJS script
-
-Now we run a basic "Hello World" example using NodeJS. Create a file called
-`ex.js` and edit the file.
-
-Add the following to the contents of that file...
-
-```node
-console.log("Hello World!");
-```
-
-Once you've done that, execute that NodeJS file with the following command.
-
-```sh
-$ ops load node_v11.15.0 -a ex.js
-```
-
-You should see "Hello World!" printed on your screen and then the ops command
-exits. For more examples using NodeJS, visit our [examples
-repository](https://github.com/nanovms/ops-examples/tree/master/nodejs)
-
-## Run a Golang Program
-
-Next, we are going to run a basic golang program. Create a file called
-`main.go` and edit the file.
-
-Add the following to the contents of that file...
-
-```golang
-package main
-
-import "fmt"
-
-func main() {
-	fmt.Println("Hello World!")
-}
-```
-
-Once you have done that, you will need to build your executable. One thing to
-keep in mind is that we always want to build for linux, and not the local host
-machine. This ensures we building for it to be run within `ops`.
-
-```sh
-$ GOOS=linux go build main.go
-```
-
-That would of created a executable binary file called `main`. We can then
-execute that binary within `ops` with the following command...
-
-```sh
-$ ops run main
-```
-
-For more examples using Golang, visit our [examples
-repository](https://github.com/nanovms/ops-examples/tree/master/golang)
