@@ -39,7 +39,7 @@ Or...
 $ sudo yum update
 $ sudo yum install qemu-kvm qemu-img
 ```
-## Verify OPS installtion.
+## Verify OPS installation.
 ```sh
 ops version
 ```
