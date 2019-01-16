@@ -4,6 +4,9 @@ The configuration file used by `ops` specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
 variables. This file follow the standard json format.
 
+For a complete sample of a configuration, see our
+[sample](configuration.md#sample)
+
 ### Configuration Attributes
 
 #### Files {#files}
@@ -46,7 +49,7 @@ _File  layout on VM_
 
 #### Args {#args}
 The command to execute when running the image. The expected format is an
-array. See sample below for an example.
+array.
 
 ```json
 {
@@ -81,9 +84,9 @@ This maps directories from a local source to a destination within the instance o
 TODO
 
 _**NOTE** is there a place where there is a list of debug flags people can put
-in somewhere?
+in somewhere?_
 
-Also, the debug flags seems to have it harded coded to a value of 't'. Is that
+_Also, the debug flags seems to have it harded coded to a value of 't'. Is that
 correct? See https://github.com/nanovms/ops/blob/master/lepton/image.go#L144_
 
 #### Program {#program}

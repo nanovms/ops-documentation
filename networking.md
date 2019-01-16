@@ -39,3 +39,8 @@ To tear down a networking bridge, use the following command...
 ```sh
 $ sudo ops net reset
 ```
+
+#### Enabling bridge for an instance
+
+Once you have setup a networking bridge, you need to specify in your `ops run`
+and `ops load` command to utilize that bridge. To do so, pass the flag `-b`.
