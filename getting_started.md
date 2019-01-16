@@ -10,34 +10,23 @@ Currently Ops support various forms of linux operating systems.
  * Fedora
  * Centos
 
-## Install Prerequisites
-
-### Install QEMU {#qemu}
-Ensure that you install a version of QEMU that is equal to or greater than
-version 2.5
-
-##### MacOS (homebrew) {#qemu-macos}
-If you're running on a Mac, you do need to install QEMU. The easiest way to
-install QEMU is via homebrew.
-
+## Installing OPS
 ```sh
-$ brew install qemu
+$ curl https://ops.city/get.sh -sSfL | sh
 ```
+If the script complain about missing HomeBrew on Mac, please install it from https://brew.sh/ and re-run the above command.
 
-For alternate ways of installing QEMU, see their
-[website](https://www.qemu.org/). 
+On Linux flavors ensure that you have QEMU version 2.5 or greater installed.
 
 ##### Debian / Ubuntu (apt-get) {#qemu-debian}
 
- 1. To install `QMEU`, run the following command...
+ To install `QEMU`, run the following command...
 
 ```sh
 $ sudo apt-get install qemu
 ```
 
 ##### Fedora (dnf/yum) {#qemu-fedora}
-
- 1. To install `qemu`, run the following command...
 
 ```sh
 $ sudo dnf update
@@ -50,3 +39,12 @@ Or...
 $ sudo yum update
 $ sudo yum install qemu-kvm qemu-img
 ```
+## Verify OPS installtion.
+```sh
+ops version
+```
+
+During installation setup will attempt to configure the PATH. 
+Because of differences between platforms, command shells the modifications to PATH may not take effect until the console is restarted, or the user is logged out, or it may not succeed at all.
+If after installation, running ops version in the console fails, try 
+```source ~/.bash_profile``` or open a new terminal.
