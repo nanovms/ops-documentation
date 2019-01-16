@@ -16,6 +16,10 @@ A: Yes, it is possible to run `ops` within a container such as docker.
 Although, it is NOT recommended to do so, especially for
 production environments. You will likely run into performance related issues.
 
+### Q: What about the filesystem?
+A: The tool was originally addressed for transient services yet full fs
+functionality is on the way.
+
 ### Q: How do I run `ops` on a cloud provider with bridged networking?
 A: Yes, it is possible to setup bridged networking on various cloud providers,
 but it is recommended to run it on a physical linux server with an ethernet
