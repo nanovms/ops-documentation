@@ -1,16 +1,13 @@
 # OPS Documentation
-This contains documentation for [OPS](https://github.com/nanovms/ops)
+This contains documentation for [OPS](https://github.com/nanovms/ops), the
+command-line interface to [NanoVms](https://nanovms.com/) nanos unikernel.
+Most Unikernels out there are specialized for a high-level language, but nanos
+is capable of executing any valid ELF binary. We provide pre-tested packages for
+interpreted and languages that do not directly produce an ELF(JIT compiled).
+This technical preview has packages for PHP and Node and more is on the way.
 
-OPS is rethinking cloud infrastructure through the use of unikernels.
-
-This is a technical preview of what is possible with unikernels and we
-have focused on ease of use first. Some goals are farther along than
-others.
-
-OPS is under active development by a full time team of kernel engineers.
-
-**IMPORTANT NOTE** Ops is currently in a technical preview stage of its
-development. It is subject to significant changes and refactoring.
+**IMPORTANT NOTE** This is a technical preview and is actively developed.It is subject 
+to significant changes and refactoring.
 
 #### What are Unikernels?
 
