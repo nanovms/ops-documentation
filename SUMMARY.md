@@ -2,7 +2,6 @@
 
 * [Introduction](introduction.md)
 * [Getting Started](getting_started.md)
-* [Installation](installation.md)
 * [Basic Usage](basic_usage.md)
 * [Configuration](configuration.md)
     <> * [Files](configuration.md#files)
