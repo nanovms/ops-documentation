@@ -78,25 +78,6 @@ adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
 }
 ```
 
-#### Debugflags {#debugflags}
-TODO
-
-_**NOTE** is there a place where there is a list of debug flags people can put
-in somewhere?_
-
-_Also, the debug flags seems to have it harded coded to a value of 't'. Is that
-correct? See https://github.com/nanovms/ops/blob/master/lepton/image.go#L144_
-
-#### Program {#program}
-TODO
-
-_**NOTE** Tried testing this, couldn't get it to work. I specified a program
-in the config for a golang application, and when i print the manifest, it
-doesn't change the "program" name._
-
-#### Version {#version}
-_Not Implemented_
-
 #### NameServer {#nameserver}
 The DNS server to use for DNS resolution. By default it is Google's `8.8.8.8`.
 
