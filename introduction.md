@@ -1,12 +1,15 @@
 # OPS Documentation
-This contains documentation for [OPS](https://github.com/nanovms/ops), the
-command-line interface to [NanoVms](https://nanovms.com/) nanos unikernel.
-Most Unikernels out there are specialized for a high-level language, but nanos
+This contains documentation for [OPS](https://github.com/nanovms/ops), a
+compilation and orchestration tool for the Nanos unikernel.
+
+Most Unikernels out there are specialized for a high-level language, but Nanos
 is capable of executing any valid ELF binary. We provide pre-tested packages for
-interpreted and languages that do not directly produce an ELF(JIT compiled).
+common linux software including support for interpreted languages to
+provide a similar Linux like experience.
+
 This technical preview has packages for PHP and Node and more is on the way.
 
-**IMPORTANT NOTE** This is a technical preview and is actively developed.It is subject 
+**IMPORTANT NOTE** This is a technical preview and is actively developed and sponsored by [NanoVMs](https://www.nanovms.com). It is subject 
 to significant changes and refactoring.
 
 #### What are Unikernels?
@@ -20,8 +23,10 @@ KVM. Since hypervisors power all public cloud computing infrastructure such as A
 ##### Improved security
 Unikernels reduce the amount of code deployed, which reduces the attack surface, improving security. They also don't allow you to ssh into them and most importantly they embrace the single process model.
 
+Note: This does have implications for some software. See the [FAQ](faq.md) for more details.
+
 ##### Small footprints
-Unikernel images are often orders of magnitude smaller than traditional OS deployments.
+Unikernel images are often orders of magnitude smaller than traditional OS deployments. You can create and deploy sub megabyte unikernels depending on what you want/need.
 
 ##### Highly optimised
 Unikernels can achieve greater performance from their single process

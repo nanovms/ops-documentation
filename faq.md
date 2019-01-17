@@ -16,6 +16,11 @@ A: Yes, it is possible to run `ops` within a container such as docker.
 Although, it is NOT recommended to do so, especially for
 production environments. You will likely run into performance related issues.
 
+### Q: What if I need to 'shell out'?
+A: We consider this an anti-pattern of software development and a
+scourge on the software ecosystem. It is advised to utilize your native
+language API and libraries to achieve the task instead.
+
 ### Q: What about the filesystem?
 A: The tool was originally addressed for transient services yet full fs
 functionality is on the way.
