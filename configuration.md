@@ -97,46 +97,6 @@ doesn't change the "program" name._
 #### Version {#version}
 _Not Implemented_
 
-#### Boot {#boot}
-Define the boot image to be used. By default, it utilizes `.staging/boot.img`
-in the `pwd`.
-
-```json
-{
-    "Boot": "./staging/boot2.img"
-}
-```
-
-#### Kernel {#kernel}
-Define the kernel image to be used. By default, it utilizes
-`.staging/stage3.img` in the `pwd`.
-
-```json
-{
-    "Kernel": "./staging/stage4.img"
-}
-```
-
-#### DiskImage {#diskimage}
-Define the output file name for the generated disk image. By default, it is
-`image`.
-
-```json
-{
-    "DiskImage": "disk-image"
-}
-```
-
-#### Mkfs {#mkfs}
-Define the mkfs to be used. By default, it utilizes `.staging/mkfs` in the
-`pwd`.
-
-```json
-{
-    "Mkfs": "./staging/mkfs"
-}
-```
-
 #### NameServer {#nameserver}
 The DNS server to use for DNS resolution. By default it is Google's `8.8.8.8`.
 
