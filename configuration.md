@@ -70,13 +70,11 @@ A dictionary/object of environment variables.
 ```
 
 #### MapDirs {#mapdirs}
-This maps directories from a local source to a destination within the instance of your choosing.
-
+Maps a local directory to a different path on guest VM. For example the below
+adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
 ```json
 {
-    MapsDirs: {
-        "src": "/myapp/code"
-    }
+    "MapDirs": {"/etc/ssl/certs/*": "/usr/lib/ssl/certs" },
 }
 ```
 
