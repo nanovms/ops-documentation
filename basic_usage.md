@@ -3,7 +3,7 @@ Basic Usage
 
 ## Build and Deploy Nanos Unikernel
 
-### **Running GoLang hello world**
+### **Running [Golang](https://golang.org) hello world**
 * Create a file called `main.go` with below content
 
 	```golang
