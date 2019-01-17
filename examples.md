@@ -2,7 +2,6 @@ Examples
 ========
 ## **Deploying a static file server**
 
-### **Running [Golang](https://golang.org) hello world**
 * Let's start with a basic go static file server, copy paste below to  `server.go`
 
 	```golang
