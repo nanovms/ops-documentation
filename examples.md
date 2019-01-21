@@ -1,6 +1,6 @@
 Examples
 ========
-## **Deploying a static file server**
+## **Deploying a static file server.**
 
 * Let's start with a basic go static file server, copy paste below to  `server.go`
 
