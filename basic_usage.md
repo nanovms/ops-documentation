@@ -68,3 +68,22 @@ command. Any code that is compiled at runtime, you would use `ops load`. An
 example of languages where you'd use this are nodejs or php. Each supported
 language for `ops load`, will have a corresponding package. To see a list of
 available packages, run `ops list`.
+
+### Nightly vs. Main
+Right now we have 2 release channels. If you run ops as is you are
+tracking the main release channel. There is no update frequency
+associated with it just whenever we deem significant work has been done
+and we aren't horribly breaking anything.
+
+The other channel you can track is the nightly channel. This is
+populated every night via the build system with whatever is in master.
+So if you want bleeding edge you can utilize that.
+
+The magic incantation for tracking this channel is simply to switch the
+'-f' flag on.
+
+For example:
+
+```sh
+$ ops -f run main
+```
