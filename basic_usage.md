@@ -46,7 +46,7 @@ Basic Usage
 
 ### **Running a NodeJS script**
 
-* Create a file called `ex.php` with below content
+* Create a file called `ex.js` with below content
 	```node
 	console.log("Hello World!");
 	```
