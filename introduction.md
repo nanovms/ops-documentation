@@ -7,10 +7,18 @@ is capable of executing any valid ELF binary. We provide pre-tested packages for
 common linux software including support for interpreted languages to
 provide a similar Linux like experience.
 
-This technical preview has packages for PHP and Node and more is on the way.
+This technical preview has packages for [PHP](examples.md),
+[Node](examples.md), Ruby, Lua, Perl and more is on the way. Note that
+you are not required to used a package. OPS is explicitly built to be
+able to run stand-alone static binaries like Go and C as well.
 
 **IMPORTANT NOTE** This is a technical preview and is actively developed and sponsored by [NanoVMs](https://www.nanovms.com). It is subject 
 to significant changes and refactoring.
+
+Significant planned upcoming changes include the following categories:
+
+  * libraries
+  * security
 
 #### What are Unikernels?
 
