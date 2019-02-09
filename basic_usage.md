@@ -87,3 +87,12 @@ For example:
 ```sh
 $ ops -n run main
 ```
+
+If there are already cached images you can use the `--force` or `-f` flag to
+replace them with the lastest images from a given channel. For example, the
+following command will both track the nightly channel and replace any cached
+images with the lastest from that channel:
+
+```sh
+$ ops -nf run main
+```
