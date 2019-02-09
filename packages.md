@@ -13,6 +13,21 @@ To get a list of currently supported packages, run the following command...
 $ ops list
 ```
 
+The package list can also be searched by simply providing a regular expression
+to the `list` command's `--search` option (`-s` for short).
+
+```sh
+$ ops list --search ^[lr]
+
++-------------+---------+----------+-------------+
+| PACKAGENAME | VERSION | LANGUAGE | DESCRIPTION |
++-------------+---------+----------+-------------+
+| ruby_2.3.1  | 2.3.1   | ruby     | ruby        |
++-------------+---------+----------+-------------+
+| lua_5.2.4   | 5.2.4   | lua      | lua         |
++-------------+---------+----------+-------------+
+```
+
 ### Removing local packages
 By default, downloaded packages are stored `~/.ops/bin/.packages`. If you'd
 like to remove a package from your hard drive, whether its to conserve space,
