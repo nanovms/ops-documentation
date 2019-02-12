@@ -80,10 +80,19 @@ populated every night via the build system with whatever is in master.
 So if you want bleeding edge you can utilize that.
 
 The magic incantation for tracking this channel is simply to switch the
-'-f' flag on.
+`-n` or `--nightly` flag on.
 
 For example:
 
 ```sh
-$ ops -f run main
+$ ops -n run main
+```
+
+If there are already cached images you can use the `--force` or `-f` flag to
+replace them with the lastest images from a given channel. For example, the
+following command will both track the nightly channel and replace any cached
+images with the lastest from that channel:
+
+```sh
+$ ops -nf run main
 ```
