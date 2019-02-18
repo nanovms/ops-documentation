@@ -50,8 +50,18 @@ Examples
     `config.json`
     ```json
     {
+        "Dirs" : ["static"],
+        "Files":["/lib/x86_64-linux-gnu/libnss_dns.so.2", "/etc/ssl/certs/ca-certificates.crt"]
+    }
+
+    If you are on linux you can use the above example to enable dns/tls otherwise you can use this for local mac examples. NOTE: This is more than likely to change in the very near future.
+
+    `config.json`
+    ```json
+    {
         "Dirs" : ["static"]
     }
+ 
     ```
     The directory structure should look like below after these steps.
     ```bash
