@@ -87,7 +87,7 @@ $ make --version
 
 ```sh
 $ sudo dnf update
-$ sudo dnf install "Development Tools"
+$ sudo dnf groupinstall "Development Tools"
 ```
 
 Or...
