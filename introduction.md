@@ -25,7 +25,7 @@ Significant planned upcoming changes include the following categories:
 Unikernels are specialised single process operating systems.
 
 Unikernels dramatically shrink the attack surface and resource footprint of cloud services while providing a much better isolation model.
-They are machine images that can be ran on a hypervisor such as Xen or
+They are machine images that can be run on a hypervisor such as Xen or
 KVM. Since hypervisors power all public cloud computing infrastructure such as Amazon EC2 and Google Cloud, this lets your services run cheaper, more securely and with finer control than with a full general purpose operating system such as Linux.
 
 ##### Improved security
