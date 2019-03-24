@@ -22,6 +22,7 @@
 * [Examples](examples.md)
 * [Networking](networking.md)
 * [Packages](packages.md)
+* [Hardware Acceleration](acceleration.md)
 * [FAQ](faq.md)
 
 ### Developer
