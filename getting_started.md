@@ -3,7 +3,7 @@ Getting Started
 
 ### Supported Operating Systems
 
-Currently Ops support various forms of linux operating systems.
+Currently Ops support various forms of UNIX operating systems.
  * MacOS
  * Debian
  * Ubuntu
