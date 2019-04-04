@@ -143,6 +143,48 @@ acceleration.
 }
 ```
 
+#### CloudConfig {#cloudconfig}
+The `CloudConfig` configures various attributes about the cloud provider, we want to use
+with ops.
+
+##### CloudConfig.Platform {#cloudconfig.platform}
+Cloud provider we want to use with ops CLI.
+
+Currently supported platforms,
+* Google Cloud Platform `gcp`
+
+```json
+{
+    "CloudConfig": {
+        "Platform": "gcp"
+    }
+}
+```
+
+##### CloudConfig.ProjectID {#cloudconfig.projectid}
+Project ID in case of Google Cloud Platform provider.
+```json
+{
+    "CloudConfig": {
+        "ProjectID": "proj-1000"
+    }
+}
+```
+
+##### CloudConfig.BucketName {#cloudconfig.bucketname}
+Bucket name is used to store Ops built image artifacts.
+
+```json
+{
+    "CloudConfig": {
+        "BucketName": "nano-deploy"
+    }
+}
+```
+
+##### CloudConfig.ArchiveName {#cloudconfig.archivename}
+_Not Implemented_
+
 ### Sample Configuration File {#sample}
 Below is a sample configuration file for a nodejs application.
 
