@@ -36,7 +36,7 @@ already a member you can add yourself to the group with the following command:
 $ usermod -aG kvm `whoami`
 ```
 
-The change will take affect upon the next login. Finally, you can check to see
+The change will take effect upon the next login. Finally, you can check to see
 if Ops is using virtualization support by inspecting the command it uses to run
 an image. You can do this by enabling verbose output when using the `run` or
 `load` commands. So assuming I have hardware acceleration enabled in my runtime
@@ -45,7 +45,7 @@ configuration:
 ```json
 {
     "RunConfig": {
-        "UseKvm": true
+        "Accel": true
     }
 }
 ```
