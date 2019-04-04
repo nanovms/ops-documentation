@@ -61,6 +61,12 @@ qemu-system-x86_64 -drive file=${HOME}/.ops/images/hello.img,format=raw,if=virti
 
 Notice that the Qemu command is generated with `-enable-kvm` option.
 
+Accelaration support can also be enabled by providing the --accel(-x) flag to the ops `run` or `load` commands.
+
+```sh
+$ ops run --accel hello  # or ops run -x hello
+```
+
 ### macOS
 
 For macOS users things are a bit simpler. To check for virtualization support you can use the
