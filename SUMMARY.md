@@ -23,6 +23,7 @@
 * [Networking](networking.md)
 * [Packages](packages.md)
 * [Hardware Acceleration](acceleration.md)
+* [Google Cloud Integration](google_cloud.md)
 * [FAQ](faq.md)
 
 ### Developer
