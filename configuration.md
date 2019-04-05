@@ -177,7 +177,7 @@ Bucket name is used to store Ops built image artifacts.
 ```json
 {
     "CloudConfig": {
-        "BucketName": "nano-deploy"
+        "BucketName": "my-bucket"
     }
 }
 ```
