@@ -33,6 +33,13 @@ $ export GOOGLE_APPLICATION_CREDENTIALS=~/service-key.json
 $ ops image create -c config.json <image_name>
 ```
 
+For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
+
+```sh
+$ export GOOGLE_APPLICATION_CREDENTIALS=~/service-key.json 
+$ ops image create -c config.json -p node_v11.5.0 -a ex.js
+```
+
 ## Creating Instance on Google Cloud
 
 After the successful creation of an image in Google Cloud, we can create an instance from an existing image.
