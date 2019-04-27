@@ -171,6 +171,16 @@ Project ID in case of Google Cloud Platform provider.
 }
 ```
 
+##### CloudConfig.Zone {#cloudconfig.zone}
+Zone in case of Google Cloud Platform provider.
+```json
+{
+    "CloudConfig": {
+        "Zone": "us-west1-b"
+    }
+}
+```
+
 ##### CloudConfig.BucketName {#cloudconfig.bucketname}
 Bucket name is used to store Ops built image artifacts.
 
