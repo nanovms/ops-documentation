@@ -2,7 +2,7 @@ Configuration
 =============
 The configuration file used by `ops` specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
-variables. This file follow the standard json format.
+variables. This file follows the standard json format.
 
 For a complete sample of a configuration, see our
 [sample](configuration.md#sample)
