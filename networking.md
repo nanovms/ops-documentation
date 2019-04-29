@@ -1,7 +1,7 @@
 Networking
 ==========
 
-Currently, `ops` support two networking modes; usermode and bridged. In this
+Currently, `ops` supports two networking modes; usermode and bridged. In this
 document we will dive into the differences between these networking modes and
 when it makes sense to select one over the other.
 
