@@ -66,7 +66,7 @@ File :/sysroot/lib64/ld-linux-x86-64.so.2
 ```
 
 ### Removing local packages
-By default, downloaded packages are stored `~/.ops/bin/.packages`. If you'd
+By default, downloaded packages are stored in `~/.ops/bin/.packages`. If you'd
 like to remove a package from your hard drive, whether its to conserve space,
 or to force a re-download of the package, you can do it here utilizing the
 `rm` cli tool.
