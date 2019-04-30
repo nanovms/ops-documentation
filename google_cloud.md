@@ -105,16 +105,33 @@ You need to export `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT` and 
 $ export GOOGLE_CLOUD_PROJECT=prod-1000
 $ export GOOGLE_CLOUD_ZONE=us-west1-b
 $ ops instance list
-+-----------------------+----------+-------------------------------+
-|        NAME           | STATUS   |            CREATED            |
-+-----------------------+----------+-------------------------------+
-| nanos-main-instance   | RUNNING  | 2019-03-21T15:06:17.567-07:00 |
-+-----------------------+----------+-------------------------------+
++-----------------------------+---------+-------------------------------+-------------+--------------+
+|            NAME             | STATUS  |            CREATED            | PRIVATE IPS |  PUBLIC IPS  |
++-----------------------------+---------+-------------------------------+-------------+--------------+
+| nanos-main-image-1556601450 | RUNNING | 2019-04-29T22:17:34.609-07:00 | 10.240.0.40 | 34.83.204.40 |
++-----------------------------+---------+-------------------------------+-------------+--------------+
 ```
 
 Alternatively you can pass project-id and zone with cli options.
 ```sh
 $ ops instance list -p prod-1000 -z us-west1-b
+```
+
+## Get Logs for Instance
+
+You can get logs from serial console of a particular instance using `ops instance logs` command.
+
+You need to export `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_ZONE` before firing command.
+
+```sh
+$ export GOOGLE_CLOUD_PROJECT=prod-1000
+$ export GOOGLE_CLOUD_ZONE=us-west1-b
+$ ops instance logs <instance_name>
+```
+
+Alternatively you can pass project-id and zone with cli options.
+```sh
+$ ops instance logs -p prod-1000 -z us-west1-b
 ```
 
 ### Delete Instance
