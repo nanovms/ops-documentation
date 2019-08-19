@@ -152,6 +152,7 @@ Cloud provider we want to use with ops CLI.
 
 Currently supported platforms,
 * Google Cloud Platform `gcp`
+* AWS `aws`
 
 ```json
 {
