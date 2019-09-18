@@ -70,3 +70,15 @@ By default, downloaded packages are stored in `~/.ops/bin/.packages`. If you'd
 like to remove a package from your hard drive, whether its to conserve space,
 or to force a re-download of the package, you can do it here utilizing the
 `rm` cli tool.
+
+### Creating a Custom or Local Dev packages
+
+https://github.com/nanovms/ops/blob/master/PACKAGES.md
+
+then copy over an un-tarred dir to ~/.ops/local_packages
+
+Finally you can run it via the local flag:
+
+```
+ops load --local mypkg -a b.php -v
+```

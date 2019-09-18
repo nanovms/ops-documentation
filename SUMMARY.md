@@ -24,6 +24,7 @@
 * [Packages](packages.md)
 * [Hardware Acceleration](acceleration.md)
 * [Google Cloud Integration](google_cloud.md)
+* [AWS Integration](aws.md)
 * [FAQ](faq.md)
 
 ### Developer
