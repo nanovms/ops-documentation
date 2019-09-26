@@ -22,25 +22,18 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 {
     "CloudConfig" :{
         "ProjectID" :"prod-1000",
-        "Zone": "us-west1-b",
+        "Zone": "us-west-1",
         "BucketName":"my-s3-bucket"
-    },
-    "RunConfig" : {
-        "Memory": "2G"
     }
 }
 ```
 
 Once, you have updated `config.json` you can create an image in AWS with the following command:
 
-```sh
-$ ops instance create -t aws -p prod-XXXX -z us-west2-a -i <image_name>
-```
-
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -c config.json -p node_v11.5.0 -a ex.js
+$ ops image create -t aws -c config.json -p node_v11.5.0 -a ex.js
 ```
 
 ### List Images
@@ -83,7 +76,7 @@ $ ops instance create -i <image_name>
 Alternatively, you can pass project-id and zone with cli options.
 
 ```sh
-$ ops instance create -p prod-1000 -z us-west1-b -i <image_name>
+$ ops instance create -p prod-1000 -z us-west-2 -i <image_name>
 ```
 
 You can also pass config, if you have mentioned project-id and zone in project's config.json.
