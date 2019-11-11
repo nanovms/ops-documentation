@@ -2,10 +2,20 @@ Frequently Asked Questions (FAQ)
 ================================
 
 ### Q: What hypervisors does `ops` currently support?
-A: Currently, the only hypervisor that is supported is
-[QEMU](https://www.qemu.org/). We are obviously open to adding more
+A: Currently, nanos can run on both qemu and xen [QEMU](https://www.qemu.org/).
+We are obviously open to adding more
 support for other various hypervisors but there are considerations to be
 had.
+
+### Q: What version of qemu is best?
+A: We track latest qemu in homebrew as we have found issues before. The
+latest qemu release is currently 4.2.X. If you don't have that release
+try to install from brew:
+
+```
+brew tap nanovms/homebrew-qemu
+brew install nanovms/homebrew-qemu/qemu
+```
 
 ### Q: Can I contribute?
 A: Sure! We accept pull requests and if you have prior kernel experience
@@ -32,29 +42,15 @@ A: The tool was originally addressed for transient services yet full fs
 functionality is on the way.
 
 ### Q: How do I run `ops` on a cloud provider with bridged networking?
-A: Yes, it is possible to setup bridged networking on various cloud providers,
-but it is recommended to run it on a physical linux server with an ethernet
-connection.  In order to do so, you need to create a second network interface
-on the instance. Use one interface for the network bridge, and the other for
-your SSH connection.
-
-##### Google Cloud Additional Interface
-[https://cloud.google.com/vpc/docs/create-use-multiple-interfaces](https://cloud.google.com/vpc/docs/create-use-multiple-interfaces)
-
-##### Digital Ocean Additional Interface
-[https://www.digitalocean.com/community/questions/more-network-interfaces-for-droplet](https://www.digitalocean.com/community/questions/more-network-interfaces-for-droplet)
-
-##### Amazon AWS EC2 Additional Interface
-[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)
-
-Note: We are currently looking at providing native AWS and GCE support.
+A: We do not suggest running ops on a cloud provider on top of linux. We
+suggest using the native way of provisioning your unikernels so they run
+by themselves standalone and you won't have do any network
+configuration.
 
 ### Q: My ssh connection gets terminated while running `ops net setup` {#ssh-terminate}
-A: This also could happen on a cloud instance (AWS, digital ocean, google
-cloud) when there is only a single network interface.
-
-You can bridge on a different interface than the one you are ssh'ing on
-to remedy this.
+A: This is only necessary if you wish to create your own bridges and
+attach tap interfaces to them. It's not a task we suggest most people do
+though.
 
 ### Q: Does this work with kubernetes?
 A: This could work with kubernetes but kubernetes is a container
