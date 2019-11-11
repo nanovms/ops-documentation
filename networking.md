@@ -5,6 +5,12 @@ Currently, `ops` supports two networking modes; usermode and bridged. In this
 document we will dive into the differences between these networking modes and
 when it makes sense to select one over the other.
 
+## Native Networking
+
+Note that by default you should probably just use the native networking
+provided by your cloud provider. These instructions only exist if you
+wish to build your own private cloud.
+
 ## Usermode Network
 Usermode is the default and simplest mode of networking. It utilizes the ready
 available network connection and shares it with the ops instance.
