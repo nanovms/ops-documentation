@@ -4,6 +4,12 @@ Amazon Web Services (AWS) Integration
 Ops can integrate with your existing Amazon Web Services (AWS) account. You can use the Ops CLI to create and upload an image in your AWS account.
 Once, you have uploaded the image, you can also create an instance with a particular image using CLI.
 
+We currently automate installing a vmimport role
+(https://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-troubleshooting.html).
+It needs to be tied to the bucket you use and uses an unique name. If
+you are having trouble you might wish to see if you have an existing
+vmimport role defined already.
+
 ## Pre-requisites
 
 1. Ensure your ~/.aws/credentials file is setup correctly - you can use
