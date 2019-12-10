@@ -5,6 +5,14 @@ Ops can utilize your CPU's virtualization extension through the various
 supported hypervisors. Ops will only attempt to enable acceleration on systems
 that support it.
 
+If you deploy to Google Cloud or AWS hardware acceleration will always
+be enabled however if you are developing locally you'll typically need
+to turn it on manually.
+
+Also bear in mind that currently the VDSO is tied to pvclock and that
+requires hardware acceleration so you'll get another speed boost from
+that as well.
+
 ### Linux
 
 To have Ops enable hardware acceleration when running an image, first check to
@@ -36,7 +44,16 @@ already a member you can add yourself to the group with the following command:
 $ usermod -aG kvm `whoami`
 ```
 
-The change will take effect upon the next login. Finally, you can check to see
+The change will take effect upon the next login.
+
+You can then verify by issuing the groups command ensuring you are in
+the kvm group:
+
+```sh
+$ groups
+```
+
+Finally, you can check to see
 if Ops is using virtualization support by inspecting the command it uses to run
 an image. You can do this by enabling verbose output when using the `run` or
 `load` commands. So assuming I have hardware acceleration enabled in my runtime
