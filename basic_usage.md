@@ -67,7 +67,7 @@ code). So, for example, any golang code that you may run, you'd use this
 command. Any code that is compiled at runtime, you would use `ops load`. An
 example of languages where you'd use this are nodejs or php. Each supported
 language for `ops load`, will have a corresponding package. To see a list of
-available packages, run `ops list`.
+available packages, run `ops pkg list`.
 
 ### Nightly vs. Main
 Right now we have 2 release channels. If you run ops as is you are
