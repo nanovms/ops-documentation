@@ -196,6 +196,16 @@ Bucket name is used to store Ops built image artifacts.
 ##### CloudConfig.ArchiveName {#cloudconfig.archivename}
 _Not Implemented_
 
+### Reboot on Exit
+
+There is an option to reboot your application immediately if it crashes that is turned off by default but you can enable it.
+
+```json
+{
+    "RebootOnExit": true
+}
+```
+
 ### Sample Configuration File {#sample}
 Below is a sample configuration file for a nodejs application.
 
