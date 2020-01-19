@@ -1,37 +1,39 @@
 Examples
 ========
+
 ## **Deploying a static file server.**
 
 * Let's start with a basic go static file server, copy paste below to  `server.go`
 
-	```golang
-    package main
+  ```golang
+  package main
 
-    import (
-        "log"
-        "net/http"
-    )
+  import (
+      "log"
+      "net/http"
+  )
 
-    func main() {
-        fs := http.FileServer(http.Dir("static"))
-        http.Handle("/", fs)
+  func main() {
+      fs := http.FileServer(http.Dir("static"))
+      http.Handle("/", fs)
 
-        log.Println("Listening...on 8080")
-        http.ListenAndServe(":8080", nil)
-    }
-	```
+      log.Println("Listening...on 8080")
+      http.ListenAndServe(":8080", nil)
+  }
+  ```
 
-* Now build server.go
+* Now build `server.go`
 
-	```sh
-	$ GOOS=linux go build server.go
-	```
+    ```sh
+    $ GOOS=linux go build server.go
+    ```
+
 * Prepare the HTML content.
     ```sh
     $ mkdir static
     $ cd static 
     ```
-    Create hello.html
+    Create `hello.html`
 
     ```html
     <!doctype html>
@@ -53,16 +55,17 @@ Examples
         "Dirs" : ["static"],
         "Files":["/lib/x86_64-linux-gnu/libnss_dns.so.2", "/etc/ssl/certs/ca-certificates.crt"]
     }
+    ```
 
-    If you are on linux you can use the above example to enable dns/tls otherwise you can use this for local mac examples. NOTE: This is more than likely to change in the very near future.
+    If you are on linux you can use the above example to enable dns/tls, otherwise you can use this for local Mac examples. NOTE: This is more than likely to change in the very near future.
 
     `config.json`
     ```json
     {
         "Dirs" : ["static"]
     }
- 
     ```
+
     The directory structure should look like below after these steps.
     ```bash
     .
@@ -74,13 +77,14 @@ Examples
 
 * Package and deploy
 
-	```sh
-	$ ops run -p 8080 -c config.json server 
-	```
+  ```sh
+  $ ops run -p 8080 -c config.json server 
+  ```
     Notice that we are using KVM user-mode networking and have to forward host port 8080 to VM. 
+
 * Curl it 
     ```bash
     curl http://localhost:8080/hello.html
     ```
 
-To learn more about various config options visit [ops github repository](https://github.com/nanovms/ops) and more examples can be found here [repository](https://github.com/nanovms/ops-examples)
+To learn more about various config options visit [OPS GitHub repository](https://github.com/nanovms/ops). More examples can be found from the [`ops-examples` repository](https://github.com/nanovms/ops-examples).
