@@ -1,6 +1,7 @@
 Configuration
 =============
-The configuration file used by `ops` specifies various options and attributes
+The configuration file used by `ops`  (such as one passed as a parameter, 
+e.g. ops --config myconfig.json ... ) specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
 variables. This file follows the standard json format.
 
