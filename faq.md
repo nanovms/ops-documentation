@@ -38,8 +38,8 @@ scourge on the software ecosystem. It is advised to utilize your native
 language API and libraries to achieve the task instead.
 
 ### Q: What about the filesystem?
-A: The tool was originally addressed for transient services yet full fs
-functionality is on the way.
+A: Nanos currently makes use of the TFS filesystem and can run databases
+and other things through the POSIX api you all know.
 
 ### Q: How do I run `ops` on a cloud provider with bridged networking?
 A: We do not suggest running ops on a cloud provider on top of linux. We
