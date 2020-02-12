@@ -59,6 +59,39 @@ You should see "Hello World!" printed on your screen and then the ops command
 exits. For more examples using NodeJS, visit our [examples
 repository](https://github.com/nanovms/ops-examples/tree/master/nodejs)
 
+### **Run and Pass an Environment Variable**
+
+This can be done via the configuration file but if you want to
+dynamically inject without having to rely on the configuration file this
+is the way:
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+
+	fmt.Println("FOO:", os.Getenv("FOO"))
+	fmt.Println("BAR:", os.Getenv("BAR"))
+
+	fmt.Println()
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		fmt.Println(pair[0])
+	}
+}
+```
+
+```sh
+GOOS=linux go build
+ops run -e FOO=1 tea
+```
+
 #### Load vs Run
 While both of these commands are used to execute code, there is a big
 difference when you would choose to run one rather than the other. For `ops
