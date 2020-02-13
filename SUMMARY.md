@@ -25,6 +25,7 @@
 * [Hardware Acceleration](acceleration.md)
 * [Google Cloud Integration](google_cloud.md)
 * [AWS Integration](aws.md)
+* [Bare Metal](bare_metal.md)
 * [FAQ](faq.md)
 
 ### Developer
