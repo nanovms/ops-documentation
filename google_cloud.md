@@ -87,7 +87,7 @@ $ ops instance create -i <image_name>
 Alternatively, you can pass project-id and zone with cli options.
 
 ```sh
-$ ops instance create -p prod-1000 -z us-west1-b -i <image_name>
+$ ops instance create -g prod-1000 -z us-west1-b -i <image_name>
 ```
 
 You can also pass config, if you have mentioned project-id and zone in project's config.json.
@@ -114,7 +114,7 @@ $ ops instance list
 
 Alternatively you can pass project-id and zone with cli options.
 ```sh
-$ ops instance list -p prod-1000 -z us-west1-b
+$ ops instance list -g prod-1000 -z us-west1-b
 ```
 
 ## Get Logs for Instance
@@ -131,7 +131,7 @@ $ ops instance logs <instance_name>
 
 Alternatively you can pass project-id and zone with cli options.
 ```sh
-$ ops instance logs -p prod-1000 -z us-west1-b
+$ ops instance logs -g prod-1000 -z us-west1-b
 ```
 
 ### Delete Instance
@@ -148,5 +148,5 @@ $ ops instance delete my-instance-running
 
 Alternatively you can pass project-id and zone with cli options.
 ```sh
-$ ops instance delete -p prod-1000 -z us-west1-b my-instance-running
+$ ops instance delete -g prod-1000 -z us-west1-b my-instance-running
 ```
