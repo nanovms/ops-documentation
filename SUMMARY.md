@@ -25,6 +25,8 @@
 * [Hardware Acceleration](acceleration.md)
 * [Google Cloud Integration](google_cloud.md)
 * [AWS Integration](aws.md)
+* [Digital Ocean](digital_ocean.md)
+* [Vultr](vultr.md)
 * [Bare Metal](bare_metal.md)
 * [FAQ](faq.md)
 
