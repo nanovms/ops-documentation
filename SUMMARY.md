@@ -27,6 +27,7 @@
 * [AWS Integration](aws.md)
 * [Digital Ocean](digital_ocean.md)
 * [Vultr](vultr.md)
+* [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
 * [FAQ](faq.md)
 
