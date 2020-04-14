@@ -20,6 +20,8 @@
     <> * [RunConfig](configuration.md#runconfig)
     <> * [Sample Configuration File](configuration.md#sample)
 * [Examples](examples.md)
+* [Images](images.md)
+* [Instances](instances.md)
 * [Networking](networking.md)
 * [Packages](packages.md)
 * [Hardware Acceleration](acceleration.md)
@@ -29,6 +31,7 @@
 * [Vultr](vultr.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
+* [Debugging](debugging.md)
 * [FAQ](faq.md)
 
 ### Developer
