@@ -88,6 +88,28 @@ The DNS server to use for DNS resolution. By default it is Google's `8.8.8.8`.
 }
 ```
 
+#### Base Volume Size {#base_volume_size}
+The base volume size is an optional parameter you can pass to specify
+the size of the base volume. By default the size is the end of blocks
+written by TFS.
+
+To specify 100 megabytes:
+
+```json
+{
+    "BaseVolumeSz": "100m"
+}
+```
+
+To specify 1 gigabyte:
+
+```json
+{
+    "BaseVolumeSz": "1g"
+}
+```
+
+
 #### RunConfig {#runconfig}
 The `RunConfig` configures various attributes about the runtime of the ops
 instance, such as allocated memory and exposed ports.
