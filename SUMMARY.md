@@ -22,6 +22,7 @@
 * [Examples](examples.md)
 * [Images](images.md)
 * [Instances](instances.md)
+* [Volumes](volumes.md)
 * [Networking](networking.md)
 * [Packages](packages.md)
 * [Hardware Acceleration](acceleration.md)
