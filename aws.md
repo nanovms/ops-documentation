@@ -39,7 +39,7 @@ Once, you have updated `config.json` you can create an image in AWS with the fol
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -t aws -c config.json -p node_v11.5.0 -a ex.js
+$ ops image create -t aws -c config.json -p node_v14.2.0 -a ex.js
 ```
 
 ### List Images
