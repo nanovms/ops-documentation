@@ -43,7 +43,7 @@ $ ops image create -c config.json <image_name>
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -c config.json -p node_v11.5.0 -a ex.js
+$ ops image create -c config.json -p node_v14.2.0 -a ex.js
 ```
 
 ### List Images

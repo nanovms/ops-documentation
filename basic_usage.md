@@ -53,7 +53,7 @@ Basic Usage
 * Package and deploy
 
 	```sh
-	$ ops load node_v11.5.0 -a ex.js
+	$ ops load node_v14.2.0 -a ex.js
 	```
 You should see "Hello World!" printed on your screen and then the ops command
 exits. For more examples using NodeJS, visit our [examples
