@@ -30,6 +30,7 @@
 * [AWS Integration](aws.md)
 * [Digital Ocean](digital_ocean.md)
 * [Vultr](vultr.md)
+* [VSphere](vsphere.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
 * [Debugging](debugging.md)
