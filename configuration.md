@@ -129,6 +129,18 @@ line.
 }
 ```
 
+##### RunConfig.UDP {#runconfig.UDP}
+UDP is off by default. You can toggle UDP on via:
+
+```json
+{
+    "RunConfig": {
+        "UDP": true
+    }
+}
+```
+
+
 ##### RunConfig.Verbose {#runconfig.verbose}
 Enables verbose logging for the runtime environment. As of now, it prints the
 command used to start `qemu`.
