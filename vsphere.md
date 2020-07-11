@@ -72,9 +72,14 @@ ops image list -t vsphere
 ## Instance Operations
 ### Create Instance
 
+The domain part of the Resource Pool is in this example, 'localhost.localdomain'. You can find that in your portal.
+
+![domain](domain.png)
+
 ```sh
 export GOVC_INSECURE=1
 export GOVC_URL="login:pass@host:port"
+export GOVC_RESOURCE_POOL="/ha-datacenter/host/localhost.localdomain/Resources"
 
 ops instance create -z us-west2-a -t vsphere -i gtest
 ```
