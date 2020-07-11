@@ -1,7 +1,7 @@
 Vsphere Integration
 ========================
 
-OPS works perfectly fine with VSphere ESX 7.0.
+OPS works perfectly fine with VSphere ESX 6.7 and 7.0.
 
 It uses the pvsci driver for storage and vmnetx3 for networking.
 
