@@ -12,8 +12,6 @@ found in your portal:
 ```json
 {
   "CloudConfig" :{
-    "ProjectID" :"prod-1033",
-    "Zone": "us-west2-a",
     "BucketName":"nanos-test"
   }
 }
@@ -81,7 +79,7 @@ export GOVC_INSECURE=1
 export GOVC_URL="login:pass@host:port"
 export GOVC_RESOURCE_POOL="/ha-datacenter/host/localhost.localdomain/Resources"
 
-ops instance create -z us-west2-a -t vsphere -i gtest
+ops instance create -t vsphere -i gtest
 ```
 
 ### Start an Instance
@@ -90,7 +88,7 @@ ops instance create -z us-west2-a -t vsphere -i gtest
 export GOVC_INSECURE=1
 export GOVC_URL="login:pass@host:port"
 
-ops instance start mytest -t vsphere -z us-west-2
+ops instance start mytest -t vsphere
 ```
 
 ### List Instances
@@ -99,7 +97,7 @@ ops instance start mytest -t vsphere -z us-west-2
 export GOVC_INSECURE=1
 export GOVC_URL="login:pass@host:port"
 
-ops instance list -t vsphere -z us-west-2
+ops instance list -t vsphere
 ```
 
 ## Get Logs for Instance
@@ -108,3 +106,13 @@ There is outstanding work to add support for grabbing the logs.
 
 ### Delete Instance
 
+Right now the delete instance deletes both the instance and the image.
+We will probably change this in the future to do just the instance.
+
+```sh
+export GOVC_INSECURE=1
+export GOVC_URL="login:pass@host:port"
+export GOVC_RESOURCE_POOL="/ha-datacenter/host/localhost.localdomain/Resources"
+
+ops instance delete -t vsphere named
+```
