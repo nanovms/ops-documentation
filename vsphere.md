@@ -100,6 +100,13 @@ export GOVC_URL="login:pass@host:port"
 ops instance list -t vsphere
 ```
 
+Note: The first time you run this command you might need to have the
+Guest IP Hack set. OPS will try to set that automatically for you but
+all existing vms won't report their ips until it is set *and* will
+require a new ARP request to be sent. If you already know the ip in
+question you can simply connect to it or you can reboot the vm and that
+will generate traffic.
+
 ## Get Logs for Instance
 
 There is outstanding work to add support for grabbing the logs.
