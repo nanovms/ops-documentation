@@ -109,7 +109,14 @@ will generate traffic.
 
 ## Get Logs for Instance
 
-There is outstanding work to add support for grabbing the logs.
+You can obtain the logs via:
+
+```
+export GOVC_INSECURE=1
+export GOVC_URL="login:pass@host:port"
+
+ops instance logs -t vsphere gtest
+```
 
 ### Delete Instance
 
