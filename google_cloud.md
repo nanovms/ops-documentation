@@ -65,10 +65,10 @@ $ ops image list
 
 ### Delete Image
 
-`ops image delete -i <imagename>` can be used to delete an image from Google Cloud.
+`ops image delete <imagename>` can be used to delete an image from Google Cloud.
 
 ```
-$ ops delete image -i nanos-main-image
+$ ops delete image nanos-main-image
 ```
 
 ## Instance Operations
