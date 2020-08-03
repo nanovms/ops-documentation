@@ -1,7 +1,7 @@
 Images
 ========================
 
-Images (disk images) are the artificats produced by OPS. These disk
+Images (disk images) are the artifacts produced by OPS. These disk
 images can be ran on a variety of hypervisors including the top public
 cloud providers such as AWS and Google Cloud.
 
