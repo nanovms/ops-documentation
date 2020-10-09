@@ -37,13 +37,13 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 Once, you have updated `config.json` you can create an image in Google Cloud with the following command.
 
 ```sh
-$ ops image create -c config.json <image_name>
+$ ops image create -c config.json <image_name> -t gcp
 ```
 
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -c config.json -p node_v14.2.0 -a ex.js
+$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image_name> -t gcp
 ```
 
 ### List Images
@@ -76,21 +76,14 @@ $ ops delete image nanos-main-image
 
 After the successful creation of an image in Google Cloud, we can create an instance from an existing image.
 
-You need to export `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_ZONE` before firing command.
-
-```
-$ export GOOGLE_CLOUD_PROJECT=prod-1000
-$ export GOOGLE_CLOUD_ZONE=us-west1-b
-$ ops instance create -i <image_name>
-```
-
-Alternatively, you can pass project-id and zone with cli options.
+You need to export `GOOGLE_APPLICATION_CREDENTIALS` and pass project-id and zone with cli options.
 
 ```sh
-$ ops instance create -g prod-1000 -z us-west1-b -i <image_name>
+$ export GOOGLE_APPLICATION_CREDENTIALS=<credentials_file_path>
+$ ops instance create -g prod-1000 -z us-west1-b -i <image_name> -t gcp
 ```
 
-You can also pass config, if you have mentioned project-id and zone in project's config.json.
+Alternatively, you can pass config, if you have mentioned project-id and zone in project's config.json.
 ```
 $ ops instance create -c config.json -i <image_name>
 ```
@@ -126,7 +119,7 @@ You need to export `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT` and 
 ```sh
 $ export GOOGLE_CLOUD_PROJECT=prod-1000
 $ export GOOGLE_CLOUD_ZONE=us-west1-b
-$ ops instance logs <instance_name>
+$ ops instance logs <instance_name> -t gcp
 ```
 
 Alternatively you can pass project-id and zone with cli options.
@@ -140,7 +133,7 @@ $ ops instance logs -g prod-1000 -z us-west1-b
 
 You need to export `GOOGLE_APPLICATION_CREDENTIALS`, `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_ZONE` before firing command.
 
-```
+```sh
 $ export GOOGLE_CLOUD_PROJECT=prod-1000
 $ export GOOGLE_CLOUD_ZONE=us-west1-b
 $ ops instance delete my-instance-running
@@ -150,3 +143,71 @@ Alternatively you can pass project-id and zone with cli options.
 ```sh
 $ ops instance delete -g prod-1000 -z us-west1-b my-instance-running
 ```
+
+## Volume Operations
+### Create Volume
+
+You need to set the `BucketName`, `ProjectID` and `Zone` in the `CloudConfig` section of your configuration file and export `GOOGLE_APPLICATION_CREDENTIALS` before firing the command.
+
+```json
+{
+    "CloudConfig" :{
+        "ProjectID" :"prod-1000",
+        "Zone": "us-west1-b",
+        "BucketName":"my-deploy"
+    }
+}
+```
+
+```sh
+$ export GOOGLE_APPLICATION_CREDENTIALS=<credentials_file_path>
+$ ops volume create <volume_name> -t gcp -c <configuration_file_path>
+```
+
+For create a volume with existing files you can add the `-d` flag and the directory path.
+```sh
+$ export GOOGLE_APPLICATION_CREDENTIALS=<credentials_file_path>
+$ ops volume create <volume_name> -t gcp -c <configuration_file_path> -d <directory_path>
+```
+
+### List Volumes
+
+You can list volumes on Google Cloud using `ops volume list -t gcp -c <configuration_file_path>` command.
+
+You need to set the `ProjectID` and `Zone` in the `CloudConfig` section of your configuration file and export `GOOGLE_APPLICATION_CREDENTIALS` before firing the command.
+
+```sh
+$ ops instance list -t gcp -c <configuration_file_path>
++-----------------------------+---------+-------------------------------+-------------+--------------+
+|            NAME             | STATUS  |            CREATED            | PRIVATE IPS |  PUBLIC IPS  |
++-----------------------------+---------+-------------------------------+-------------+--------------+
+| nanos-main-image-1556601450 | RUNNING | 2019-04-29T22:17:34.609-07:00 | 10.240.0.40 | 34.83.204.40 |
++-----------------------------+---------+-------------------------------+-------------+--------------+
+```
+
+
+### Delete Volume
+
+`ops volume delete` command can be used to delete an instance on Google Cloud.
+
+You need to set the `ProjectID` and `Zone` in the `CloudConfig` section of your configuration file and export `GOOGLE_APPLICATION_CREDENTIALS` before firing the command.
+
+```sh
+$ export GOOGLE_APPLICATION_CREDENTIALS=<credentials_file_path>
+$ ops volume delete <volume_name> -t gcp -c <configuration_file_path>
+```
+
+### Attach Volume
+
+For attaching a volume you need a running instance using a image configured with a mount point. This means you have to create a volume before running the instance. After the volume created you have to specify the volume label with the same name of the volume created. You can create the image running the next command.
+```sh
+$ ops image create <image_name> -c config.json  --mounts <volume_label>:<mount_path>
+```
+
+After having the instance running you can attach a volume using `ops volume attach <instance_name> <volume_name> <volume_name> -t gcp -c <configuration_file_path>`.
+
+**Note:** You need to stop and start the instance to see the changes applied.
+
+### Detach Volume
+
+You can detach a volume from a running instance using `ops volume detach <instance_name> <volume_name> -t gcp -c <configuration_file_path>`.
