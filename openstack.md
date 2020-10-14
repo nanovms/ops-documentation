@@ -100,6 +100,31 @@ export OS_PROJECT_ID=""
 ops instance create -z us-west2-a -t openstack -i gtest
 ```
 
+While creating instance on openstack OPS needs flavour name. If you don't provide, OPS selects one for you. You can provide flavor name via CLI and config file.
+
+CLI example
+
+```sh
+ops instance create -t openstack -a <image_name> -f <flavor_name>
+```
+
+Sample config file
+```json
+{
+  "CloudConfig" :{
+    "Platform" : "openstack", 
+    "flavor" : "<flavor_name>" 
+  }
+}
+```
+OPS provides configurable instance volume size. Add volume size in config file. Default size is 1 GB.
+``` json
+{
+    "RunConfig": {
+        "VolumeSizeInGb" : 2
+    }
+}
+```
 ### List Instances
 
 ```sh
@@ -119,4 +144,17 @@ ops instance list -t openstack -z us-west-2
 ## Get Logs for Instance
 
 ### Delete Instance
+```sh
+#!/bin/sh
 
+export OS_USERNAME=""
+export OS_PASSWORD=""
+export OS_DOMAIN_NAME="Default"
+export OS_AUTH_URL="https://auth.vexxhost.net/"
+export OS_REGION_NAME="sjc1"
+export OS_PROJECT_NAME=""
+export OS_PROJECT_ID=""
+
+ops instance delete -t openstack <instance_name>
+```
+You can fetch instance name from **ops instance list** command.
