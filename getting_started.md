@@ -1,8 +1,7 @@
 Getting Started
 ===============
 
-### Supported Operating Systems
-
+## Supported Operating Systems
 Currently, Ops support various forms of UNIX operating systems.
  * MacOS
  * Debian
@@ -21,7 +20,6 @@ from https://brew.sh/ and re-run the command above.
 On Linux flavors ensure that you have QEMU version 2.5 or greater installed.
 
 ##### Debian / Ubuntu (apt-get) {#qemu-debian}
-
  To install `QEMU`, run the following command:
 
 ```sh
@@ -29,7 +27,6 @@ $ sudo apt-get install qemu
 ```
 
 ##### Fedora (dnf/yum) {#qemu-fedora}
-
 ```sh
 $ sudo dnf update
 $ sudo dnf install qemu-kvm qemu-img
@@ -41,6 +38,7 @@ Or:
 $ sudo yum update
 $ sudo yum install qemu-kvm qemu-img
 ```
+
 ## Verify the OPS Installation
 ```sh
 $ ops version
