@@ -1,10 +1,6 @@
 Debugging
 ========================
 
-## Table of Contents
-1. [Using the GNU Debugger](#using-the-gnu-debugger)
-2. [GUI Debugger in VSCode](#gui-debugger-in-vscode)
-
 ## Using the GNU Debugger
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Gdb_archer_fish.svg/1200px-Gdb_archer_fish.svg.png" width="50%">
