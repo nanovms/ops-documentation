@@ -1,18 +1,17 @@
 Configuration
 =============
-The configuration file used by `ops`  (such as one passed as a parameter, 
-e.g. ops --config myconfig.json ... ) specifies various options and attributes
+The configuration file used by `ops` (such as one passed as a parameter, 
+e.g. `ops --config myconfig.json`) specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
 variables. This file follows the standard json format.
 
 For a complete sample of a configuration, see our
-[sample](configuration.md#sample)
+[sample](configuration.md#sample).
 
 ### Configuration Attributes
 
 #### Files {#files}
-An array of file locations to include into the image
-
+An array of file locations to include into the image:
 ```json
 {
     "Files": ["ex.js"]
@@ -20,15 +19,14 @@ An array of file locations to include into the image
 ```
 
 #### Dirs {#dirs}
-An array of directory locations to include into the image
-
+An array of directory locations to include into the image:
 ```json
 {
     "Dirs": ["myapp/static"]
 }
 ```
 
-_File layout on local host machine_
+_File layout on local host machine:_
 ```
 -myapp
     app
@@ -38,7 +36,7 @@ _File layout on local host machine_
             -main.css
 ```
 
-_File  layout on VM_
+_File  layout on VM:_
 ```
 /myapp
     app
@@ -49,9 +47,7 @@ _File  layout on VM_
 ```
 
 #### Args {#args}
-The command to execute when running the image. The expected format is an
-array.
-
+An array of commands to execute when running the image:
 ```json
 {
     "Args": ["ex.js"]
@@ -59,8 +55,7 @@ array.
 ```
 
 #### Env {#env}
-A dictionary/object of environment variables.
-
+A dictionary/object of environment variables:
 ```json
 {
     "Env": {
@@ -81,7 +76,6 @@ adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
 
 #### NameServer {#nameserver}
 The DNS server to use for DNS resolution. By default it is Google's `8.8.8.8`.
-
 ```json
 {
     "NameServer": "10.8.0.1"
@@ -94,7 +88,6 @@ the size of the base volume. By default the size is the end of blocks
 written by TFS.
 
 To specify 100 megabytes:
-
 ```json
 {
     "BaseVolumeSz": "100m"
@@ -102,13 +95,11 @@ To specify 100 megabytes:
 ```
 
 To specify 1 gigabyte:
-
 ```json
 {
     "BaseVolumeSz": "1g"
 }
 ```
-
 
 #### RunConfig {#runconfig}
 The `RunConfig` configures various attributes about the runtime of the ops
@@ -131,7 +122,6 @@ line.
 
 ##### RunConfig.UDP {#runconfig.UDP}
 UDP is off by default. You can toggle UDP on via:
-
 ```json
 {
     "RunConfig": {
@@ -140,11 +130,9 @@ UDP is off by default. You can toggle UDP on via:
 }
 ```
 
-
 ##### RunConfig.Verbose {#runconfig.verbose}
 Enables verbose logging for the runtime environment. As of now, it prints the
 command used to start `qemu`.
-
 ```json
 {
     "RunConfig": {
@@ -157,7 +145,6 @@ command used to start `qemu`.
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.
 Optionally, a suffix of "M" or "G" can be used to signify a value in megabytes
 or gigabytes respectively.
-
 ```json
 {
     "RunConfig": {
@@ -169,7 +156,6 @@ or gigabytes respectively.
 ##### RunConfig.Bridged {#runconfig.bridged}
 Enables the use of bridged networking mode. This also enables KVM
 acceleration.
-
 ```json
 {
     "RunConfig": {
@@ -185,7 +171,7 @@ with ops.
 ##### CloudConfig.Platform {#cloudconfig.platform}
 Cloud provider we want to use with ops CLI.
 
-Currently supported platforms,
+Currently supported platforms:
 * Google Cloud Platform `gcp`
 * AWS `aws`
 
@@ -219,7 +205,6 @@ Zone in case of Google Cloud Platform provider.
 
 ##### CloudConfig.BucketName {#cloudconfig.bucketname}
 Bucket name is used to store Ops built image artifacts.
-
 ```json
 {
     "CloudConfig": {
@@ -232,9 +217,7 @@ Bucket name is used to store Ops built image artifacts.
 _Not Implemented_
 
 ### Reboot on Exit
-
-There is an option to reboot your application immediately if it crashes that is turned off by default but you can enable it.
-
+There is an option to reboot your application immediately if it crashes that is turned off by default, but you can enable it.
 ```json
 {
     "RebootOnExit": true
@@ -243,7 +226,6 @@ There is an option to reboot your application immediately if it crashes that is 
 
 ### Sample Configuration File {#sample}
 Below is a sample configuration file for a nodejs application.
-
 ```json
 {
 	"Files": ["ex.js"],
