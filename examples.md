@@ -2,7 +2,7 @@ Examples
 ========
 
 ## Deploying a Static File Server
-Lets start with a basic go static file server, copy paste below to `server.go`:
+Lets start with a basic go static file server, copy-and-paste below to `server.go`:
 ```golang
 package main
 
