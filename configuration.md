@@ -247,7 +247,14 @@ _TODO_
 _TODO_
 
 #### Klibs {#runconfig.klibs}
-_TODO_
+
+For example to run the NTP klib (eg: ntpd):
+
+{
+  "RunConfig":{
+    "Klibs":["ntp"]
+  }
+}
 
 #### Memory {#runconfig.memory}
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.
