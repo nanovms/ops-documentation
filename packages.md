@@ -49,7 +49,7 @@ Sample Readme for Nginx Application
 If you want see contents of a package, you can use `ops pkg contents <package_name>` command.
 
 ```sh
-$ ops pkg contents perl_5.22.1 
+$ ops pkg contents perl_5.22.1
 File :/package.manifest
 File :/perl
 Dir :/sysroot
@@ -80,5 +80,5 @@ then copy over an un-tarred dir to ~/.ops/local_packages
 Finally you can run it via the local flag:
 
 ```
-ops load --local mypkg -a b.php -v
+ops pkg load --local mypkg -a b.php -v
 ```
