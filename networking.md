@@ -29,7 +29,7 @@ see this [article](https://en.wikipedia.org/wiki/Bridging_%28networking%29).
 
 In addition to that, KVM hardware acceleration can only be achieved while
 utilizing this networking mode. Because of this, having an Ethernet connection
-is required to setup this networking mode. 
+is required to setup this networking mode.
 
 If you attempt to set it up without it, you may see your SSH session be
 terminated or see an error like "no DHCP packet received within 10s".
@@ -49,4 +49,4 @@ $ sudo ops net reset
 #### Enabling bridge for an instance
 
 Once you have setup a networking bridge, you need to specify in your `ops run`
-and `ops load` command to utilize that bridge. To do so, pass the flag `-b`.
+and `ops pkg load` command to utilize that bridge. To do so, pass the flag `-b`.

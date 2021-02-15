@@ -24,7 +24,7 @@ Package and deploy:
 ```sh
 $ ops run main
 ```
-	
+
 For more examples using Golang, visit our
 [examples repository](https://github.com/nanovms/ops-examples/tree/master/golang).
 
@@ -38,7 +38,7 @@ phpinfo();
 
 Package and deploy:
 ```sh
-$ ops load php_7.2.13 -a ex.php
+$ ops pkg load php_7.2.13 -a ex.php
 ```
 
 ### [NodeJS](https://nodejs.org/en/) Example
@@ -49,7 +49,7 @@ console.log("Hello World!");
 
 Package and deploy:
 ```sh
-$ ops load node_v14.2.0 -a ex.js
+$ ops pkg load node_v14.2.0 -a ex.js
 ```
 
 You should see "Hello World!" printed on your screen and then the ops command
@@ -93,9 +93,9 @@ While both of these commands are used to execute code, there is a big
 difference when you would choose to run one rather than the other. For `ops
 run`, you would use this command to run compiled code (executable machine
 code). So, for example, any golang code that you may run, you would use this
-command. Any code that is compiled at runtime, you would use `ops load`.
+command. Any code that is compiled at runtime, you would use `ops pkg load`.
 Example of languages where you would use this are NodeJS or PHP. Each supported
-language for `ops load`, will have a corresponding package. To see a list of
+language for `ops pkg load`, will have a corresponding package. To see a list of
 available packages, run `ops pkg list`.
 
 ### Nightly vs. Main
