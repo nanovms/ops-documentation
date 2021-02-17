@@ -27,26 +27,86 @@ Bridged networking connects a virtual machine to a network using the host
 computer's Ethernet adapter. For more information about bridged networking,
 see this [article](https://en.wikipedia.org/wiki/Bridging_%28networking%29).
 
-In addition to that, KVM hardware acceleration can only be achieved while
-utilizing this networking mode. Because of this, having an Ethernet connection
-is required to setup this networking mode.
+Bridged networking should only be used when you want full control over
+the networking. Generally speaking this means you are on real hardware,
+running linux. If you are deploying to the public cloud you will want to
+use ops normally and *NOT* setup this as it'l be slow.
 
-If you attempt to set it up without it, you may see your SSH session be
-terminated or see an error like "no DHCP packet received within 10s".
+Here is a simple Go example demonstrating two applications sitting on
+their respective tap interfaces:
 
-To setup bridged networking, use the following command...
-
-```sh
-$ sudo ops net setup
+```go
+package main
+import (
+  "fmt"
+  "io/ioutil"
+  "log"
+  "net/http"
+  "os"
+  "time"
+)
+func main() {
+  clientIP := os.Args[1]
+  URL := fmt.Sprintf("http://%s/hello", clientIP)
+  client := http.Client{
+    Timeout: time.Duration(5 * time.Second),
+  }
+  request, err := http.NewRequest("GET", URL, nil)
+  if err != nil {
+    log.Fatal(err)
+  }
+  ticker := time.NewTicker(5 * time.Second)
+  quit := make(chan struct{})
+  for {
+    select {
+    case <-ticker.C:
+      resp, err := client.Do(request)
+      if err != nil {
+        fmt.Println(err)
+      } else {
+        defer resp.Body.Close()
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+          fmt.Println(err)
+        } else {
+          fmt.Print(string(body))
+        }
+      }
+    case <-quit:
+      ticker.Stop()
+      return
+    }
+  }
+}
 ```
 
-To tear down a networking bridge, use the following command...
-
-```sh
-$ sudo ops net reset
+```go
+package main
+import (
+  "fmt"
+  "net/http"
+)
+func main() {
+  hello := func(w http.ResponseWriter, req *http.Request) {
+    fmt.Fprintf(w, "hello test 2\n")
+  }
+  headers := func(w http.ResponseWriter, req *http.Request) {
+    for name, headers := range req.Header {
+      for _, h := range headers {
+        fmt.Fprintf(w, "%v: %v\n", name, h)
+      }
+    }
+  }
+  http.HandleFunc("/hello", hello)
+  http.HandleFunc("/headers", headers)
+  http.ListenAndServe(":8081", nil)
+}
 ```
 
-#### Enabling bridge for an instance
+You'll either need the appropriate permissions or you can just give
+yourself sudo then you can run:
 
-Once you have setup a networking bridge, you need to specify in your `ops run`
-and `ops pkg load` command to utilize that bridge. To do so, pass the flag `-b`.
+```sh
+ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19
+ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
+```

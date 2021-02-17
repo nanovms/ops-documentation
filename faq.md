@@ -75,3 +75,11 @@ should be considered such as sharing a kernel amongst multiple tenants.
 Please see [the documentation](k8s.md) for running Nanos under
 kubernetes.
 
+### Q: Is there an API?
+
+Yes, if you are coding in Go you can use the API found at
+[https://pkg.go.dev/github.com/nanovms/ops/lepton](https://pkg.go.dev/github.com/nanovms/ops/lepton) .
+
+If you are looking for a web-accessible API
+[Nanos C2](https://nanovms.com/nanos-c2) has you covered.
+

@@ -10,6 +10,13 @@ It needs to be tied to the bucket you use and uses an unique name. If
 you are having trouble you might wish to see if you have an existing
 vmimport role defined already.
 
+## Instance type Support
+
+Nanos supports running on many of the AWS instance types including
+normal instance types like t2 and the newer Nitro based instances such as t3, c5, etc.
+
+We currently don't have support for ARM based instances.
+
 ## Pre-requisites
 
 1. Ensure your ~/.aws/credentials file is setup correctly - you can use

@@ -37,6 +37,7 @@
 * [Firecracker](firecracker.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
+* [Integrations](integrations.md)
 * [Debugging](debugging.md)
 * [FAQ](faq.md)
 
