@@ -35,6 +35,7 @@
 * [VSphere](vsphere.md)
 * [Hyper-V](hyper-v.md)
 * [Firecracker](firecracker.md)
+* [UpCloud](upcloud.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
 * [Integrations](integrations.md)
