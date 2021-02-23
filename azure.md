@@ -94,6 +94,21 @@ export AZURE_BASE_GROUP_NAME=""
 ops instance create -z westus2 -t azure -i bob
 ```
 
+#### VPC, Subnet and Security Group
+
+By default, ops creates a VPC, a subnet and a security group per instance.
+
+You can select a different VPC, subnet or security group using the configuration file. The keys to set are `RunConfig.VPC`, `RunConfig.Subnet` and `RunConfig.SecurityGroup`.
+```json
+{
+    "RunConfig":{
+        "VPC": "vpc-name",
+        "Subnet": "subnet-name",
+        "SecurityGroup": "sg-name"
+    }
+}
+```
+
 ### List Instances
 
 ```sh
@@ -108,7 +123,7 @@ export AZURE_BASE_GROUP_NAME=""
 ops instance list -t azure -z us-west-2
 ```
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 You can get logs from serial console of a particular instance using `ops instance logs` command.
 The logs are stored in your cloud storage bucket.

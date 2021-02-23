@@ -107,7 +107,7 @@ require a new ARP request to be sent. If you already know the ip in
 question you can simply connect to it or you can reboot the vm and that
 will generate traffic.
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 You can obtain the logs via:
 

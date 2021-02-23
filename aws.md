@@ -120,6 +120,19 @@ Sample config
 }
 ```
 
+#### VPC and Security Group
+
+By default, ops uses the first VPC found in aws and creates a security group per instance.
+
+You can select a different VPC or use a existing security group using the configuration file. The keys to set are `RunConfig.VPC` and `RunConfig.SecurityGroup`.
+```json
+{
+    "RunConfig":{
+        "VPC": "vpc-name",
+        "SecurityGroup": "sg-name"
+    }
+}
+```
 
 ### List Instances
 
@@ -139,7 +152,7 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance list -p prod-1000 -z us-west1-b
 ```
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 You can get logs from serial console of a particular instance using `ops instance logs` command.
 

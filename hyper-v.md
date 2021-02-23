@@ -21,6 +21,6 @@ https://nanovms.com/services/subscription
 
 ### List Instances
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 ### Delete Instance
