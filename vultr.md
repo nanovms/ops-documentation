@@ -78,7 +78,7 @@ VULTR_SECRET=my_vultr_secret \
 ops instance list -z ewr1 -t vultr
 ```
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 ### Delete Instance
 

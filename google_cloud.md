@@ -132,7 +132,7 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance list -g prod-1000 -z us-west1-b
 ```
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 You can get logs from serial console of a particular instance using `ops instance logs` command.
 

@@ -112,8 +112,8 @@ Sample config file
 ```json
 {
   "CloudConfig" :{
-    "Platform" : "openstack", 
-    "flavor" : "<flavor_name>" 
+    "Platform" : "openstack",
+    "flavor" : "<flavor_name>"
   }
 }
 ```
@@ -141,7 +141,7 @@ export OS_PROJECT_ID=""
 ops instance list -t openstack -z us-west-2
 ```
 
-## Get Logs for Instance
+### Get Logs for Instance
 
 ### Delete Instance
 ```sh
