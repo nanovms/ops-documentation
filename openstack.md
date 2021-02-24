@@ -17,6 +17,17 @@ In the cloud provider, download a script with the env variables required.
 $ ./6050015361872676-openrc.sh`
 ```
 
+Alternatively, you can set the env variables manually.
+```
+export OS_USERNAME=""
+export OS_PASSWORD=""
+export OS_DOMAIN_NAME="Default"
+export OS_AUTH_URL="https://auth.vexxhost.net/"
+export OS_REGION_NAME="sjc1"
+export OS_PROJECT_NAME=""
+export OS_PROJECT_ID=""
+```
+
 ## Image Operations
 ### Create Image
 
