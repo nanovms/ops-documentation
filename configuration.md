@@ -443,13 +443,13 @@ Defines the netmask of the network interface.
 }
 ```
 
-#### OnPrem {#runconfig.on_prem}
-OnPrem is used to run unikernels in background.
+#### Background {#runconfig.background}
+Starts unikernels in background. You can stop the unikernel using the onprem instances stop command.
 
 ```json
 {
     "RunConfig": {
-        "OnPrem": true
+        "Background": true
     }
 }
 ```
