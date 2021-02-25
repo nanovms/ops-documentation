@@ -1,6 +1,6 @@
 Configuration
 =============
-The configuration file used by `ops` (such as one passed as a parameter, 
+The configuration file used by `ops` (such as one passed as a parameter,
 e.g. `ops --config myconfig.json`) specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
 variables. This file follows the standard json format.
@@ -44,11 +44,11 @@ _TODO_
 _TODO_
 
 ### CloudConfig {#cloudconfig}
-The `CloudConfig` configures various attributes about the cloud provider, we want to use
-with ops.
+The `CloudConfig` configures various attributes about the cloud provider, we want to use with ops.
 
 #### BucketName {#cloudconfig.bucketname}
 Bucket name is used to store Ops built image artifacts.
+
 ```json
 {
     "CloudConfig": {
@@ -56,12 +56,38 @@ Bucket name is used to store Ops built image artifacts.
     }
 }
 ```
+#### DomainName {#cloudconfig.domain_name}
+Updates DNS entry with the started instance IP.
+
+```json
+{
+    "CloudConfig": {
+        "DomainName": "ops.city"
+    }
+}
+```
 
 #### Flavor {#cloudconfig.flavor}
-_TODO_
+Specifies the machine type used to create an instance. Each cloud provider has different types descriptions.
+
+```json
+{
+    "CloudConfig": {
+        "Flavor": "t2.micro"
+    }
+}
+```
 
 #### ImageName {#cloudconfig.imagename}
-_TODO_
+Specifies the image name in the cloud provider.
+
+```json
+{
+    "CloudConfig": {
+        "ImageName": "web-server"
+    }
+}
+```
 
 #### Platform {#cloudconfig.platform}
 Cloud provider we want to use with ops CLI.
@@ -69,6 +95,13 @@ Cloud provider we want to use with ops CLI.
 Currently supported platforms:
 * Google Cloud Platform `gcp`
 * AWS `aws`
+* Vultr `vultr`
+* Vmware `vsphere`
+* Azure `azure`
+* Openstack `openstack`
+* Upcloud `upcloud`
+* Hyper-v `hyper-v`
+See further instructions about the cloud provider in dedicated documentation page.
 
 ```json
 {
@@ -79,7 +112,8 @@ Currently supported platforms:
 ```
 
 #### ProjectID {#cloudconfig.projectid}
-Project ID in case of Google Cloud Platform provider.
+Project ID is used in some cloud providers to identify a workspace.
+
 ```json
 {
     "CloudConfig": {
@@ -88,12 +122,66 @@ Project ID in case of Google Cloud Platform provider.
 }
 ```
 
+#### SecurityGroup {#cloudconfig.security_group}
+Allows an instance to use an existing security group in the cloud provider.
+
+```json
+{
+    "CloudConfig": {
+        "SecurityGroup": "sg-1000"
+    }
+}
+```
+
+#### Subnet {#cloudconfig.subnet}
+Allows an instance to use an existing subnet in the cloud provider.
+
+```json
+{
+    "CloudConfig": {
+        "Subnet": "sb-1000"
+    }
+}
+```
+
+#### Tags {#cloudconfig.tags}
+A list of keys and values to provide more context about an instance or an image. There are a set of pre-defined tags to identify the resources created by `ops`.
+
+```json
+{
+    "RunConfig": {
+        "Tags": [
+            {
+                "key": "instance-owner",
+                "value": "joe-smith"
+            },
+            {
+                "key": "function",
+                "value": "web-server"
+            }
+        ]
+    }
+}
+```
+
 #### Zone {#cloudconfig.zone}
-Zone in case of Google Cloud Platform provider.
+Zone is used in some cloud providers to identify the location where cloud resources are stored.
+
 ```json
 {
     "CloudConfig": {
         "Zone": "us-west1-b"
+    }
+}
+```
+
+#### VPC {#cloudconfig.vpc}
+Allows instance to use an existing vpc in the cloud provider.
+
+```json
+{
+    "CloudConfig": {
+        "VPC": "vpc-1000"
     }
 }
 ```
@@ -115,7 +203,7 @@ _File layout on local host machine:_
     app
     -static
         -example.html
-        -stylesheet 
+        -stylesheet
             -main.css
 ```
 
@@ -154,9 +242,6 @@ _TODO_
 ### Kernel {#kernel}
 _TODO_
 
-### ManifestName {#manifest_name}
-_TODO_
-
 ### MapDirs {#mapdirs}
 A map of a local directory to a different path on the guest VM. For example the below
 adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
@@ -165,9 +250,6 @@ adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
     "MapDirs": {"/etc/ssl/certs/*": "/usr/lib/ssl/certs" },
 }
 ```
-
-### Mkfs {#mkfs}
-_TODO_
 
 ### Mounts {#mounts}
 _TODO_
@@ -201,19 +283,22 @@ There is an option to reboot your application immediately if it crashes that is 
 ```
 
 ### RunConfig {#runconfig}
-The `RunConfig` configures various attributes about the runtime of the ops
-instance, such as allocated memory and exposed ports.
+The `RunConfig` configures various attributes about the runtime of the ops instance, such as allocated memory and exposed ports.
 
 #### Accel {#runconfig.accel}
-_TODO_
+Defines whether hardware acceleration should be enabled in qemu. This option is enabled by default.
 
-#### BaseName {#runconfig.base_name}
-_TODO_
-
+```json
+{
+    "RunConfig": {
+        "Accel": true
+    }
+}
+```
 
 #### Bridged {#runconfig.bridged}
-Enables the use of bridged networking mode. This also enables KVM
-acceleration.
+Connects the unikernel network interface to a bridge with the name `br0`. The bridge name may be overriden with the property [BridgeName](#runconfig.bridge_name).
+
 ```json
 {
     "RunConfig": {
@@ -222,29 +307,96 @@ acceleration.
 }
 ```
 
+#### BridgeName {#runconfig.bridge_name}
+Connects the unikernel network interface to a bridge with the name specified. If the bridge does not exist in host machine it is created.
+
+```json
+{
+    "RunConfig": {
+        "BridgeName": "br1"
+    }
+}
+```
+
 #### CPUs {#runconfig.cpus}
-_TODO_
+Specifies the number of CPU cores the unikernel is allowed to use.
+
+```json
+{
+    "RunConfig": {
+        "CPUs": 2
+    }
+}
+```
 
 #### Debug {#runconfig.debug}
-_TODO_
+Opens a port in unikernel to allow a connection with the GDB debugger. See further instructions in [Debugging](/ops/debugging). If debug is set to true the hardware acceleration (`accel`) is disabled.
 
-#### DomainName {#runconfig.domain_name}
-_TODO_
+```json
+{
+    "RunConfig": {
+        "Debug": true
+    }
+}
+```
+
+
 
 #### Gateway {#runconfig.gateway}
-_TODO_
+Defines the default gateway IP of the network interface.
+
+```json
+{
+    "RunConfig": {
+        "Gateway": "192.168.1.255"
+    }
+}
+```
 
 #### GdbPort {#runconfig.gdb_port}
-_TODO_
+Define the gdb debugger port. It only takes effect if debug is enabled. By default the `GdbPort` is `1234`.
+
+```json
+{
+    "RunConfig": {
+        "GdbPort": 1234,
+        "Debug": true
+    }
+}
+```
 
 #### Imagename {#runconfig.image}
-_Not Implemented_
+Sets the name of the image file.
+
+```json
+{
+    "RunConfig": {
+        "Imagename": "web-server"
+    }
+}
+```
 
 #### InstanceName {#runconfig.instance_name}
-_TODO_
+Sets the name of the instance.
+
+```json
+{
+    "RunConfig": {
+        "InstanceName": "web-server-instance"
+    }
+}
+```
 
 #### IPAddr {#runconfig.ip_addr}
-_TODO_
+Defines the IP address of the network interface.
+
+```json
+{
+    "RunConfig": {
+        "IPAddr": "192.168.1.255"
+    }
+}
+```
 
 #### Klibs {#runconfig.klibs}
 
@@ -260,6 +412,7 @@ For example to run the NTP klib (eg: ntpd):
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.
 Optionally, a suffix of "M" or "G" can be used to signify a value in megabytes
 or gigabytes respectively.
+
 ```json
 {
     "RunConfig": {
@@ -269,13 +422,37 @@ or gigabytes respectively.
 ```
 
 #### Mounts {#runconfig.mounts}
-_TODO_
+Defines a list of directories paths in the host machine whose data will be copied to the unikernel.
+
+```json
+{
+    "RunConfig": {
+        "Mounts": ["./files","./assets"]
+    }
+}
+```
 
 #### NetMask {#runconfig.net_mask}
-_TODO_
+Defines the netmask of the network interface.
+
+```json
+{
+    "RunConfig": {
+        "NetMask": "255.255.255.0"
+    }
+}
+```
 
 #### OnPrem {#runconfig.on_prem}
-_TODO_
+OnPrem is used to run unikernels in background.
+
+```json
+{
+    "RunConfig": {
+        "OnPrem": true
+    }
+}
+```
 
 #### Ports {#runconfig.ports}
 A list of ports to expose. Alternatively, you can also use `-p` in the command
@@ -289,26 +466,51 @@ line.
 }
 ```
 
-#### SecurityGroup {#runconfig.security_group}
-_TODO_
+
 
 #### ShowDebug {#runconfig.show_debug}
-_TODO_
+Enables printing more details about what ops is doing at the moment. Also, enables the printing of warnings and errors.
+
+```json
+{
+    "RunConfig": {
+        "ShowDebug": true,
+    }
+}
+```
 
 #### ShowErrors {#runconfig.show_errors}
-_TODO_
+Enables printing errors with more details.
+
+```json
+{
+    "RunConfig": {
+        "ShowErrors": true,
+    }
+}
+```
 
 #### ShowWarnings {#runconfig.show_warnings}
-_TODO_
+Enables printing warnings details.
 
-#### Subnet {#runconfig.subnet}
-_TODO_
-
-#### Tags {#runconfig.tags}
-_TODO_
+```json
+{
+    "RunConfig": {
+        "ShowWarnings": true,
+    }
+}
+```
 
 #### TapName {#runconfig.tap_name}
-_TODO_
+Connects the unikernel to a network interface with the name specified. If the `tap` does not exist in host machine it is created.
+
+```json
+{
+    "RunConfig": {
+        "TapName": "tap0"
+    }
+}
+```
 
 #### UDP {#runconfig.udp}
 UDP is off by default. You can toggle UDP on via:
@@ -321,11 +523,19 @@ UDP is off by default. You can toggle UDP on via:
 ```
 
 #### UDPPorts {#runconfig.udp_ports}
-_TODO_
+Opens ports that use UDP protocol.
+```json
+{
+    "RunConfig": {
+        "Ports": [60, 6006],
+    }
+}
+```
 
 #### Verbose {#runconfig.verbose}
 Enables verbose logging for the runtime environment. As of now, it prints the
 command used to start `qemu`.
+
 ```json
 {
     "RunConfig": {
@@ -335,10 +545,16 @@ command used to start `qemu`.
 ```
 
 #### VolumeSizeInGb {#runconfig.volume_size_in_gb}
-_TODO_
+This property is only used by cloud provider openstack and sets the instance volume size. Default size is 1 GB.
 
-#### VPC {#runconfig.vpc}
-_TODO_
+```json
+{
+    "RunConfig": {
+        "VolumeSizeInGb": 2
+    }
+}
+```
+
 
 ### TargetRoot {#target_root}
 _TODO_
