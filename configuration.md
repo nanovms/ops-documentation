@@ -393,7 +393,19 @@ Defines the IP address of the network interface.
 ```json
 {
     "RunConfig": {
-        "IPAddr": "192.168.1.255"
+        "IPAddr": "192.168.1.75"
+    }
+}
+```
+
+The IP address has to be specified along with the netmask{#runconfig.netmask} and the gateway{#runconfig.gateway}, so the unikernel can assign the IP address to the network interface.
+
+```json
+{
+    "RunConfig": {
+        "IPAddr": "192.168.1.75",
+        "NetMask": "255.255.255.0",
+        "Gateway": "192.168.1.1"
     }
 }
 ```
