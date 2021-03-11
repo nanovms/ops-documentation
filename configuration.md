@@ -387,13 +387,13 @@ Sets the name of the instance.
 }
 ```
 
-#### IPAddr {#runconfig.ip_addr}
+#### IPAddress {#runconfig.ipaddress}
 Defines the IP address of the network interface.
 
 ```json
 {
     "RunConfig": {
-        "IPAddr": "192.168.1.75"
+        "IPAddress": "192.168.1.75"
     }
 }
 ```
@@ -403,7 +403,7 @@ The IP address has to be specified along with the netmask{#runconfig.netmask} an
 ```json
 {
     "RunConfig": {
-        "IPAddr": "192.168.1.75",
+        "IPAddress": "192.168.1.75",
         "NetMask": "255.255.255.0",
         "Gateway": "192.168.1.1"
     }
