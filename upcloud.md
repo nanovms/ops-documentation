@@ -23,13 +23,13 @@ $ export UPCLOUD_ZONE=<location of your images and instances>
 You can create an image in UpCloud with the following command.
 
 ```sh
-$ ops image create -a <elf file> -t upcloud
+$ ops image create <elf_file> -i <image_name> -t upcloud
 ```
 
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image name> -t upcloud
+$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image_name> -t upcloud
 ```
 
 ### List Images

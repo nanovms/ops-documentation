@@ -32,9 +32,9 @@ export OS_PROJECT_ID=""
 ### Create Image
 
 ```sh
-GOOS=linux go build -o <image_name>
+GOOS=linux go build -o <elf_file>
 
-ops image create -c config.json -t openstack -a <image_name>
+ops image create <elf_file|program> -c config.json -t openstack -i <image_name>
 ```
 
 ### List Images

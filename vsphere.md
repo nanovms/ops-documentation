@@ -52,7 +52,7 @@ export GOVC_URL="login:pass@host:port"
 
 GOOS=linux go build -o gtest
 
-ops image create -c config.json -t vsphere -a gtest
+ops image create gtest -c config.json -t vsphere
 
 ```
 

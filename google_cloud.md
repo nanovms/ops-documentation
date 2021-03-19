@@ -37,7 +37,7 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 Once, you have updated `config.json` you can create an image in Google Cloud with the following command.
 
 ```sh
-$ ops image create -c config.json <image_name> -t gcp
+$ ops image create <elf_file|program> -c config.json -i <image_name> -t gcp
 ```
 
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
@@ -223,7 +223,7 @@ $ ops volume delete <volume_name> -t gcp -c <configuration_file_path>
 
 For attaching a volume you need a running instance using a image configured with a mount point. This means you have to create a volume before running the instance. After the volume created you have to specify the volume label with the same name of the volume created. You can create the image running the next command.
 ```sh
-$ ops image create <image_name> -c config.json  --mounts <volume_label>:<mount_path>
+$ ops image create <elf_file|program> -i <image_name> -c config.json  --mounts <volume_label>:<mount_path>
 ```
 
 After having the instance running you can attach a volume using `ops volume attach <instance_name> <volume_name> <volume_name> -t gcp -c <configuration_file_path>`.

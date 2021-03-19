@@ -18,7 +18,7 @@ After enabling the required windows features you may be able to manage virtual m
 ### Create Image
 
 ```sh
-$ ops image create -a <elf file> -t hyper-v
+$ ops image create <elf_file|program> -i <image_name> -t hyper-v
 ```
 
 ### List Images
