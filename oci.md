@@ -13,7 +13,7 @@ Once, you have uploaded image, you can also create an instance with a particular
     3. Click on `Add API Key` button. A modal with further instructions will appear.
     4. Download the private key.
     5. Click on `Add` button. You should see a configuration preview in the modal.
-    6. Copy this content to `~/.oci/config` file. Create the directory `.oci` in your home folder if it does not exist yet.
+    6. Copy configuration preview content to `~/.oci/config` file in your machine. Create the directory `.oci` in your home folder if it does not exist yet.
     7. Update the `key_file` in OCI configuration file with the path of the file you downloaded in step 4.
 3. You are now able to use ops commands to interact with your OCI Account
 
