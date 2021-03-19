@@ -15,7 +15,20 @@ Once, you have uploaded image, you can also create an instance with a particular
     5. Click on `Add` button. You should see a configuration preview in the modal.
     6. Copy configuration preview content to `~/.oci/config` file in your machine. Create the directory `.oci` in your home folder if it does not exist yet.
     7. Update the `key_file` in OCI configuration file with the path of the file you downloaded in step 4.
-3. You are now able to use ops commands to interact with your OCI Account
+3. Setup a bucket in your OCI account to receive your images.
+    1. Access `Object Storage` page.
+    2. Click on `Create Bucket` button.
+    3. Access bucket details page and copy `Namespace` value to ops configuration file.
+4. Copy your bucket details to ops configuration.
+```
+{
+  "CloudConfig": {
+    "BucketName": "<bucket_name>",
+    "BucketNamespace": "<bucket_namespace>"
+  }
+}
+```
+5. You are now able to use ops commands to interact with your OCI Account
 
 
 ```
@@ -34,21 +47,21 @@ key_file=<path to your private keyfile> # TODO
 You can create an image in OCI with the following command.
 
 ```sh
-$ ops image create -a <elf file> -t oci
+$ ops image create <elf_file|program> -t oci -c config.json
 ```
 
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image name> -t oci
+$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image name> -t oci -c config.json
 ```
 
 ### List Images
 
-You can list existing images on OCI with `ops image list -t oci`.
+You can list existing images on OCI with `ops image list -t oci -c config.json`.
 
 ```sh
-$ ops image list -t oci
+$ ops image list -t oci -c config.json
 +--------------------------------------+------------------------+--------+---------+------------------+
 |                 UUID                 |          NAME          | STATUS |  SIZE   |    CREATEDAT     |
 +--------------------------------------+------------------------+--------+---------+------------------+
@@ -65,7 +78,7 @@ $ ops image list -t oci
 `ops image delete <imagename>` can be used to delete an image from OCI.
 
 ```
-$ ops delete image nanos-main-image -t oci
+$ ops delete image nanos-main-image -t oci -c config.json
 ```
 
 ## Instance Operations
@@ -73,7 +86,7 @@ $ ops delete image nanos-main-image -t oci
 
 After the successful creation of an image in OCI, we can create an instance from an existing image.
 ```
-$ ops instance create -t oci -i <image_name>
+$ ops instance create -t oci -c config.json -i <image_name>
 ```
 
 ### List Instances
@@ -81,7 +94,7 @@ $ ops instance create -t oci -i <image_name>
 You can list instance on OCI using `ops instance list` command.
 
 ```sh
-$ ops instance list -t oci
+$ ops instance list -t oci -c config.json
 +--------------------------------------+------------------------+---------+-------------+-----------------------------------------+
 |                  ID                  |          NAME          | STATUS  | PRIVATE IPS |               PUBLIC IPS                |
 +--------------------------------------+------------------------+---------+-------------+-----------------------------------------+
@@ -98,5 +111,5 @@ Work in progress.
 `ops instance delete` command can be used to delete instance on OCI.
 
 ```sh
-$ ops instance delete my-instance-running -t oci
+$ ops instance delete my-instance-running -t oci -c config.json
 ```
