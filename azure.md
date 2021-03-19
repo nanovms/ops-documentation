@@ -49,7 +49,7 @@ export AZURE_BASE_GROUP_NAME="bob"
 
 GOOS=linux go build -o gtest2
 
-ops image create -c config.json -t azure -a gtest2
+ops image create <elf_file|program> -c config.json -t azure -a gtest2
 ```
 
 ### List Images

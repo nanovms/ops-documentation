@@ -45,7 +45,7 @@ func main() {
 TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
-ops image create -c config.json -z ewr1 -a x -t vultr
+ops image create <elf_file|program> -i <image_name> -c config.json -z ewr1 -t vultr
 ```
 
 ### List Images
