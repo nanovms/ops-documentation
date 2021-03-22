@@ -25,6 +25,7 @@
 * [Volumes](volumes.md)
 * [Networking](networking.md)
 * [Packages](packages.md)
+* [Klibs](klibs.md)
 * [Hardware Acceleration](acceleration.md)
 * [Google Cloud Integration](google_cloud.md)
 * [Azure](azure.md)
