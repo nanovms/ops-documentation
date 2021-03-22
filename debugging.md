@@ -249,7 +249,7 @@ It is now possible to use the debugging palette to debug the application code.
 
 Ops provides a tool that allow you to inspect image crash logs and image manifests.
 
-If the unikernel crashes it writes the error stack to a log file before exiting. You are able to see the log content if you run the command `dump -l <image_path>`.
+If the application crashes the unikernel writes the error stack to a log file before exiting. You are able to see the log content if you run the command `dump -l <image_path>`.
 ```
 $ dump -l ~/.ops/main.img
 detected filesystem at 0x11600
