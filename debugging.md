@@ -30,7 +30,7 @@ __Example__
 For this example will examine a segfault (that we purposely injected):
 
 ```
-#include <stdio.h> 
+#include <stdio.h>
 #include <stdlib.h>
 
 void mybad() {
@@ -45,8 +45,8 @@ int main(void) {
   mybad();
   printf("should not get here\n");
 
-  return 0; 
-} 
+  return 0;
+}
 ```
 
 We compile with debugging symbols and link statically:
@@ -97,7 +97,7 @@ This will pause waiting on a gdb to attach to it.
 In another window, we'll launch gdb pointing it at whatever kernel you are using:
 
 ```
-gdb ~/.ops/0.1.27/kernel.img 
+gdb ~/.ops/0.1.27/kernel.img
 ```
 
 We'll connect to qemu by specifying the remote:
@@ -122,7 +122,7 @@ You can see the source now:
 
 ```
 (gdb) list
-1       #include <stdio.h> 
+1       #include <stdio.h>
 2       #include <stdlib.h>
 3
 4       void mybad() {
@@ -244,3 +244,86 @@ See further instructions in https://nanovms.gitbook.io/ops/debugging
 4. Set a `Breakpoint` in the source file (`main.c`) and start the debugging session from the `Run` on the left sidebar (alternatively use `Ctrl+Shift+D`) and click on the `> Debug` icon.
 
 It is now possible to use the debugging palette to debug the application code.
+
+## Dump
+
+Ops provides a tool that allow you to inspect image crash logs and image manifests.
+
+If the application crashes the unikernel writes the error stack to a log file before exiting. You are able to see the log content if you run the command `dump -l <image_path>`.
+```
+$ dump -l ~/.ops/main.img
+detected filesystem at 0x11600
+klog offset: 0x10600
+klog size: 4096 bytes
+boot id: 0
+exit code: 1
+
+en1: assigned 10.0.2.15
+2021/03/22 11:35:35 Failed
+```
+
+The image manifest has details about the image like:
+- files and their paths in the filesystem;
+- environment variable values, including nanos base image version used;
+- program and arguments to run on initialization;
+- static IP, gateway and netmask to configure the network interface;
+- etc.
+You can look into your image manifest by using the command `dump <image_path>`.
+```
+$ dump ~/.ops/main.img
+detected filesystem at 0xc11600
+Label:
+UUID: ad63ee2d-58d1-336f-7484-9fc81f3bc835
+metadata (
+program:/main
+arguments:(0:main)
+environment:(PWD:/ NANOS_VERSION:0.1.32 USER:root)
+children:(
+    .:
+    proc:(children:(
+        .:
+        ..:
+        self:(mtime:6942441066663300181 atime:6942441066663300181 children:(
+            .:
+            ..:
+            exe:(mtime:6942441066669261459 atime:6942441066669261459 linktarget:/main)
+        ))
+        sys:(children:(
+            .:
+            ..:
+            kernel:(children:(
+                .:
+                ..:
+                hostname:(extents:(0:(allocated:1 length:1 offset:5668)) filelength:7)
+            ))
+        ))
+    ))
+    etc:(children:(
+        ssl:(children:(
+            .:
+            ..:
+            certs:(children:(
+                ca-certificates.crt:(extents:(0:(allocated:406 length:406 offset:1078)) filelength:207436)
+                .:
+                ..:
+            ))
+        ))
+        passwd:(extents:(0:(allocated:1 length:1 offset:1485)) filelength:33)
+        .:
+        ..:
+        resolv.conf:(extents:(0:(allocated:1 length:1 offset:1484)) filelength:18)
+    ))
+    ..:
+    lib:(children:(
+        .:
+        ..:
+        x86_64-linux-gnu:(children:(
+            libnss_dns.so.2:(extents:(0:(allocated:53 length:53 offset:1025)) filelength:26936)
+            .:
+            ..:
+        ))
+    ))
+    main:(extents:(0:(allocated:4182 length:4182 offset:1486)) filelength:2140732)
+)
+booted:)
+```
