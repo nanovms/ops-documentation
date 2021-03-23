@@ -247,7 +247,7 @@ It is now possible to use the debugging palette to debug the application code.
 
 ## Dump
 
-Ops provides a tool that allow you to inspect image crash logs and image manifests.
+Ops provides a tool that allow you to inspect image crash logs and image manifests. The dump tool binary is inside the ops version directory (`~/.ops/<ops_version>/dump`).
 
 If the application crashes the unikernel writes the error stack to a log file before exiting. You are able to see the log content if you run the command `dump -l <image_path>`.
 ```
