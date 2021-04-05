@@ -109,7 +109,7 @@ $ ops volume create <vol_name> -t <cloud_provider>
 
 $ ops image create <image_name> --mounts <vol_name>:<mount_path> -t <cloud_provider>
 
-$ ops instance create <instance_name> -i <image_name> -t <cloud_provider>
+$ ops instance create <image_name> --instance-name <instance_name> -t <cloud_provider>
 
 $ ops volume attach <instance_name> <vol_name> -t <cloud_provider>
 ```

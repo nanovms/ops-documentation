@@ -91,7 +91,7 @@ export AZURE_CLIENT_SECRET=""
 
 export AZURE_BASE_GROUP_NAME=""
 
-ops instance create -z westus2 -t azure -i bob
+ops instance create bob -z westus2 -t azure
 ```
 
 #### VPC, Subnet and Security Group

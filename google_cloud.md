@@ -80,19 +80,19 @@ You need to export `GOOGLE_APPLICATION_CREDENTIALS` and pass project-id and zone
 
 ```sh
 $ export GOOGLE_APPLICATION_CREDENTIALS=<credentials_file_path>
-$ ops instance create -g prod-1000 -z us-west1-b -i <image_name> -t gcp
+$ ops instance create <image_name> -g prod-1000 -z us-west1-b -t gcp
 ```
 
 Alternatively, you can pass config, if you have mentioned project-id and zone in project's config.json.
 ```
-$ ops instance create -t gcp -c config.json -i <image_name>
+$ ops instance create <image_name> -t gcp -c config.json
 ```
 
 You can provide list of ports to be exposed on gcp instance via config and command line.
 
 CLI example
 ``` sh
-$ ops instance create -t gcp -p prod-1000 -z us-west1-a -i <image_name> --port 80 --port 443
+$ ops instance create <image_name> -t gcp -p prod-1000 -z us-west1-a --port 80 --port 443
 ```
 
 Sample config

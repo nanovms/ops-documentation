@@ -66,7 +66,7 @@ ops image list -z ewr1 -t vultr
 TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
-ops instance create -z ewr1 -t vultr -i 6f5e4eebdf761
+ops instance create 6f5e4eebdf761 -z ewr1 -t vultr
 ```
 
 ### List Instances

@@ -86,7 +86,7 @@ $ ops delete image nanos-main-image -t oci -c config.json
 
 After the successful creation of an image in OCI, we can create an instance from an existing image.
 ```
-$ ops instance create -t oci -c config.json -i <image_name>
+$ ops instance create <image_name> -t oci -c config.json
 ```
 
 ### List Instances
