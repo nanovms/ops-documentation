@@ -36,7 +36,7 @@ $ ops image list -t onprem
 ### Create Instance
 
 ```sh
-ops instance create -i 8080 -t onprem -z onprem -p 8080
+ops instance create <image_name> -t onprem -z onprem -p 8080
 ```
 
 ### List Instances

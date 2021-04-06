@@ -79,7 +79,7 @@ export GOVC_INSECURE=1
 export GOVC_URL="login:pass@host:port"
 export GOVC_RESOURCE_POOL="/ha-datacenter/host/localhost.localdomain/Resources"
 
-ops instance create -t vsphere -i gtest
+ops instance create gtest -t vsphere
 ```
 
 ### Start an Instance

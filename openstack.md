@@ -55,7 +55,7 @@ ops image delete -t openstack <image_name>
 
 ```sh
 
-ops instance create -t openstack -i <image_name>
+ops instance create <image_name> -t openstack
 ```
 
 While creating instance on openstack OPS needs flavour name. If you don't provide, OPS selects one for you. You can provide flavor name via CLI and config file.
@@ -63,7 +63,7 @@ While creating instance on openstack OPS needs flavour name. If you don't provid
 CLI example
 
 ```sh
-ops instance create -t openstack -a <image_name> -f <flavor_name>
+ops instance create <image_name> -t openstack -f <flavor_name>
 ```
 
 Sample config file

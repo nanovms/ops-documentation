@@ -42,7 +42,7 @@ $ ops delete image <image_name> -t hyper-v
 ### Create Instance
 
 ```sh
-$ ops instance create -t hyper-v -i <image_name>
+$ ops instance create <image_name> -t hyper-v
 ```
 
 ### List Instances

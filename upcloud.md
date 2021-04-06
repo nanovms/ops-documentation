@@ -61,8 +61,8 @@ $ ops delete image nanos-main-image -t upcloud
 ### Create Instance
 
 After the successful creation of an image in UpCloud, we can create an instance from an existing image.
-```
-$ ops instance create -t upcloud -i <image_name>
+```sh
+$ ops instance create <image_name> -t upcloud
 ```
 
 ### List Instances

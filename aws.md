@@ -83,25 +83,25 @@ $ ops delete image -i nanos-main-image
 After the successful creation of an image in AWS, we can create an instance from an existing image.
 
 ```
-$ ops instance create -i <image_name>
+$ ops instance create <image_name>
 ```
 
 Alternatively, you can pass project-id and zone with cli options.
 
 ```sh
-$ ops instance create -p prod-1000 -z us-west-2 -i <image_name>
+$ ops instance create <image_name> -p prod-1000 -z us-west-2
 ```
 
 You can also pass config, if you have mentioned project-id and zone in project's config.json.
 ```
-$ ops instance create -c config.json -i <image_name>
+$ ops instance create <image_name> -c config.json
 ```
 
 You can provide list of ports to be exposed on aws instance via config and command line.
 
 CLI example
 ``` sh
-$ ops instance create -p prod-1000 -z us-west-2 -i <image_name> --port 80 --port 443
+$ ops instance create <image_name> -p prod-1000 -z us-west-2 --port 80 --port 443
 ```
 
 Sample config
