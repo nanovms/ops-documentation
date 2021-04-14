@@ -32,10 +32,10 @@ For alternate ways of installing QEMU, see their
 
 ##### Debian / Ubuntu (apt-get)
 
- 1. To install `QMEU`, run the following command...
+ 1. To install `QEMU`, run the following command...
 
 ```sh
-$ sudo apt-get install qemu
+$ sudo apt-get install qemu-kvm qemu-utils
 ```
 
 ##### Fedora (dnf/yum)

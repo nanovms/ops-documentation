@@ -23,7 +23,7 @@ On Linux flavors ensure that you have QEMU version 2.5 or greater installed.
  To install `QEMU`, run the following command:
 
 ```sh
-$ sudo apt-get install qemu
+$ sudo apt-get install qemu-kvm qemu-utils
 ```
 
 ##### Fedora (dnf/yum) {#qemu-fedora}
