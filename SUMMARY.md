@@ -39,6 +39,7 @@
 * [UpCloud](upcloud.md)
 * [Virtual Box](virtual_box.md)
 * [OCI](oci.md)
+* [Visual Studio Code Extension](vscode.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
 * [Integrations](integrations.md)
