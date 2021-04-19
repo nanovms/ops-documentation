@@ -37,6 +37,7 @@
 * [Hyper-V](hyper-v.md)
 * [Firecracker](firecracker.md)
 * [UpCloud](upcloud.md)
+* [Virtual Box](virtual_box.md)
 * [OCI](oci.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
