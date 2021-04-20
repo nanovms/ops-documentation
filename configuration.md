@@ -429,7 +429,7 @@ Defines the static IPv6 address of the network interface.
 ```json
 {
     "RunConfig": {
-        "IPv6Address": "IPv6Address"
+        "IPv6Address": "FE80::46F:65FF:FE9C:4861"
     }
 }
 ```
