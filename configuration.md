@@ -149,7 +149,7 @@ A list of keys and values to provide more context about an instance or an image.
 
 ```json
 {
-    "RunConfig": {
+    "CloudConfig": {
         "Tags": [
             {
                 "key": "instance-owner",
