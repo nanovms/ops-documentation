@@ -125,6 +125,8 @@ Project ID is used in some cloud providers to identify a workspace.
 #### SecurityGroup {#cloudconfig.security_group}
 Allows an instance to use an existing security group in the cloud provider.
 
+On AWS, both the name and the id of the vpc may be used as value.
+
 ```json
 {
     "CloudConfig": {
@@ -135,6 +137,8 @@ Allows an instance to use an existing security group in the cloud provider.
 
 #### Subnet {#cloudconfig.subnet}
 Allows an instance to use an existing subnet in the cloud provider.
+
+On AWS, both the name and the id of the vpc may be used as value.
 
 ```json
 {
@@ -177,6 +181,8 @@ Zone is used in some cloud providers to identify the location where cloud resour
 
 #### VPC {#cloudconfig.vpc}
 Allows instance to use an existing vpc in the cloud provider.
+
+On AWS, both the name and the id of the vpc may be used as value.
 
 ```json
 {
