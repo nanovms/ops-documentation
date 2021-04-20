@@ -39,7 +39,11 @@
 * [UpCloud](upcloud.md)
 * [Virtual Box](virtual_box.md)
 * [OCI](oci.md)
+<<<<<<< HEAD
 * [Visual Studio Code Extension](vscode.md)
+=======
+* [Terraform](terraform.md)
+>>>>>>> wip
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
 * [Integrations](integrations.md)
