@@ -67,6 +67,19 @@ Updates DNS entry with the started instance IP.
 }
 ```
 
+#### EnableIPv6 {#cloudconfig.enable_ipv6}
+This option is only supported on AWS.
+
+If `EnableIPv6` is set to true and a VPC is created, the new VPC will have ipv6 support. Otherwise, it doesn't affect the selected VPC ipv6 support.
+
+```json
+{
+    "CloudConfig": {
+        "EnableIPv6": true
+    }
+}
+```
+
 #### Flavor {#cloudconfig.flavor}
 Specifies the machine type used to create an instance. Each cloud provider has different types descriptions.
 
@@ -412,6 +425,17 @@ The IP address has to be specified along with the netmask{#runconfig.netmask} an
         "IPAddress": "192.168.1.75",
         "NetMask": "255.255.255.0",
         "Gateway": "192.168.1.1"
+    }
+}
+```
+
+#### IPv6Address {#runconfig.ipv6address}
+Defines the static IPv6 address of the network interface.
+
+```json
+{
+    "RunConfig": {
+        "IPv6Address": "FE80::46F:65FF:FE9C:4861"
     }
 }
 ```
