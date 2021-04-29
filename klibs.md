@@ -13,7 +13,7 @@ The allowed configuration properties are:
 - `ntpPort` - the ntp sever port;
 - `ntpPollMin` - the minimum poll time is expressed as a power of two. The default value is 6, corresponding to 64 seconds (2^6 = 64);
 - `ntpPollMax` - the maximum poll time is expressed as a power of two. The default value is 10, corresponding to 1024 seconds (2^10 = 1024).
-- `ntpResetThreshold` - this is a threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump
+- `ntpResetThreshold` - This is a difference threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump. If the difference is over this threshold then step/jump will be used allowing correction over much longer periods.
 
 Use the configuration file to enable the `ntp` klib and setup the settings.
 ```json
