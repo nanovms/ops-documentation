@@ -1,7 +1,7 @@
 Deploy
 ========================
 
-`Ops` provides a command that allows to quickly update an image and an instance in a cloud provider from an elf file or a package.
+`Ops` provides a command that allows to skip the normal deployment workflow that would involve multiple commands to create and destroy images and instances. It allows to quickly update an image and an instance in a cloud provider from an elf file or a package.
 
 The command format is `ops deploy <elf file> -t <cloud provider>`.
 
