@@ -12,14 +12,14 @@ To run:
 ./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
 ```
 
-You should replace the stage3.img file with the location of your stage3
+You should replace the kernel.img file with the location of your kernel
 and the my_img.img with the unikernel disk image of choice:
 
 The vm_config.json:
 ```
 {
   "boot-source": {
-    "kernel_image_path": "/Users/bob/.ops/0.1.26/stage3.img",
+    "kernel_image_path": "/Users/bob/.ops/0.1.26/kernel.img",
     "boot_args": "console=ttyS0 reboot=k panic=1 pci=off"
   },
   "drives": [
@@ -130,7 +130,7 @@ curl --unix-socket /tmp/firecracker.socket -i \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
-"kernel_image_path": "/home/bob/.ops/0.1.26/stage3.img",
+"kernel_image_path": "/home/bob/.ops/0.1.26/kernel.img",
 "boot_args": "console=ttyS0 reboot=k panic=1 pci=off" }'
 ```
 
