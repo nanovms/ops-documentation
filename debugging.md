@@ -327,3 +327,32 @@ children:(
 )
 booted:)
 ```
+
+## FUSE
+
+Nanos has a FUSE driver which allows us to mount the TFS image used on
+the host filesystem. This makes it easy for rapid development, ease of
+debugging and other interesting tools.
+
+If you'd like to read more check out
+https://nanovms.com/dev/tutorials/nanos-unikernel-has-fuse-driver-for-tfs
+.
+
+To try it out on Linux:
+
+```
+sudo apt-get install libfuse-dev
+```
+
+To try it out on Mac:
+
+```
+brew install macfuse
+```
+
+Then you simply create a mount point and mount your desired image:
+
+```
+mkdir -p /tmp/mnt
+~/.ops/0.1.34/tfs-fuse /tmp/mnt ~/.ops/images/myimg.img
+```
