@@ -123,4 +123,11 @@ $ ops volume create vol -s 1g -d ./files
 $ ops run webapp --mounts vol:/assets
 ```
 
+As mentioned above you can mount multiple volumes with the config.json
+or pass multiple mounts flags like so:
+
+```
+$ ops run g --mounts vol1:/vol1 --mounts vol2:/vol2
+```
+
 See an example in our [tutorial](https://nanovms.com/dev/tutorials/working-with-unikernel-volumes-in-nanos).
