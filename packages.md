@@ -129,6 +129,24 @@ template with your program being 'test':
 1 directory, 2 files
 ```
 
+At a minimum your package.manifest should have the following fields:
+
+```
+{
+   "Program":"test_0.0.1/test",
+   "Args" : ["test"],
+   "Version":"0.0.1"
+}
+```
+
+It is important to note that the Program path should be valid. If you
+wish you may also add Language, Runtime, Description into the manifest
+so they show up in the search.
+
+These have been traditionally populated from
+~/.ops/packages/manifest.json . You may also wish to include a README.md
+inside the package.
+
 Then we can directly add the package in question as we develop on it:
 
 ```
