@@ -261,6 +261,18 @@ _TODO_
 ### Kernel {#kernel}
 _TODO_
 
+### ManifestPassthrough {#manifestpassthrough}
+
+There is the concept of the [manifest](https://nanos.org/thebook#manifest) in Nanos where there exists many other config options that don't boil up to ops configuration, however, sometimes you still wish to pass these settings down to the manifest. Certain klibs, in particular, have variables that need to be set. To set them do this:
+
+```json
+{
+  "ManifestPassthrough": {
+    "my_manifest_setting": "some_value"
+  }
+}
+```
+
 ### MapDirs {#mapdirs}
 A map of a local directory to a different path on the guest VM. For example the below
 adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
