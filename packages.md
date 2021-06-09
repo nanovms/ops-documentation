@@ -82,3 +82,61 @@ Finally you can run it via the local flag:
 ```
 ops pkg load --local mypkg -a b.php -v
 ```
+
+You can use the --missing-files flag on 'ops run' to hunt down any
+missing shared libraries that might not be getting loaded from the ldd
+output. For example with ruby:
+
+```
+$ ops run --missing-files /usr/local/bin/ruby
+booting /home/eyberg/.ops/images/ruby.img ...
+en1: assigned 10.0.2.15
+`RubyGems' were not loaded.
+`did_you_mean' was not loaded.
+missing_files_begin
+encdb.so
+encdb.so.rb
+encdb.so.so
+ansi_x3_4_1968.so
+ansi_x3_4_1968.so.rb
+ansi_x3_4_1968.so.so
+rubygems.rb
+rubygems.so
+did_you_mean.rb
+did_you_mean.so
+missing_files_end
+```
+
+You can also turn on '--trace' to find the locations it might be in. A
+common idiom would to be run:
+
+```
+$ ops run --trace /usr/local/bin/ruby &>/tmp/missing
+```
+
+then grep through the output to find loads that failed.
+
+If you wish to create your own local package you can use this as a
+template with your program being 'test':
+
+```
+➜  test_0.0.1 tree
+.
+├── package.manifest
+├── sysroot
+└── test
+
+1 directory, 2 files
+```
+
+Then we can directly add the package in question as we develop on it:
+
+```
+ops pkg add test_0.0.1 --name test_0.0.1
+```
+
+We can finally load the package:
+
+```
+ops pkg load -l test_0.0.1
+```
