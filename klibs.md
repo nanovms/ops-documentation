@@ -3,6 +3,16 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
+As of the 0.1.34 release there are 7 klibs:
+
+cloud_init - used for Azure && env config init
+ntp - used for clock syncing
+radar - a klib if using the external Radar service
+syslog - used to ship stdout/stderr to an external syslog - useful if
+you can't/won't modify code
+test - a simple test/template klib
+tls - used for radar/ntp and other klibs that require it
+tun - supports tun devices (eg: vpn gateways)
 
 ## NTP
 
@@ -99,4 +109,30 @@ m=+0.001076816
 en1: assigned FE80::E444:9CFF:FECA:FDCA
 Current Time in String:  2021-04-22 12:06:53.91767521 +0000 UTC
 m=+8.008671695
+```
+
+## Syslog
+
+If you can point your app at a syslog we encourage you to do that:
+
+https://nanovms.com/dev/tutorials/logging-go-unikernels-to-papertrail
+
+However, if you have no control over the application than you can direct
+Nanos to use the syslog klib and it will ship everything over.
+
+Just pass in the desired syslog output and server along with the syslog
+klib in your config.
+
+For example, if running locally via user-mode you can use 10.0.2.2:
+
+```
+{
+  "ManifestPassthrough": {
+    "syslog_output": "udp",
+    "syslog_server": "10.0.2.2"
+  },
+ "RunConfig": {
+    "Klibs": ["syslog"]
+  }
+}
 ```
