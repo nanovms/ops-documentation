@@ -120,7 +120,7 @@ https://nanovms.com/dev/tutorials/logging-go-unikernels-to-papertrail
 However, if you have no control over the application than you can direct
 Nanos to use the syslog klib and it will ship everything over.
 
-Just pass in the desired syslog output and server along with the syslog
+Just pass in the desired syslog server along with the syslog
 klib in your config.
 
 For example, if running locally via user-mode you can use 10.0.2.2:
@@ -128,8 +128,9 @@ For example, if running locally via user-mode you can use 10.0.2.2:
 ```
 {
   "ManifestPassthrough": {
-    "syslog_output": "udp",
-    "syslog_server": "10.0.2.2"
+    "syslog": {
+      "server": "10.0.2.2"
+    }
   },
  "RunConfig": {
     "Klibs": ["syslog"]
