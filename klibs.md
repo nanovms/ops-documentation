@@ -137,3 +137,65 @@ For example, if running locally via user-mode you can use 10.0.2.2:
   }
 }
 ```
+
+## Cloud Init - HTTP->File KLIB
+
+Cloud Init has 2 functions.
+
+1) For Azure machines it is auto-included to check in to the meta server
+to tell Azure that the machine has completed booting. This is necessary,
+otherwise Azure will think it failed.
+
+2) One can include this on any platform to download one or more extra
+files to the instance for post-deploy config options. This is useful
+when security or ops teams are separate from dev or build teams and they
+might handle deploying tls certificates or secrets post-deploy. All
+files are downloaded before execution of the main program.
+
+Certain caveats to be aware of:
+
+* Only direct download links are supported today. (no redirects)
+* Chunked transfer is not supported. (don't try to download a movie)
+
+Also, be aware that you set an appropriate minimum image base size to
+accomodate your files.
+
+Example Go program:
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+)
+
+func main() {
+	body, err := ioutil.ReadFile("/nanos.md")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Print(string(body))
+
+}
+```
+
+Example config:
+
+```json
+{
+  "BaseVolumeSz": "20m",
+ "RunConfig": {
+    "Klibs": ["cloud_init", "tls"]
+  },
+
+  "ManifestPassthrough": {
+    "cloud_init": {
+      "download": [
+        {"src": "https://ops.city", "dest": "/nanos.md"}
+      ]
+    }
+  }
+
+}
+```
