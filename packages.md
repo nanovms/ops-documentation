@@ -158,3 +158,12 @@ We can finally load the package:
 ```
 ops pkg load -l test_0.0.1
 ```
+
+### Create a Cloud Image from Local Package
+
+Creating a cloud image from your local package is just like creating it
+from a regular package but you pass the '-l' flag in:
+
+```sh
+ops image create -c test.json -l --package c2_0.0.1 -t gcp -i mytest2
+```

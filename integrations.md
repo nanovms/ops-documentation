@@ -7,3 +7,4 @@ systems.
 ## Editors
 
 [VSCode](https://marketplace.visualstudio.com/items?itemName=nanovms.ops)
+[IntelliJ](https://plugins.jetbrains.com/plugin/16899-nanovms-ops)
