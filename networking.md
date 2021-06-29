@@ -22,6 +22,81 @@ development; it may not be a good choice for production environments.
 No action is required to configure usermode networking, it is used by
 default.
 
+Usermode does nat on a port but sometimes you'll want to add dns. This
+is fairly straight-forward to do. Again - this is *only* for dev/test
+not production deploys:
+
+server:
+```go
+package main
+
+import (
+  "fmt"
+  "net/http"
+)
+
+func main() {
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Welcome to my website!")
+  })
+
+  fs := http.FileServer(http.Dir("static/"))
+  http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+  http.ListenAndServe(":8080", nil)
+}
+```
+
+build/run:
+```bash
+GO111MODULE=off GOOS=linux go build
+ops run -p 8080 g
+```
+
+client:
+```go
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+  "net/http"
+)
+
+func main() {
+  resp, err := http.Get("http://bob:8080")
+  if err != nil {
+    fmt.Println(err)
+  }
+
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println(err)
+  }
+
+  fmt.Println(string(body))
+}
+```
+
+You just need to include a /etc/hosts entry for your client to talk to
+10.0.2.2:
+
+Sample config:
+```bash
+➜  z tree
+.
+├── config.json
+├── etc
+│   └── hosts
+├── main.go
+└── z
+
+➜  z cat etc/hosts
+10.0.2.2       bob
+
+ops run -c config.json z
+```
+
 ## Bridged Network
 Bridged networking connects a virtual machine to a network using the host
 computer's Ethernet adapter. For more information about bridged networking,
@@ -110,3 +185,7 @@ yourself sudo then you can run:
 ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19
 ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
 ```
+
+It is important to know that on a MAC you typically won't be able to
+bridge since you probably don't have an actual ethernet card. There
+still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box). Virtualbox has it's own tap kext driver.
