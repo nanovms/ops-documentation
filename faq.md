@@ -10,7 +10,7 @@ Also - Nanos runs on Google Cloud && AWS.
 
 ### Q: What version of qemu is best?
 A: We track latest qemu in homebrew as we have found issues before. The
-latest qemu release is currently 4.2.X. If you don't have that release
+latest qemu release is currently 6.0.X. If you don't have that release
 try to install from brew:
 
 ```
@@ -83,3 +83,36 @@ Yes, if you are coding in Go you can use the API found at
 If you are looking for a web-accessible API
 [Nanos C2](https://nanovms.com/nanos-c2) has you covered.
 
+### Q: How can I tell if I'm running inside Nanos at runtime?
+
+You can use the Uname syscall and extract the sysname from it:
+
+```go
+package main
+
+import (
+	"fmt"
+	"syscall"
+)
+
+func int8ToStr(arr []int8) string {
+	b := make([]byte, 0, len(arr))
+	for _, v := range arr {
+		if v == 0x00 {
+			break
+		}
+		b = append(b, byte(v))
+	}
+	return string(b)
+}
+
+func main() {
+	utsname := syscall.Utsname{}
+	err := syscall.Uname(&utsname)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("%+v\n", int8ToStr(utsname.Sysname[:]))
+}
+```
