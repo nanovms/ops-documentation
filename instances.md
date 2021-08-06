@@ -8,7 +8,7 @@ To list all instances:
 ops instance list
 ```
 
-To create a new instances from an existing image:
+To create a new instance from an existing image:
 ```
 ops instance create -i <name> <image name or ref>
 ```
