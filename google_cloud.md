@@ -166,6 +166,22 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance delete -g prod-1000 -z us-west1-b my-instance-running
 ```
 
+### Create Instance with Instance Group
+
+OPS has initial support for putting an instance into an instance group.
+This allows you to load balance a handful of instances and scale up/down
+on demand.
+
+The instance group must already be created to use this feature. When
+deploying through 'instance create' OPS will create a new instance
+template, apply it to the instance group, and then force re-create all
+the instances with the new instance template. The instance template will
+track any firewall rule changes (such as ports).
+
+```sh
+$ ops instance create <image_name> -t gcp -p prod-1000 -z us-west1-a --port 80 --port 443 --instance-group my-instance-group
+```
+
 ## Volume Operations
 ### Create Volume
 
