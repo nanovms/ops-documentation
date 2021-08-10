@@ -45,6 +45,7 @@
 * [Bare Metal](bare_metal.md)
 * [Integrations](integrations.md)
 * [Debugging](debugging.md)
+* [CrossBuilding](crossbuilding.md)
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
 
