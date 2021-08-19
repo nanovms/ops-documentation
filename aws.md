@@ -120,6 +120,12 @@ Sample config
 }
 ```
 
+If you need to specify a specific zone when creating the instance use
+the [Subnet config var](https://nanovms.gitbook.io/ops/configuration#cloudconfig.subnet).
+
+This is necessary for certain operations such as when you want to mount
+a volume to an instance.
+
 #### VPC and Security Group
 
 By default, ops uses the first VPC found in aws and creates a security group per instance.
