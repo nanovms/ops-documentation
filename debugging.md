@@ -356,3 +356,74 @@ Then you simply create a mount point and mount your desired image:
 mkdir -p /tmp/mnt
 ~/.ops/0.1.34/tfs-fuse /tmp/mnt ~/.ops/images/myimg.img
 ```
+
+## Debug Logging
+
+You can use the 'net console' logging feature if you'd like to log
+without printing via serial/vga. Simply specify it via:
+
+```
+{
+  "ManifestPassthrough": {
+    "consoles": ["+net"]
+  }
+}
+```
+
+Then you can capture it via netcat:
+
+```
+nc -l -u 4444
+```
+
+The default ip/port that Nanos will ship the logging to is 10.0.2.2
+(assuming user-mode) and port of 4444.
+
+You can adjust these via the following config though:
+
+```netconsole_ip```
+
+```netconsole_port```
+
+## Syscall Execution Time
+
+OPS/Nanos has the ability to trace the number of syscall executions and
+timing information much like ```strace -c```.
+
+Here is a short c example:
+
+```
+#include <stdio.h>
+
+int main() {
+  printf("hello!\n");
+}
+```
+
+The output:
+
+```
+eyberg@box:~/z$ ops run --syscall-summary main
+booting /home/eyberg/.ops/images/main.img ...
+en1: assigned 10.0.2.15
+hello!
+
+% time      seconds   usecs/call        calls       errors syscall
+------ ------------ ------------ ------------------------------------------
+ 48.53     0.000644          215            3              brk
+ 25.16     0.000334          334            1              read
+ 16.05     0.000213          213            1              write
+  3.31     0.000044            6            7              mmap
+  1.73     0.000023            6            4              pread64
+  1.58     0.000021            4            5            4 openat
+  0.97     0.000013           13            1              close
+  0.90     0.000012            3            4              mprotect
+  0.67     0.000009            9            1              uname
+  0.37     0.000005            5            1            1 access
+  0.22     0.000003            2            2              fstat
+  0.22     0.000003            1            3            3 stat
+  0.22     0.000003            2            2            1 arch_prctl
+------ ------------ ------------ ------------------------------------------
+100.00     0.001327                        35            9 total
+exit status 1
+```
