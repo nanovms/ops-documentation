@@ -167,3 +167,20 @@ from a regular package but you pass the '-l' flag in:
 ```sh
 ops image create -c test.json -l --package c2_0.0.1 -t gcp -i mytest2
 ```
+
+### Create a Package from Docker
+
+You can create a local package from an existing docker container. If the
+container does not exist it will download it first and then convert it
+into a unikernel. Currently this just grabs the binary and libraries
+necessary to run it versus the entire filesystem that might be present.
+
+```sh
+$ ops pkg from-docker node:16.3.0 -f node
+
+$ ops pkg load -l node-16.3.0 -a a.js
+booting /Users/qtmsheep/.ops/images/program ...
+en1: assigned 10.0.2.15
+Hello
+exit status 1
+```
