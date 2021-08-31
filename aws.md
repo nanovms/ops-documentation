@@ -183,3 +183,46 @@ Alternatively you can pass project-id and zone with cli options.
 ```sh
 $ ops instance delete -p prod-1000 -z us-west1-b my-instance-running
 ```
+
+### IPV6 Networking
+
+IPV6 support differs from cloud to cloud. On AWS DHCPV6 is used. You can
+have an ip auto-assigned or you can set one yourself but you must be
+aware that a subnet must have IPv6 enabled.
+
+A sample config for assigning an ip:
+
+```
+➜  g cat config.json
+{
+  "CloudConfig" :{
+    "Zone": "us-west-1",
+    "BucketName":"my-bucket",
+    "EnableIPv6": true,
+    "VPC":"test-ipv6-test-2"
+  },
+  "RunConfig": {
+    "IPv6Address": "2600:1f1c:604:9a00:7a34:8c37:5b08:f104",
+    "Ports": [
+      "80",
+      "8080",
+      "443"
+    ]
+  }
+}
+```
+
+To test:
+
+```
+[ec2-user@ip-172-33-75-200 ~]$ ping6
+2600:1f1c:604:9a00:7a34:8c37:5b08:f104
+PING 2600:1f1c:604:9a00:7a34:8c37:5b08:f104(2600:1f1c:604:9a00:7a34:8c37:5b08:f104) 56 data bytes
+64 bytes from 2600:1f1c:604:9a00:7a34:8c37:5b08:f104: icmp_seq=1 ttl=255 time=0.573 ms
+64 bytes from 2600:1f1c:604:9a00:7a34:8c37:5b08:f104: icmp_seq=2 ttl=255 time=0.419 ms
+^C
+```
+
+Be aware that you might not have IPV6 connectivity from the
+laptop/server you are testing from. You can verify within an instance on
+AWS to test connectivity.
