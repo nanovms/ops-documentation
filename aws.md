@@ -215,8 +215,7 @@ A sample config for assigning an ip:
 To test:
 
 ```
-[ec2-user@ip-172-33-75-200 ~]$ ping6
-2600:1f1c:604:9a00:7a34:8c37:5b08:f104
+[ec2-user@ip-172-33-75-200 ~]$ ping6 2600:1f1c:604:9a00:7a34:8c37:5b08:f104
 PING 2600:1f1c:604:9a00:7a34:8c37:5b08:f104(2600:1f1c:604:9a00:7a34:8c37:5b08:f104) 56 data bytes
 64 bytes from 2600:1f1c:604:9a00:7a34:8c37:5b08:f104: icmp_seq=1 ttl=255 time=0.573 ms
 64 bytes from 2600:1f1c:604:9a00:7a34:8c37:5b08:f104: icmp_seq=2 ttl=255 time=0.419 ms
