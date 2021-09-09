@@ -249,3 +249,40 @@ After having the instance running you can attach a volume using `ops volume atta
 ### Detach Volume
 
 You can detach a volume from a running instance using `ops volume detach <instance_name> <volume_name> -t gcp -c <configuration_file_path>`.
+
+### IPV6 Networking
+
+IPV6 support differs from cloud to cloud. 
+
+To use IPv6 on Google Cloud you must create a VPC and a subnet with IPv6
+enabled. You can not use the legacy network nor can you use an
+auto-created subnet.
+
+When you create it you won't see in the UI that it is IPv6 enabled but
+you can click the 'REST' button to see it.
+
+A sample config:
+
+```
+{
+  "CloudConfig" :{
+    "ProjectID": "my-project",
+    "Zone": "us-west2-a",
+    "BucketName":"nanos-test",
+    "EnableIPv6": true,
+    "VPC": "ipv6-test",
+    "Subnet": "ipv6-test"
+  },
+  "RunConfig": {
+    "Ports": [
+      "80",
+      "8080",
+      "443"
+    ]
+  }
+}
+```
+
+Be aware that you might not have IPV6 connectivity from the
+laptop/server you are testing from. You can verify within an instance on
+Google or some other IPv6 capable machine.
