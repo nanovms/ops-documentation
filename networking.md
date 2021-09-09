@@ -189,3 +189,11 @@ ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
 It is important to know that on a MAC you typically won't be able to
 bridge since you probably don't have an actual ethernet card. There
 still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box). Virtualbox has it's own tap kext driver.
+
+## IPv6
+
+IPv6 support varies from cloud to cloud. Please consult the individual
+instructions found for each cloud:
+
+[Google Cloud](google_cloud.md)
+[AWS](aws.md)
