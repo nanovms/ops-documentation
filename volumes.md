@@ -114,6 +114,47 @@ $ ops instance create <image_name> --instance-name <instance_name> -t <cloud_pro
 $ ops volume attach <instance_name> <vol_name> -t <cloud_provider>
 ```
 
+You can create arbitrarily large empty volumes on providers such as AWS
+by specifying the requested size. AWS will re-size the volume to
+whatever you set it as.
+
+Sometimes it might be helpful to know when a volume is attached and
+detached at run-time as AWS supports attaching/detaching volumes at
+run-time.
+
+You can look at the pseudo-file of ```/proc/mounts``` to determine
+whether or not the volume is available. For instance:
+
+Using this config file:
+```
+➜  g cat config.json
+{
+  "Mounts": {
+    "bob": "/bob"
+  }
+}
+```
+
+and this program:
+
+```
+➜  g cat main.go
+package main
+
+import (
+        "fmt"
+        "os"
+)
+
+func main() {
+        body, err := os.ReadFile("/proc/mounts")
+        if err != nil {
+                fmt.Println(err)
+        }
+        fmt.Print(string(body))
+}
+```
+
 ## Wrap-up
 
 Mounting volumes require us to create an image with the mounts details, launch an instance using the image and attaching a volume. Locally, you are able to mount a volume with 2 commands.
