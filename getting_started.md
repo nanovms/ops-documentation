@@ -1,23 +1,34 @@
 Getting Started
 ===============
 
-## Supported Operating Systems
-Currently, Ops support various forms of UNIX operating systems.
- * MacOS
- * Debian
- * Ubuntu
- * Fedora
- * Centos
-
 ## Installing OPS
 ```sh
 $ curl https://ops.city/get.sh -sSfL | sh
 ```
 
+If that works you can try this simple hello world example. You don't
+need node installed for this as ops will automatically download a node
+package for you:
+
+```sh
+$ ops pkg load node_v14.2.0 -p 8083 -f -n -a hi.js
+```
+
+Put this in your hi.js:
+
+```sh
+var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello World\n');
+}).listen(8083, "0.0.0.0");
+console.log('Server running at http://127.0.0.1:8083/');
+```
+
 If the script complain about missing HomeBrew on Mac, please install it
 from https://brew.sh/ and re-run the command above.
 
-On Linux flavors ensure that you have QEMU version 2.5 or greater installed.
+On Linux flavors ensure that you have QEMU version 2.5 or greater installed. It should be noted that the latest qemu version is 6.1 so if you are using something older - it's really old.
 
 ##### Debian / Ubuntu (apt-get) {#qemu-debian}
  To install `QEMU`, run the following command:

@@ -125,3 +125,17 @@ images with the lastest from that channel:
 ```sh
 $ ops -nf run main
 ```
+
+OPS itself also tracks nightly builds.
+
+## Supported Operating Systems
+
+OPS can run on many different Unix based environments.
+
+ * [MacOS](https://github.com/nanovms/homebrew-ops)
+ * Debian
+ * Ubuntu
+ * [Arch](https://aur.archlinux.org/packages/ops/)
+ * Fedora
+ * Centos
+ * WSL

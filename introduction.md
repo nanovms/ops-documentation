@@ -7,18 +7,13 @@ is capable of executing any valid ELF-binary. We provide pre-tested packages for
 common linux software, including support for interpreted languages to
 provide a similar Linux like experience.
 
-This technical preview has packages for [PHP](examples.md),
-[Node](examples.md), Ruby, Lua, Perl and more is on the way. Note that
+OPS has packages for [PHP](examples.md),
+[Node](examples.md), Ruby, Lua, Perl and much more. Note that
 you are not required to use a package. OPS is explicitly built to be
 able to run standalone static binaries such as Go and C.
 
-**IMPORTANT NOTE:** This is a technical preview that is being actively developed
-and sponsored by [NanoVMs](https://www.nanovms.com). It is subject to significant
-changes and refactoring.
-
-Significant planned upcoming changes include the following categories:
-  * Libraries
-  * Security
+This is a project that is being actively developed
+and sponsored by [NanoVMs](https://www.nanovms.com).
 
 #### What are Unikernels?
 Unikernels are specialised single process operating systems.
