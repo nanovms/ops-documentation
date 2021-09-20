@@ -250,6 +250,13 @@ After having the instance running you can attach a volume using `ops volume atta
 
 You can detach a volume from a running instance using `ops volume detach <instance_name> <volume_name> -t gcp -c <configuration_file_path>`.
 
+## Networking Considerations
+
+If you specify a port in your config you are stating you wish the public
+ip associated with the instance to be exposed with that port. If you
+don't specify the port by default the private ip allows any instance in
+the same vpc to talk to it.
+
 ### IPV6 Networking
 
 IPV6 support differs from cloud to cloud. 
