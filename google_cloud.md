@@ -265,6 +265,14 @@ To use IPv6 on Google Cloud you must create a VPC and a subnet with IPv6
 enabled. You can not use the legacy network nor can you use an
 auto-created subnet.
 
+After you create a new VPC and subnet you can adjust the subnet to be
+dual stack like so:
+
+```
+gcloud compute networks subnets update mysubnet \
+  --stack-type=IPV4_IPV6 --ipv6-access-type=EXTERNAL --region=us-west2
+```
+
 When you create it you won't see in the UI that it is IPv6 enabled but
 you can click the 'REST' button to see it.
 
@@ -289,7 +297,21 @@ A sample config:
   }
 }
 ```
-
 Be aware that you might not have IPV6 connectivity from the
 laptop/server you are testing from. You can verify within an instance on
-Google or some other IPv6 capable machine.
+Google or some other IPv6 capable machine via telnet:
+
+```
+telnet 2600:1900:4120:1235:: 8080
+```
+
+or ping:
+
+```
+ping6 2600:1900:4120:1235::
+```
+
+Also, keep in mind that when you create a new VPC by default there are
+no firewall rules so things like ICMP (ping) won't work without adding
+them manually nor would ssh'ing into a test instance work without a
+corresponding rule on the new VPC for ssh (22).
