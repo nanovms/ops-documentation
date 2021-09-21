@@ -46,6 +46,19 @@ _TODO_
 ### CloudConfig {#cloudconfig}
 The `CloudConfig` configures various attributes about the cloud provider, we want to use with ops.
 
+### CWD #{cwd}
+Some applications expect to have a working directory in a different
+place than where they have been placed. You can adjust this via the
+manifest variable 'cwd':
+
+```json
+{
+  "ManifestPassthrough": {
+    "cwd": "/my_new/path"
+  }
+}
+```
+
 #### BucketName {#cloudconfig.bucketname}
 Bucket name is used to store Ops built image artifacts.
 
@@ -100,6 +113,16 @@ Specifies the image name in the cloud provider.
         "ImageName": "web-server"
     }
 }
+```
+
+#### OPS_HOME
+The OPS_HOME environment variable points to the location of where ops
+will store build images and releases locally. By default it is set to
+~/.ops . However there are some use-cases where you might want it set to
+something else like so:
+
+```
+OPS_HOME=/opt/ops
 ```
 
 #### Platform {#cloudconfig.platform}
@@ -456,11 +479,13 @@ Defines the static IPv6 address of the network interface.
 
 For example to run the NTP klib (eg: ntpd):
 
+```json
 {
   "RunConfig":{
     "Klibs":["ntp"]
   }
 }
+```
 
 #### Memory {#runconfig.memory}
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.

@@ -225,3 +225,21 @@ PING 2600:1f1c:604:9a00:7a34:8c37:5b08:f104(2600:1f1c:604:9a00:7a34:8c37:5b08:f1
 Be aware that you might not have IPV6 connectivity from the
 laptop/server you are testing from. You can verify within an instance on
 AWS to test connectivity.
+
+### Volumes
+
+When you mount a volume to an AWS instance you must specify the zone
+modifier for the region. So instead of using:
+
+```
+"Zone": "us-west-1",
+```
+
+Use
+
+```
+"Zone": "us-west-1c",
+```
+
+OPS will strip the zone 'c' from other operations that only
+require/desire region.
