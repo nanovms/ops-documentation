@@ -34,6 +34,7 @@
 * [Digital Ocean](digital_ocean.md)
 * [Vultr](vultr.md)
 * [VSphere](vsphere.md)
+* [WorkStation](workstation.md)
 * [Hyper-V](hyper-v.md)
 * [Firecracker](firecracker.md)
 * [UpCloud](upcloud.md)
