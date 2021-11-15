@@ -1,5 +1,4 @@
-Digital Ocean Integration
-========================
+# Digital Ocean Integration
 
 Ops can integrate with your existing Digital Ocean account.
 
@@ -7,24 +6,26 @@ Ops can integrate with your existing Digital Ocean account.
 
 1. Create an account in [Digital Ocean](https://cloud.digitalocean.com/);
 2. Access [Application & API page](https://cloud.digitalocean.com/account/api/tokens):
-- Generate a token and export the value to the environment variable `TOKEN`.
-- Generate space access keys and export the key and the secret to the environment variables `SPACES_KEY` and `SPACES_SECRET`.
+   - Generate a token and export the value to the environment variable `DO_TOKEN`.
+   - Generate space access keys and export the key and the secret to the environment variables `SPACES_KEY` and `SPACES_SECRET`.
 3. Access [Spaces page](https://cloud.digitalocean.com/spaces) and create a space;
 4. Set your bucket name with the space name and set the region name where the space was created in the configuration file;
 
 Configuration example.
+
 ```json
 {
   "CloudConfig": {
     "BucketName": "ops",
     "Zone": "sfo3"
-  },
+  }
 }
 ```
 
-
 ## Image Operations
+
 ### Create Image
+
 You can create an image in Digital Ocean with the following command.
 
 ```sh
@@ -63,9 +64,11 @@ $ ops delete image nanos-main-image -t do -c config.json
 ```
 
 ## Instance Operations
+
 ### Create Instance
 
 After the successful creation of an image in Digital Ocean, we can create an instance from an existing image.
+
 ```
 $ ops instance create -t do -c config.json -i <image_name>
 ```

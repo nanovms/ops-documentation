@@ -1,5 +1,4 @@
-Vultr Integration
-========================
+# Vultr Integration
 
 OPS works perfectly fine with Vultr.
 
@@ -9,9 +8,9 @@ found in your portal:
 
 ```json
 {
-  "CloudConfig" :{
+  "CloudConfig": {
     "Zone": "ewr1",
-    "BucketName":"nanos-test"
+    "BucketName": "nanos-test"
   }
 }
 ```
@@ -39,10 +38,11 @@ func main() {
 ```
 
 ## Image Operations
+
 ### Create Image
 
 ```sh
-TOKEN=my_api_token \
+VULTR_TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
 ops image create <elf_file|program> -i <image_name> -c config.json -z ewr1 -t vultr
@@ -51,7 +51,7 @@ ops image create <elf_file|program> -i <image_name> -c config.json -z ewr1 -t vu
 ### List Images
 
 ```sh
-TOKEN=my_api_token \
+VULTR_TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
 ops image list -z ewr1 -t vultr
@@ -60,10 +60,11 @@ ops image list -z ewr1 -t vultr
 ### Delete Image
 
 ## Instance Operations
+
 ### Create Instance
 
 ```sh
-TOKEN=my_api_token \
+VULTR_TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
 ops instance create 6f5e4eebdf761 -z ewr1 -t vultr
@@ -72,7 +73,7 @@ ops instance create 6f5e4eebdf761 -z ewr1 -t vultr
 ### List Instances
 
 ```sh
-TOKEN=my_api_token \
+VULTR_TOKEN=my_api_token \
 VULTR_ACCESS=my_access_token \
 VULTR_SECRET=my_vultr_secret \
 ops instance list -z ewr1 -t vultr
@@ -81,4 +82,3 @@ ops instance list -z ewr1 -t vultr
 ### Get Logs for Instance
 
 ### Delete Instance
-
