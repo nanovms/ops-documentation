@@ -110,6 +110,23 @@ Sample config
     }
 }
 ```
+
+#### Private Static IP
+
+By default, ops uses will rely on DHCP.
+
+If you would like to set a static private ip you can use the following:
+
+```json
+{
+    "RunConfig":{
+      "IPAddress": "172.31.33.7"
+    }
+}
+```
+
+Note: You must choose an available IP that is within your chosen/default VPC.
+
 ### List Instances
 
 You can list instance on Google Cloud using `ops instance list` command.
