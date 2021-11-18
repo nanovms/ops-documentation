@@ -140,6 +140,22 @@ You can select a different VPC or use a existing security group using the config
 }
 ```
 
+#### Private Static IP
+
+By default, ops uses will rely on DHCP.
+
+If you would like to set a static private ip you can use the following:
+
+```json
+{
+    "RunConfig":{
+      "IPAddress": "172.31.33.7"
+    }
+}
+```
+
+Note: You must choose an available IP that is within your chosen/default VPC.
+
 ### List Instances
 
 You can list instance on AWS using `ops instance list` command.
