@@ -35,15 +35,34 @@ func main() {
 ### Create Image
 
 ```sh
+export API_URL="https://172.16.41.133:8006"
+export TOKEN_ID="myuser@pam!tokenid"
+export SECRET="some-uuid-goes-here"
+ops image create g -t proxmox -c config.json
 ```
 
 ### List Images
+
+```sh
+export API_URL="https://172.16.41.133:8006"
+export TOKEN_ID="myuser@pam!tokenid"
+export SECRET="some-uuid-goes-here"
+
+ops image list -t proxmox
+```
 
 ### Delete Image
 
 ## Instance Operations
 
 ### Create Instance
+
+```sh
+export API_URL="https://172.16.41.133:8006"
+export TOKEN_ID="myuser@pam!tokenid"
+export SECRET="some-uuid-goes-here"
+ops instance create g.img -t proxmox
+```
 
 ### List Instances
 
@@ -56,7 +75,22 @@ ops instance list -t proxmox
 
 ### Start Instance
 
+```sh
+export API_URL="https://172.16.41.133:8006"
+export TOKEN_ID="myuser@pam!tokenid"
+export SECRET="some-uuid-goes-here"
+ops instance start 100 -t proxmox
+```
+
+
 ### Stop Instance
+
+```sh
+export API_URL="https://172.16.41.133:8006"
+export TOKEN_ID="myuser@pam!tokenid"
+export SECRET="some-uuid-goes-here"
+ops instance stop 100 -t proxmox
+```
 
 ### Get Logs for Instance
 
