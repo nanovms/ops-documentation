@@ -35,6 +35,7 @@
 * [Vultr](vultr.md)
 * [VSphere](vsphere.md)
 * [WorkStation](workstation.md)
+* [ProxMox](proxmox.md)
 * [Hyper-V](hyper-v.md)
 * [Firecracker](firecracker.md)
 * [UpCloud](upcloud.md)
