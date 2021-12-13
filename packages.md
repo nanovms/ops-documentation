@@ -184,3 +184,25 @@ en1: assigned 10.0.2.15
 Hello
 exit status 1
 ```
+
+If you would like to create a package from a local image try this
+workflow:
+
+Sample Dockerfile:
+
+```
+FROM debian
+CMD ["/bin/ls"]
+```
+
+Note: Right now the build process is dependent upon a non-scratch
+environment, for instance using ldd and cut.
+
+```
+docker build -t bob .
+```
+
+```
+ops pkg from-docker bob -n bob -f ls
+ops pkg load --local bob
+```
