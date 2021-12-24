@@ -144,3 +144,48 @@ ops instance logs -t azure gtest2-image -z us-west-2
 ```
 
 ### Delete Instance
+
+## Volume Operations
+### Create Volume
+
+Create a small 1mb min. volume locally:
+```
+ops volume create avol
+```
+
+Upload and set the size to 50gb remotely:
+```
+#!/bin/sh
+
+export AZURE_STORAGE_ACCOUNT=""
+export AZURE_STORAGE_ACCESS_KEY=""
+
+export AZURE_SUBSCRIPTION_ID=""
+export AZURE_LOCATION_DEFAULT="westus2"
+export AZURE_TENANT_ID=""
+export AZURE_CLIENT_ID=""
+export AZURE_CLIENT_SECRET=""
+
+export AZURE_BASE_GROUP_NAME=""
+
+ops volume create avol -s 50g -t azure
+```
+
+### List Volumes
+
+```
+#!/bin/sh
+
+export AZURE_STORAGE_ACCOUNT=""
+export AZURE_STORAGE_ACCESS_KEY=""
+
+export AZURE_SUBSCRIPTION_ID=""
+export AZURE_LOCATION_DEFAULT="westus2"
+export AZURE_TENANT_ID=""
+export AZURE_CLIENT_ID=""
+export AZURE_CLIENT_SECRET=""
+
+export AZURE_BASE_GROUP_NAME=""
+
+ops volume list -t azure
+```
