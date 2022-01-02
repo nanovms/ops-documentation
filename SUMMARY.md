@@ -37,6 +37,7 @@
 * [WorkStation](workstation.md)
 * [ProxMox](proxmox.md)
 * [Hyper-V](hyper-v.md)
+* [Bhyve](bhyve.md)
 * [Firecracker](firecracker.md)
 * [UpCloud](upcloud.md)
 * [Virtual Box](virtual_box.md)
