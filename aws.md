@@ -200,6 +200,20 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance delete -p prod-1000 -z us-west1-b my-instance-running
 ```
 
+### Create Instance with Instance Group
+
+OPS has initial support for putting an instance into an AWS auto scaling group.
+This allows you to load balance a handful of instances and scale up/down
+on demand.
+
+The instance group must already be created to use this feature. When
+deploying through 'instance create' OPS will create a new launch
+template, apply it to the AWS auto scaling group, and then attach it to the instance when creating.
+
+```sh
+$ ops instance create <image_name> -t aws -z us-west1-a --instance-group my-instance-group
+```
+
 ### IPV6 Networking
 
 IPV6 support differs from cloud to cloud. On AWS DHCPV6 is used. You can
