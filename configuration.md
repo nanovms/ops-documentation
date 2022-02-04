@@ -308,11 +308,11 @@ adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
 ### Mounts {#mounts}
 _TODO_
 
-### NameServer {#nameserver}
-The DNS server to use for DNS resolution. By default it is Google's `8.8.8.8`.
+### NameServers {#nameservers}
+An array of DNS servers to use for DNS resolution. By default it is Google's `8.8.8.8`.
 ```json
 {
-    "NameServer": "10.8.0.1"
+    "NameServers": ["10.8.0.1"]
 }
 ```
 
@@ -659,7 +659,7 @@ Below is a sample configuration file for a nodejs application.
 	"Kernel": "./staging/stage4.img",
 	"Mkfs": "./staging/mkfs",
 	"DiskImage": "disk-image",
-	"NameServer": "10.8.0.1",
+	"NameServers": ["10.8.0.1"],
 	"RunConfig": {
 		"Verbose": true,
 		"Bridged": true,
