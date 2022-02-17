@@ -38,7 +38,7 @@ phpinfo();
 
 Package and deploy:
 ```sh
-$ ops pkg load php_7.2.13 -a ex.php
+$ ops pkg load eyberg/php:7.2.13 -a ex.php
 ```
 
 ### [NodeJS](https://nodejs.org/en/) Example
@@ -49,7 +49,7 @@ console.log("Hello World!");
 
 Package and deploy:
 ```sh
-$ ops pkg load node_v14.2.0 -a ex.js
+$ ops pkg load eyberg/node:14.2.0 -a ex.js
 ```
 
 You should see "Hello World!" printed on your screen and then the ops command
