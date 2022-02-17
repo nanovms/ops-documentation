@@ -11,7 +11,7 @@ need node installed for this as ops will automatically download a node
 package for you:
 
 ```sh
-$ ops pkg load node_v14.2.0 -p 8083 -f -n -a hi.js
+$ ops pkg load eyberg/node:v14.2.0 -p 8083 -f -n -a hi.js
 ```
 
 Put this in your hi.js:
