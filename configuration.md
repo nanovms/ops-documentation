@@ -591,22 +591,12 @@ Connects the unikernel to a network interface with the name specified. If the `t
 }
 ```
 
-#### UDP {#runconfig.udp}
-UDP is off by default. You can toggle UDP on via:
-```json
-{
-    "RunConfig": {
-        "UDP": true
-    }
-}
-```
-
 #### UDPPorts {#runconfig.udp_ports}
 Opens ports that use UDP protocol.
 ```json
 {
     "RunConfig": {
-        "Ports": [60, 6006],
+        "UDPPorts": ["60", "70-80", "6006"],
     }
 }
 ```
