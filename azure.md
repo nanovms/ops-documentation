@@ -7,10 +7,25 @@ OPS can run on Microsoft Azure assuming your environment is setup.
 
 1. Create a new resource group.
 2. Create a storage account - that is your bucket.
-3. Create a quickstart auth:
+
+3. You might need to login first:
+
+```sh
+ az login --scope https://graph.windows.net//.default
+```
+
+4. Create a quickstart auth:
+ 
 ```sh
 az ad sp create-for-rbac --sdk-auth > quickstart.auth
 ```
+
+5. Create a role using the clientID as the assignee inside quickstart.auth:
+
+```
+ az role assignment create --assignee dead-beef-feed-face --role Contributor
+```
+
 Most of the environment variables you need will be found in this json file.
 
 ## Image Operations
