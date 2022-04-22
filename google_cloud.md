@@ -274,6 +274,17 @@ ip associated with the instance to be exposed with that port. If you
 don't specify the port by default the private ip allows any instance in
 the same vpc to talk to it.
 
+### Elastic IP:
+
+If you have already provisioned an elastic ip you may use it by setting
+it in the Cloud Config:
+
+```
+"CloudConfig" :{
+  "StaticIP": "1.2.3.4"
+}
+```
+
 ### IPV6 Networking
 
 IPV6 support differs from cloud to cloud. 
