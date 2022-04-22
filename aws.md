@@ -214,6 +214,17 @@ template, apply it to the AWS auto scaling group, and then attach it to the inst
 $ ops instance create <image_name> -t aws -z us-west1-a --instance-group my-instance-group
 ```
 
+### Elastic IP:
+
+If you have already provisioned an elastic ip you may use it by setting
+it in the Cloud Config:
+
+```
+"CloudConfig" :{
+  "StaticIP": "1.2.3.4"
+}
+```
+
 ### IPV6 Networking
 
 IPV6 support differs from cloud to cloud. On AWS DHCPV6 is used. You can
