@@ -6,6 +6,9 @@ nodejs and php) or applications (ie Redis and Nginx). This makes it easier and
 more convenient to execute code without needing to compile your own
 interpreter(s).
 
+You can also create and upload your own public and private packages at
+https://repo.ops.city as well.
+
 ### Listing Packages
 To get a list of currently supported packages, run the following command...
 
@@ -205,4 +208,32 @@ docker build -t bob .
 ```
 ops pkg from-docker bob -n bob -f ls
 ops pkg load --local bob
+```
+
+### Login to the OPS Repo
+
+To upload private and public packages or use your private packages:
+
+You'll need to initially create an account at https://repo.ops.city .
+For now it just relies on github auth:
+
+```
+ops pkg login <api_key>
+```
+
+### Upload a Package
+
+If you have an account from the above step you can login with your
+apikey:
+
+```
+ops pkg login <api-key>
+```
+
+Then, for example, you could create a new node package from docker and
+then push it up:
+
+```
+ops pkg from-docker node:16.3.0 -f node
+ops pkg push node-16.3.0
 ```
