@@ -270,6 +270,27 @@ A map of environment variables:
 }
 ```
 
+### Exec Protection {#exec_protection}
+
+Nanos has an 'exec protection' feature that prevents the kernel from
+executing any code outside the main executable and other 'trusted' files
+explicitly marked. The program is further limited from modifying the
+executable file and creating new ones. This flag may also be used on
+individual files within the children tuple. This prevents the
+application from exec-mapping anything that is not explicitly mapped as
+executable.
+
+This is not on by default, however, as many JITs won't work with it
+turned on.
+
+```json
+{
+  "ManifestPassthrough": {
+    "exec_protection": "t"
+  }
+}
+```
+
 ### Files {#files}
 An array of file locations to include into the image:
 ```json
