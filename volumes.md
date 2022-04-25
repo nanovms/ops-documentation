@@ -41,7 +41,7 @@ $ ops volume list
 
 ## Setup Mount Path
 
-Mounting a volume in an instance requires an image to know beforehand which volumes it should expect and the directories where the volumes will be mounted. The unikernel recognizes the volume by its name/label or UUID.
+Mounting a volume in an instance requires an image to know beforehand which volumes it should expect and the directories where the volumes will be mounted. The unikernel recognizes the volume by its name/label, UUID, or virtual id. The virtual id may be used when you wish to have the same volume name or mount a different volume with a different volume name to the same mount point. The virtual id syntax is currently supported on GCP, Azure and AWS.
 
 You can specify mounts details using the command flag or the configuration file.
 
@@ -49,16 +49,24 @@ Using configuration file, you have to set the `Mounts` property.
 ```JSON
 {
   "Mounts": {
-    "<vol_uuid_or_vol_name>": "<path_in_unikernel_where_vol_will_be_mounted>"
+    "<vol_uuid_or_vol_name_or_virtual_id>": "<path_in_unikernel_where_vol_will_be_mounted>"
   }
 }
 
-// Example
+// Volume Name Example
 {
   "Mounts": {
     "vol": "/files"
   }
 }
+
+// Virtual ID Example
+{
+  "Mounts": {
+    "%1": "/files"
+  }
+}
+
 ```
 And, then you can use the configuration file on creating the image.
 ```
@@ -67,10 +75,13 @@ $ ops image create <image_name> -c <configuration_file>
 
 If you want to test quickly you can also use the `mounts` command flag instead.
 ```sh
-$ ops image create <image_name> --mounts <vol_name_or_vol_uuid>/<path_to_mount>
+$ ops image create <image_name> --mounts <vol_name_or_vol_uuid_or_virtual_id>/<path_to_mount>
 
-// Example
+// Volume Name Example
 $ ops image create webapp --mounts vol:/files
+
+// Virtual ID Example
+$ ops image create webapp --mounts %1:/files
 ```
 
 The mounts must be specified on creating an image. All commands that require to build an image accept the mounts details.
