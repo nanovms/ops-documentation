@@ -15,7 +15,8 @@ vmimport role defined already.
 Nanos supports running on many of the AWS instance types including
 normal instance types like t2 and the newer Nitro based instances such as t3, c5, etc.
 
-We currently don't have support for ARM based instances.
+We recently introduced support for ARM based instances in the form of
+AWS Graviton instances 2 and 3. We also support SMP there.
 
 ## Pre-requisites
 
