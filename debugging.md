@@ -427,3 +427,70 @@ hello!
 100.00     0.001327                        35            9 total
 exit status 1
 ```
+
+## Core Dumps
+
+Nanos supports core dumps. By default they are turned off and enabled if
+specifying a > 0 'coredumplimit' config variable. Ensure that the volume
+size is large enough to contain the core dump as well however.
+
+Locally you can do something like this:
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  printf("yo\n");
+  abort();
+
+  return 0;
+}
+```
+
+with a config like:
+
+```
+{
+  "BaseVolumeSz": "200m",
+  "ManifestPassthrough": {
+    "coredumplimit": "150m"
+  }
+}
+```
+
+Your size will vary with the size and scope of your application.
+
+```
+ops run -c config.json main
+```
+
+You can now see a core has been generated:
+
+```
+➜  t ops image tree main
+/
+|   proc
+|   |   sys
+|   |   |   kernel
+|   |   |   |   hostname
+|   |   self
+|   |   |   exe -> /main
+|   lib
+|   |   x86_64-linux-gnu
+|   |   |   libnss_dns.so.2
+|   etc
+|   |   passwd
+|   |   ssl
+|   |   |   certs
+|   |   |   |   ca-certificates.crt
+|   |   resolv.conf
+|   core
+|   main
+```
+
+Now you can copy it out:
+
+```
+ops image cp main core .
+```
