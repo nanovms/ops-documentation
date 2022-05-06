@@ -11,7 +11,8 @@ For a complete sample of a configuration, see our
 ## Configuration Attributes
 
 ### Args {#args}
-An array of commands to execute when running the image:
+Args is an array of arguments passed to your program to execute when running the image. Most programs will consider the program name as arg[0] but not all.
+
 ```json
 {
     "Args": ["ex.js"]
