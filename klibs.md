@@ -3,16 +3,18 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of the 0.1.34 release there are 7 klibs:
+As of the 0.1.34 release there are 10 klibs:
 
-cloud_init - used for Azure && env config init
-ntp - used for clock syncing
-radar - a klib if using the external Radar service
-syslog - used to ship stdout/stderr to an external syslog - useful if
-you can't/won't modify code
-test - a simple test/template klib
-tls - used for radar/ntp and other klibs that require it
-tun - supports tun devices (eg: vpn gateways)
+* aws
+* cloud_azure - use to check in to the Azure meta-data service
+* cloud_init - used for Azure && env config init
+* cloudwatch - use to implement cloudwatch agent for AWS
+* ntp - used for clock syncing
+* radar - a klib if using the external Radar service
+* syslog - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
+* test - a simple test/template klib
+* tls - used for radar/ntp and other klibs that require it
+* tun - supports tun devices (eg: vpn gateways)
 
 ## NTP
 
