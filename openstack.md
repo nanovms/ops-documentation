@@ -6,13 +6,15 @@ OPS works perfectly fine with OpenStack.
 Some cloud providers using OpenStack that have been tested are [vexxhost](https://vexxhost.com/) and [ovh](https://www.ovh.com/).
 
 In the cloud provider, download a script with the env variables required.
+
 1. Create an account;
 2. Login;
 3. Click `API Access` in left menu;
 4. Click on button with the description `Download OpenStack RC File`;
 5. Select an option which contains the description `RC File`.
-![download rc file](openstack-rc-file.png)
+  ![download rc file](openstack-rc-file.png)
 6. Run `RC file` script in the terminal where you will use ops.
+
 ```
 $ ./6050015361872676-openrc.sh`
 ```
@@ -33,7 +35,6 @@ export OS_PROJECT_ID=""
 
 ```sh
 GOOS=linux go build -o <elf_file>
-
 ops image create <elf_file|program> -c config.json -t openstack -i <image_name>
 ```
 
