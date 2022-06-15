@@ -108,6 +108,34 @@ $ ops volume attach <instance_name> <volume_name>
 
 You can detach a volume from one instance using `ops detach <instance_name> <volume_name>`
 
+## Read Only
+
+You can set a volume as read-only in your manifest like this:
+
+```
+"Mounts": {
+        "%1": "/files1:ro",
+}
+```
+
+or if you are passing via the cli flags:
+
+```
+--mounts "%1:/files1:ro"
+```
+
+If you wish to make the root/base volume readonly you can do so by
+passing the manifest config like so:
+
+```
+"ManifestPassthrough": {
+  "readonly_rootfs": "true"
+}
+```
+
+Note: Read-only in this context applies to the actual volume mount not
+user filesystem access as Nanos doesn't have the notion of users.
+
 ## Cloud Providers
 
 All mounting volumes requirements applies to the cloud providers.
