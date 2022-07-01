@@ -21,11 +21,12 @@ As of the 0.1.34 release there are 10 klibs:
 The `ntp` klib allows to set the configuration properties to synchronize the unikernel clock with a ntp server.
 
 The allowed configuration properties are:
-- `ntpAddress` - the ntp server address;
-- `ntpPort` - the ntp sever port;
-- `ntpPollMin` - the minimum poll time is expressed as a power of two. The default value is 6, corresponding to 64 seconds (2^6 = 64);
-- `ntpPollMax` - the maximum poll time is expressed as a power of two. The default value is 10, corresponding to 1024 seconds (2^10 = 1024).
-- `ntpResetThreshold` - This is a difference threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump. If the difference is over this threshold then step/jump will be used allowing correction over much longer periods.
+- `ntp_servers` - array of ntp servers, with each server specified using the format `<address>[:<port]`
+- `ntp_poll_min` - the minimum poll time is expressed as a power of two. The default value is 4, corresponding to 16 seconds (2^4 = 16)
+- `ntp_poll_max` - the maximum poll time is expressed as a power of two. The default value is 10, corresponding to 1024 seconds (2^10 = 1024)
+- `ntp_reset_threshold` - This is a difference threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump. If the difference is over this threshold then step/jump will be used allowing correction over much longer periods
+- `ntp_max_slew_ppm` - maximum slewing rate for clock offset error correction, expressed in PPM; default value: 83333
+- `ntp_max_freq_ppm` - maximum clock frequency error rate, expressed in PPM; default value: 25000
 
 Use the configuration file to enable the `ntp` klib and setup the settings.
 ```json
@@ -33,11 +34,10 @@ Use the configuration file to enable the `ntp` klib and setup the settings.
   "RunConfig": {
     "Klibs": ["ntp"]
   },
-  "Env": {
-    "ntpAddress": "127.0.0.1",
-    "ntpPort": "1234",
-    "ntpPollMin": "5",
-    "ntpPollMax": "10"
+  "ManifestPassthrough": {
+    "ntp_servers": ["127.0.0.1:1234"],
+    "ntp_poll_min": "5",
+    "ntp_poll_max": "10"
   }
 }
 ```
@@ -53,11 +53,10 @@ then manually adjust the clock on qemu:
   "RunConfig": {
     "Klibs": ["ntp"]
   },
-  "Env": {
-    "ntpAddress": "0.us.pool.ntp.org",
-    "ntpPort": "123",
-    "ntpPollMin": "4",
-    "ntpPollMax": "6"
+  "ManifestPassthrough": {
+    "ntp_servers": ["0.us.pool.ntp.org:123"],
+    "ntp_poll_min": "4",
+    "ntp_poll_max": "6"
   }
 }
 ```
