@@ -303,6 +303,14 @@ An array of file locations to include into the image:
 ### Force {#force}
 _TODO_
 
+### IdleOnExit
+This option keeps a VM running after the user program exits successfully. The VCPUs remain halted.
+```json
+{
+    "IdleOnExit": true
+}
+```
+
 ### Kernel {#kernel}
 _TODO_
 
