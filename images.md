@@ -33,3 +33,9 @@ the image 'redis-server'.
 ```ops image tree redis-server```
 
 Displays the tree output of the image 'redis-server'.
+
+### mirror
+
+```ops image mirror myimage <src_region> <dst_region>```
+
+Copies an image from one region to another. This command is for simple images or images that rely on ext. config stores.
