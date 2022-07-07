@@ -59,7 +59,16 @@ manifest variable 'cwd':
   }
 }
 ```
+#### InstanceProfile
+This configuration setting sets up an IAM role for an instance. Currently, this is only used for AWS but, in the future, it might be used to set roles for other cloud providers.
 
+```json
+{
+    "CloudConfig": {
+        "InstanceProfile": "myrolename"
+    }
+}
+```
 #### BucketName {#cloudconfig.bucketname}
 Bucket name is used to store Ops built image artifacts.
 
