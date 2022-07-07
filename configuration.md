@@ -334,6 +334,14 @@ adds all files under /etc/ssl/certs on host to /usr/lib/ssl/certs on VM.
     "MapDirs": {"/etc/ssl/certs/*": "/usr/lib/ssl/certs" },
 }
 ```
+#### MmapMinAddr
+This is an optional configuration setting that defines the minimum virtual address that a process is allowed to mmap. If set to zero, allow zero-page mappings to occur.
+
+```json
+{
+    "MmapMinAddr" : "0"
+}
+```
 
 ### Mounts {#mounts}
 _TODO_
@@ -540,7 +548,6 @@ Defines a list of directories paths in the host machine whose data will be copie
     }
 }
 ```
-
 #### NetMask {#runconfig.net_mask}
 Defines the netmask of the network interface.
 
