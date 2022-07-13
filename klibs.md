@@ -21,7 +21,7 @@ As of the 0.1.34 release there are 10 klibs:
 The `ntp` klib allows to set the configuration properties to synchronize the unikernel clock with a ntp server.
 
 The allowed configuration properties are:
-- `ntp_servers` - array of ntp servers, with each server specified using the format `<address>[:<port]`
+- `ntp_servers` - array of ntp servers, with each server specified using the format `<address>[:<port]`. The `<address>` string can contain an IP address or a fully qualified domain name; if it contains a numeric IPv6 address, it must be enclosed in square brackets, as per RFC 3986 (example: `"ntp_servers": ["[2610:20:6f97:97::4]", "[2610:20:6f97:97::5]:1234"]`)
 - `ntp_poll_min` - the minimum poll time is expressed as a power of two. The default value is 4, corresponding to 16 seconds (2^4 = 16)
 - `ntp_poll_max` - the maximum poll time is expressed as a power of two. The default value is 10, corresponding to 1024 seconds (2^10 = 1024)
 - `ntp_reset_threshold` - This is a difference threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump. If the difference is over this threshold then step/jump will be used allowing correction over much longer periods
