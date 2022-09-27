@@ -190,6 +190,9 @@ It is important to know that on a MAC you typically won't be able to
 bridge since you probably don't have an actual ethernet card. There
 still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box). Virtualbox has it's own tap kext driver.
 
+There is now experimental support to run bridged newtorking on Big Sur
+and beyond. The [macBridging](https://github.com/nanovms/ops/compare/master...macBridging) branch provides vmnet-bridged support. You can use this if you are using qemu 7.1 or qemu HEAD from brew. You currently need to be root or set the suid bit (chmod +s) to the qemu binary. We haven't enabled it because it requires a special entitlement from Apple.
+
 ## IPv6
 
 IPv6 support varies from cloud to cloud. Please consult the individual

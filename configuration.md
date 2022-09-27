@@ -697,3 +697,19 @@ Below is a sample configuration file for a nodejs application.
 	}
 }
 ```
+
+### TargetConfig
+
+There is currently limited support to adding cloud provider specific
+config. This is done as to not overload the other configuration
+settings.
+
+Currently only the proxmox target has support here. For example:
+
+```json
+{
+  "TargetConfig": {
+    "isoStorageName": "someothervalue"
+  }
+}
+```
