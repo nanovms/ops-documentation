@@ -95,3 +95,29 @@ ops instance stop 100 -t proxmox
 ### Get Logs for Instance
 
 ### Delete Instance
+
+## Networkig
+
+Proxmox has support for assigning multiple nics to the instance. By
+default DHCP is used but static ip addresses can be set as well. Proxmox
+is the only target that we support multiple nics for currently.
+
+A config could look like so:
+```
+{
+  "RunConfig": {
+    "Nics": [
+      {
+        "BridgeName": "vmbr0",
+        "IPAddress": "1.2.3.4",
+        "IPv6Address": "",
+        "Netmask": "",
+        "Gateway": "",
+      },
+      {
+        "BridgeName": "vmbr0"
+      }
+    ]
+  }
+}
+```
