@@ -16,6 +16,15 @@ As of the 0.1.34 release there are 10 klibs:
 * tls - used for radar/ntp and other klibs that require it
 * tun - supports tun devices (eg: vpn gateways)
 
+Not all of these are available to be included in your config. Only the
+ones found in your ~/.ops/release/klibs folder can be specified.
+
+Some of these are auto-included as they provide support that is required
+by certain clouds/hypervisors. You should only include a klib if you
+think you need it. The ones that are required for certain functionality
+will be auto-included by ops. For instance if you are deploying to Azure
+we'll auto-include the cloud_init and tls klibs.
+
 ## NTP
 
 The `ntp` klib allows to set the configuration properties to synchronize the unikernel clock with a ntp server.
