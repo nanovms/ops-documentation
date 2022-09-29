@@ -8,6 +8,13 @@ You'll also want to ensure you have the correct permissions for that
 user's token on both the datacenter and storage for the operations you'd like to
 perform.
 
+The default node name is set to 'pve' but you can reset this through the
+environment variable of 'NODE_NAME':
+
+```
+export NODE_NAME='somethingelse'
+```
+
 ```sh
 package main
 
@@ -96,7 +103,7 @@ ops instance stop 100 -t proxmox
 
 ### Delete Instance
 
-## Networkig
+## Networking
 
 Proxmox has support for assigning multiple nics to the instance. By
 default DHCP is used but static ip addresses can be set as well. Proxmox
@@ -121,3 +128,9 @@ A config could look like so:
   }
 }
 ```
+
+Notes:
+
+If you are running through nested virtualization such as using VMWare
+Fusion there is a known bug where you need to disable KVM on your
+instances.
