@@ -46,6 +46,20 @@ For creating an image using a particular package, you need to provide the packag
 $ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image_name> -t gcp
 ```
 
+Nanos supports running ARM payloads on ARM instances but in order to do
+so you must build your image with an ARM instance type:
+
+```json
+{
+  "CloudConfig": {
+    "Flavor":"t2a-standard-1"
+  }
+}
+```
+
+Also note that this instance type is not supported in every region. You
+can try us-central1-a.
+
 ### List Images
 
 You can list existing images on Google cloud with `ops image list`.
