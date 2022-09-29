@@ -10,7 +10,8 @@ You can also create and upload your own public and private packages at
 https://repo.ops.city as well.
 
 ### Listing Packages
-To get a list of currently supported packages, run the following command...
+To get a list of currently supported packages, run the following
+command:
 
 ```sh
 $ ops pkg list
@@ -30,6 +31,9 @@ $ ops pkg list --search ^[lr]
 | lua_5.2.4   | 5.2.4   | lua      | lua         |
 +-------------+---------+----------+-------------+
 ```
+
+Note: This command will probably go away in the future in favor of
+search.
 
 ### Getting package locally
 Package can be downloaded to the local cache `~/.ops/packages` using `ops get` command.
@@ -237,3 +241,36 @@ then push it up:
 ops pkg from-docker node:16.3.0 -f node
 ops pkg push node-16.3.0
 ```
+
+### Search
+
+You can search for a pakage on https://repo.ops.city like so:
+
+```
+ops pkg search gatsby
+```
+
+Then intention is that this will eventually deprecate 'ops pkg list'.
+
+### Debugging
+
+When working with scripting languages you might run into issues where
+they load libraries at run-time that you aren't aware you need. There
+are two ways to identify these:
+
+You can turn on --trace with ops to look for it loading libraries:
+```
+ops run myprogram --trace &>/tmp/out
+grep -B 1 "direct return: -" /tmp/out
+```
+
+You can use strace and run it normally and look for explicit dlopen
+calls:
+
+```
+strace myprogram 2>&1 | grep -E '^open(at)?\(.*\.so' > /tmp/dlopen
+```
+
+Once you find the missing library you can create the proper directory in
+your package and copy it in or put it into a local directory structure
+if just using 'ops run'.
