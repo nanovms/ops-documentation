@@ -528,3 +528,33 @@ Program terminated with signal SIGABRT, Aborted.
 #4  0x0000007a1af3f7b7 in __GI_abort () at abort.c:79
 #5  0x000000000056d185 in main () at main.c:6
 ```
+
+## Tracing
+
+If you are using '--trace' you can set an optional 'notrace' variable to
+exclude certain output such as:
+
+```
+"notrace": ["open", "close"]
+```
+
+You can also do the opposite such as:
+
+```
+"tracelist": ["open", "close"]
+```
+
+You can also trace groups of related syscalls:
+
+```
+"tracelist": ["%file"]
+```
+
+The supported groups are:
+
+  - %file
+  - %desc
+  - %network
+  - %process
+  - %signal
+  - %memory
