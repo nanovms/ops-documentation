@@ -207,6 +207,12 @@ and use it:
 ops pkg load -l mypkg_0.0.1
 ```
 
+Then you can upload it to [https://repo.ops.city](https://repo.ops.city):
+
+```
+ops pkg push mypkg_0.0.1
+```
+
 ### Create a Package from Docker
 
 You can create a local package from an existing docker container. If the
