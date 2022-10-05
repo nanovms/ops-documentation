@@ -80,6 +80,9 @@ or to force a re-download of the package, you can do it here utilizing the
 
 ### Creating a Custom or Local Dev packages
 
+If you want to create a packaeg manually you can follow these
+instructions:
+
 https://github.com/nanovms/ops/blob/master/PACKAGES.md
 
 then copy over an un-tarred dir to ~/.ops/local_packages
@@ -173,6 +176,35 @@ from a regular package but you pass the '-l' flag in:
 
 ```sh
 ops image create -c test.json -l --package c2_0.0.1 -t gcp -i mytest2
+```
+
+### Create a New Package from an existing Package
+
+You can use an existing package as a base to create a new package. For
+instance if you are deploying a node application you might have
+something that looks like this:
+
+```sh
+ops pkg load eyberg/node:v18.9.0 -c config.json -p 8080
+```
+
+```
+{
+  "Files": ["hi.js"],
+  "Args": ["hi.js"]
+}
+```
+
+You can create a new package from this config like so:
+
+```sh
+ops pkg from-pkg eyberg/node:v18.9.0 -c config.json -n mypkg -v 0.0.1
+```
+
+and use it:
+
+```
+ops pkg load -l mypkg_0.0.1
 ```
 
 ### Create a Package from Docker
