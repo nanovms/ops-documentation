@@ -148,6 +148,24 @@ For example, if running locally via user-mode you can use 10.0.2.2:
 }
 ```
 
+If you are running on Linux you can use rsyslogd for this. By default
+rsyslogd will not listen on UDP 514 so you can un-comment the lines in
+/etc/rsyslog.conf:
+
+```
+module(load="imudp")
+input(type="imudp" port="514")
+```
+
+and restart:
+
+```
+sudo service rsyslog restart
+```
+
+also you can disable the dupe filter or add a timetstamp to skirt around
+that.
+
 ## Cloud Init - HTTP->File KLIB
 
 Cloud Init has 2 functions.
