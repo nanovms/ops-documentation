@@ -8,6 +8,25 @@ variables. This file follows the standard json format.
 For a complete sample of a configuration, see our
 [sample](configuration.md#sample).
 
+You can also enable config interpolation for things like secrets, hosts
+or other configuration that you would like to inject from your
+environment. This is helpful to reduce duplicate config:
+
+For example:
+```
+secret=test ops_render_config=true ops run -c config.json
+```
+
+Will populate 'secret' with 'test':
+
+```
+{
+  "Env": {
+    "secret": "$secret"
+  }
+}
+```
+
 ## Configuration Attributes
 
 ### Args {#args}
