@@ -180,10 +180,17 @@ when security or ops teams are separate from dev or build teams and they
 might handle deploying tls certificates or secrets post-deploy. All
 files are downloaded before execution of the main program.
 
+The cloud_init klib supports a configuration option to overwrite previous files: it's called `overwrite"`.
+If you specify this option for a given file, by inserting an `overwrite` JSON attribute with any string value,
+cloud_init will re-download the file at every boot.
+
 Certain caveats to be aware of:
 
 * Only direct download links are supported today. (no redirects)
-* Chunked transfer is not supported. (don't try to download a movie)
+* HTTP chunked transfer encoding is not supported, (don't try to download a movie).
+  If the source server uses this encoding, a file download may never complete.
+* When cloud_init cannot download one or more files, the kernel does not start the user program.
+  The rationale for this is that we want all files to be ready and accessible when the program starts.
 
 Also, be aware that you set an appropriate minimum image base size to
 accomodate your files.
@@ -208,7 +215,7 @@ func main() {
 }
 ```
 
-Example config:
+Example config - _no overwrite_ - existing destination file won't be changed/overwritten:
 
 ```json
 {
@@ -220,7 +227,34 @@ Example config:
   "ManifestPassthrough": {
     "cloud_init": {
       "download": [
-        {"src": "https://ops.city", "dest": "/nanos.md"}
+        {
+          "src": "https://raw.githubusercontent.com/nanovms/ops-documentation/master/README.md",
+          "dest": "/nanos.md"
+        }
+      ]
+    }
+  }
+
+}
+```
+
+Example config - _overwrite_ - existing destination file will be replaced/overwritten at every boot:
+
+```json
+{
+  "BaseVolumeSz": "20m",
+ "RunConfig": {
+    "Klibs": ["cloud_init", "tls"]
+  },
+
+  "ManifestPassthrough": {
+    "cloud_init": {
+      "download": [
+        {
+          "src": "https://raw.githubusercontent.com/nanovms/ops-documentation/master/README.md",
+          "dest": "/nanos.md",
+          "overwrite": "t"
+        }
       ]
     }
   }
