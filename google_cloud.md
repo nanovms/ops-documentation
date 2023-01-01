@@ -120,7 +120,7 @@ Sample config
         "BucketName":"my-s3-bucket"
     },
     "RunConfig": {
-        "Ports" : [80, 443]
+        "Ports" : ["80", "443"]
     }
 }
 ```
@@ -140,6 +140,20 @@ If you would like to set a static private ip you can use the following:
 ```
 
 Note: You must choose an available IP that is within your chosen/default VPC.
+
+#### IP Forwarding
+
+By default, IP forwarding is `disabled` on GCP.
+
+If you would like to enable IP forwarding when creating the instance you can use the following:
+
+```json
+{
+    "RunConfig":{
+      "CanIPForward": true
+    }
+}
+```
 
 ### List Instances
 
@@ -301,7 +315,7 @@ it in the Cloud Config:
 
 ### IPV6 Networking
 
-IPV6 support differs from cloud to cloud. 
+IPV6 support differs from cloud to cloud.
 
 To use IPv6 on Google Cloud you must create a VPC and a subnet with IPv6
 enabled. You can not use the legacy network nor can you use an
