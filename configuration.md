@@ -632,6 +632,17 @@ Connects the unikernel network interface to a bridge with the name specified. If
 }
 ```
 
+#### CanIPForward {#runconfig.can_ip_forward}
+Enable IP forwarding when creating an instance. Only **GCP** provider.
+
+```json
+{
+    "RunConfig": {
+        "CanIPForward": true
+    }
+}
+```
+
 #### CPUs {#runconfig.cpus}
 Specifies the number of CPU cores the unikernel is allowed to use.
 
