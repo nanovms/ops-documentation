@@ -180,9 +180,13 @@ when security or ops teams are separate from dev or build teams and they
 might handle deploying tls certificates or secrets post-deploy. All
 files are downloaded before execution of the main program.
 
-The cloud_init klib supports a configuration option to overwrite previous files: it's called `overwrite"`.
+The cloud_init klib supports a configuration option to overwrite previous files: it's called `overwrite`.
 If you specify this option for a given file, by inserting an `overwrite` JSON attribute with any string value,
 cloud_init will re-download the file at every boot.
+
+The cloud_init klib also supports simple authentication mechanisms by using `auth` config option.
+It uses HTTP Authorization request header `Authorization: <auth-scheme> <authorization-parameters>`
+where `<auth-scheme>` and  `<authorization-parameters>` are configurable.
 
 Certain caveats to be aware of:
 
@@ -254,6 +258,30 @@ Example config - _overwrite_ - existing destination file will be replaced/overwr
           "src": "https://raw.githubusercontent.com/nanovms/ops-documentation/master/README.md",
           "dest": "/nanos.md",
           "overwrite": "t"
+        }
+      ]
+    }
+  }
+
+}
+```
+
+Example config, basic access authentication - _auth_ - `Authorization` header will be added to the request:
+
+```json
+{
+  "BaseVolumeSz": "20m",
+ "RunConfig": {
+    "Klibs": ["cloud_init", "tls"]
+  },
+
+  "ManifestPassthrough": {
+    "cloud_init": {
+      "download": [
+        {
+          "src": "https://httpbin.org/hidden-basic-auth/user/passwd",
+          "dest": "/basic_auth_test.txt",
+          "auth": "Basic dXNlcjpwYXNzd2Q="
         }
       ]
     }
