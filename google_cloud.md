@@ -125,6 +125,16 @@ Sample config
 }
 ```
 
+#### Spot Provisioning
+
+You maybe enable spot provisioning using the following config:
+
+```
+  "CloudConfig": {
+    "Spot": true
+  }
+```
+
 #### Private Static IP
 
 By default, ops uses will rely on DHCP.
