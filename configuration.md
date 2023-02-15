@@ -1010,6 +1010,17 @@ This is an optional configuration setting that defines the minimum virtual addre
 }
 ```
 
+#### Exec Wait For IPv4 {#manifestpassthrough.exec_wait_for_ipv4}
+This is an optional configuration setting that allows Nanos to wait for a valid ipv4 address to become available via DHCP using the timeout of 'exec_wait_for_ip4_secs'. If static ip is set than there is no effect. This configuration is not on by default.
+
+```json
+{
+    "ManifestPassthrough": {
+        "exec_wait_for_ip4_secs": "5"
+    }
+}
+```
+
 #### ltrace {#manifestpassthrough.ltrace}
 This enables tracing calls made by the application binary to dynamic library functions.
 It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
