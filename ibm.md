@@ -30,7 +30,7 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 }
 ```
 
-Once, you have updated `config.json` you can create an image in Google Cloud with the following command.
+Once, you have updated `config.json` you can create an image in IBM Cloud with the following command.
 
 ```sh
 $ ops image create -t ibm <program> -c config.json
@@ -44,7 +44,7 @@ $ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image_name> -t ib
 
 ### List Images
 
-You can list existing images on Google cloud with `ops image list`.
+You can list existing images on IBM cloud with `ops image list`.
 
 ```sh
 $ ops image list
