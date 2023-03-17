@@ -16,7 +16,7 @@ $ export TOKEN="somethinguniqueandrandom"
 ### Create Image
 
 If you have already created an Ops project, you can update your existing `config.json`.
-You need to add [CloudConfig](configuration.md#cloudconfig) which mentions specific details like `ProjectID`, `BucketName`.
+You need to add [CloudConfig](configuration.md#cloudconfig) which mentions specific details like  `BucketName`.
 
 ```json
 {
