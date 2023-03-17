@@ -6,7 +6,7 @@ Once, you have uploaded image, you can also create an instance with a particular
 
 ## Pre-requisites
 
-Create a token and export it:
+[Create an api key](https://cloud.ibm.com/iam/apikeys) and export it:
 
 ```sh
 $ export TOKEN="somethinguniqueandrandom"
