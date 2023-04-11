@@ -138,6 +138,22 @@ The `CloudConfig` configures various attributes about the cloud provider, we wan
 }
 ```
 
+#### DedicatedHostId {#cloudconfig.dedicated_hostid}
+This option is supported on [**AWS**](https://aws.amazon.com/ec2/dedicated-hosts/pricing/#Dedicated_Hosts_Configuration_Table) only.
+Please keep in mind that, depending on the dedicated host type, only some instance flavors may be available.
+
+`DedicatedHostId` is used to specify the dedicated host id placement on cloud provider.
+
+```json
+{
+  "CloudConfig" : {
+      "DedicatedHostId": "h-deadbeefdeadbeef1",
+      "Flavor": "c4.large",
+      "BucketName":"my-bucket"
+  }
+}
+```
+
 #### DomainName {#cloudconfig.domain_name}
 `DomainName` is used to update DNS entry with the started instance IP.
 
