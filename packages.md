@@ -252,6 +252,32 @@ ops pkg from-docker bob -n bob -f ls
 ops pkg load --local bob
 ```
 
+### Create a Package from 'ops run' style
+
+You can create a local package in the same style you use `ops run`
+
+```sh
+$ ops run myprogram
+```
+
+by using `ops pkg from-run`
+
+```sh
+$ ops pkg from-run --name mypackage --version v0.1 myprogram
+creating new pkg
+$
+
+$ ops pkg list --local
++-----------+-------------+---------+----------+---------+--------------------------------+
+| NAMESPACE | PACKAGENAME | VERSION | LANGUAGE | RUNTIME |          DESCRIPTION           |
++-----------+-------------+---------+----------+---------+--------------------------------+
+|           | mypackage   | v0.1    |          |         |                                |
++-----------+-------------+---------+----------+---------+--------------------------------+
+
+$ ops pkg load --local mypackage_v0.1
+...
+```
+
 ### Login to the OPS Repo
 
 To upload private and public packages or use your private packages:
