@@ -75,15 +75,15 @@ then manually adjust the clock on qemu:
 package main
 
 import (
-        "fmt"
-        "time"
+	"fmt"
+	"time"
 )
 
 func main() {
-        for i := 0; i < 10; i++ {
-                fmt.Println("Current Time in String: ", time.Now().String())
-                time.Sleep(8 * time.Second)
-        }
+	for i := 0; i < 10; i++ {
+		fmt.Println("Current Time in String: ", time.Now().String())
+		time.Sleep(8 * time.Second)
+	}
 }
 ```
 
@@ -135,14 +135,14 @@ klib in your config.
 
 For example, if running locally via user-mode you can use 10.0.2.2:
 
-```
+```json
 {
   "ManifestPassthrough": {
     "syslog": {
       "server": "10.0.2.2"
     }
   },
- "RunConfig": {
+  "RunConfig": {
     "Klibs": ["syslog"]
   }
 }
@@ -166,9 +166,9 @@ sudo service rsyslog restart
 also you can disable the dupe filter or add a timetstamp to skirt around
 that.
 
-## Cloud Init - HTTP->File KLIB
+## Cloud Init - HTTP(s) to File/Env KLIB
 
-Cloud Init has 2 functions.
+Cloud Init has 3 functions.
 
 1) For Azure machines it is auto-included to check in to the meta server
 to tell Azure that the machine has completed booting. This is necessary,
@@ -179,6 +179,10 @@ files to the instance for post-deploy config options. This is useful
 when security or ops teams are separate from dev or build teams and they
 might handle deploying tls certificates or secrets post-deploy. All
 files are downloaded before execution of the main program.
+
+3) One can include this on any platform to populate the environment
+of the user process with variables whose name and value are retrieved
+from an HTTP(S) server during startup.
 
 The cloud_init klib supports a configuration option to overwrite previous files: it's called `overwrite`.
 If you specify this option for a given file, by inserting an `overwrite` JSON attribute with any string value,
@@ -195,6 +199,7 @@ Certain caveats to be aware of:
   If the source server uses this encoding, a file download may never complete.
 * When cloud_init cannot download one or more files, the kernel does not start the user program.
   The rationale for this is that we want all files to be ready and accessible when the program starts.
+* When used to populate the user environment, only string-valued attributes are converted to environment variables (**non-string-valued attributes are ignored**).
 
 Also, be aware that you set an appropriate minimum image base size to
 accomodate your files.
@@ -206,11 +211,11 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 )
 
 func main() {
-	body, err := ioutil.ReadFile("/nanos.md")
+	body, err := os.ReadFile("/nanos.md")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -224,7 +229,7 @@ Example config - _no overwrite_ - existing destination file won't be changed/ove
 ```json
 {
   "BaseVolumeSz": "20m",
- "RunConfig": {
+  "RunConfig": {
     "Klibs": ["cloud_init", "tls"]
   },
 
@@ -247,7 +252,7 @@ Example config - _overwrite_ - existing destination file will be replaced/overwr
 ```json
 {
   "BaseVolumeSz": "20m",
- "RunConfig": {
+  "RunConfig": {
     "Klibs": ["cloud_init", "tls"]
   },
 
@@ -271,7 +276,7 @@ Example config, basic access authentication - _auth_ - `Authorization` header wi
 ```json
 {
   "BaseVolumeSz": "20m",
- "RunConfig": {
+  "RunConfig": {
     "Klibs": ["cloud_init", "tls"]
   },
 
@@ -288,4 +293,169 @@ Example config, basic access authentication - _auth_ - `Authorization` header wi
   }
 
 }
+```
+
+Example config, with environment variables management - `download_env` config:
+
+The configuration syntax in the manifest to use this functionality is as in the following example:
+
+```json
+  "ManifestPassthrough": {
+    "cloud_init": {
+
+      "download_env": [
+        {
+          "src": "http://10.0.2.2:8200/v1/secret/data/hello",
+          "auth": "Bearer hvs.6v6yY5yZf32uZzaa7HhiX6AZ",
+          "path": "attr1/attr2"
+        }
+      ]
+
+    }
+  },
+```
+
+The `download_env` attribute is an array where each element specifies
+ - `src`  - download source URL
+ - `auth` - _optional_ authentication header
+ - `path` -  _optional_ attribute path
+
+For each element in the `download_env` attribute, the klib executes an HTTP request to the specified URL, and if the peer responds successfully,
+the response body is parsed as a JSON object, and from this object an "environment object" is retrieved.
+
+If the attribute path (i.e. the path element in the manifest) is not present (or is empty), the environment object corresponds to the root JSON object of the response body, otherwise,
+for each element in the attribute path (`where the element separator is the / character`), a _nested_ JSON object is retrieved from the response body by looking up an attribute named after the element
+(**the corresponding attribute value must be a JSON object**): _the environment object is the nested object corresponding to the last element of the attribute path_.
+
+Once the environment object is identified, **all string-valued attributes** in this object are converted to environment variables (**non-string-valued attributes are ignored**).
+
+Examples:
+
+an empty attribute path can be used to retrieve the environment variables from the following response body:
+
+```json
+{
+  "VAR1": "value1",
+  "VAR2": "value2"
+}
+```
+
+an attribute path set to "obj1/obj2" can be used to retrieve the environment variables from the following response body:
+
+```json
+{
+  "obj1": {
+    "obj2": {
+      "VAR1": "value1",
+      "VAR2": "value2"
+    }
+  }
+}
+```
+
+`"VAR1"` and `VAR2`, being **non-string-valued attributes**, will be **ignored** from the following response body:
+
+```json
+{
+  "VAR1": 1,
+  "VAR2": true,
+  "VAR3": "value3"
+}
+```
+
+Full example:
+
+nanos config:
+
+```json
+{
+  "BaseVolumeSz": "20m",
+  "RunConfig": {
+    "Klibs": [
+      "cloud_init",
+      "tls"
+    ]
+  },
+  "ManifestPassthrough": {
+    "cloud_init": {
+      "download": [
+        {
+          "src": "https://httpbin.org/hidden-basic-auth/user/passwd",
+          "dest": "/cloud_init_test.json",
+          "overwrite": "t",
+          "auth": "Basic dXNlcjpwYXNzd2Q="
+        }
+      ],
+      "download_env": [
+        {
+          "src": "https://httpbin.org/hidden-basic-auth/user/passwd",
+          "auth": "Basic dXNlcjpwYXNzd2Q=",
+          "path": ""
+        }
+      ]
+    }
+  }
+}
+
+```
+
+go program sample:
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+const (
+	AUTH_RESULT_FILE  = "cloud_init_test.json" // {"authenticated": true, "user": "user"}
+	ENV_AUTHENTICATED = "authenticated"
+	ENV_USER          = "user"
+)
+
+func main() {
+	// ManifestPassthrough.cloud_init.download
+	authResult, err := os.ReadFile(AUTH_RESULT_FILE)
+	if err != nil {
+		fmt.Printf("error reading file - %s (%s)\n", AUTH_RESULT_FILE, err.Error())
+	} else {
+		fmt.Printf("%s - content:\n", AUTH_RESULT_FILE)
+		fmt.Printf("%s\n", string(authResult))
+	}
+
+	// ManifestPassthrough.cloud_init.download_env
+	authenticated, ok := os.LookupEnv(ENV_AUTHENTICATED)
+	if !ok {
+		fmt.Printf("ENV: %q - not found\n", ENV_AUTHENTICATED)
+	} else {
+		fmt.Printf("ENV: %q = %q\n", ENV_AUTHENTICATED, authenticated)
+	}
+
+	// ManifestPassthrough.cloud_init.download_env
+	user, ok := os.LookupEnv(ENV_USER)
+	if !ok {
+		fmt.Printf("ENV: %q - not found\n", ENV_USER)
+	} else {
+		fmt.Printf("ENV: %q = %q\n", ENV_USER, user)
+	}
+}
+```
+
+from the result, as expected, `"authenticated"` - being **non-string-valued attribute**, is not available in the environment:
+
+```sh
+booting /home/ops/.ops/images/cloudinit_test ...
+...
+
+cloud_init_test.json - content:
+{
+  "authenticated": true,
+  "user": "user"
+}
+
+ENV: "authenticated" - not found
+ENV: "user" = "user"
+...
 ```
