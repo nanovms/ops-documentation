@@ -1049,6 +1049,18 @@ It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
 }
 ```
 
+#### so_rcvbuf {#manifestpassthrough.so_rcvbuf}
+This is an optional configuration setting used to manage the size (in bytes) of the socket receive buffer.
+The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, you could use the following config:
+
+```json
+{
+    "ManifestPassthrough": {
+        "so_rcvbuf": "524288"
+    }
+}
+```
+
 ### Debugflags {#debugflags}
 `Debugflags` adds additional debug flags to the runtime.
 
