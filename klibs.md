@@ -3,20 +3,22 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of the 0.1.34 release there are 10 klibs:
+As of Nanos [016b5f3](https://github.com/nanovms/nanos/commit/016b5f39d5e5d9db1ae8da12fa1a6b4e066f2ef2) there are 12 klibs:
 
-* aws
-* cloud_azure - use to check in to the Azure meta-data service
-* cloud_init - used for Azure && env config init
-* cloudwatch - use to implement cloudwatch agent for AWS
-* ntp - used for clock syncing
-* radar - a klib if using the external Radar service
-* syslog - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
-* test - a simple test/template klib
-* tls - used for radar/ntp and other klibs that require it
-* tun - supports tun devices (eg: vpn gateways)
+* __cloud_init__ - used for Azure && env config init
+  * __cloud_azure__ - use to check in to the Azure meta-data service
+* __cloudwatch__ - use to implement cloudwatch agent for AWS
+  * __aws__
+* __firewall__ - use to implement network firewall
+* __gcp__
+* __ntp__ - used for clock syncing
+* __radar__ - a klib if using the external Radar service
+* __syslog__ - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
+* __tls__ - used for radar/ntp and other klibs that require it
+* __tun__ - supports tun devices (eg: vpn gateways)
+* __test__ - a simple test/template klib
 
-Not all of these are available to be included in your config. Only the
+Not all of these are available to be included in your config (__cloud_azure__, __aws__) . Only the
 ones found in your ~/.ops/release/klibs folder can be specified.
 
 Some of these are auto-included as they provide support that is required
@@ -458,4 +460,138 @@ cloud_init_test.json - content:
 ENV: "authenticated" - not found
 ENV: "user" = "user"
 ...
+```
+
+## Firewall
+
+This klib implements a __network firewall__. The firewall can drop IP packets received from any network interface, based on a set of rules defined in the manifest.
+Each rule is specified as a tuple located in the rules array of the firewall tuple in the manifest. Valid attributes for a firewall rule are the following:
+
+* `ip`: matches IPv4 packets, and is a tuple that can have the following attributes:
+  * `src`: matches packets based on the __source IPv4 address__, which is specified with the standard _dotted notation_ __aaa.bbb.ccc.ddd__,
+           can be _prefixed_ by an optional __!__ character which makes the rule match packets with an address different from the provided value,
+           and can be _suffixed_ with an __optional netmask__ (with format /<n>, where <n> can have a value from 1 to 32) which matches packets based on the first part of the provided address
+
+* `ip6`: matches IPv6 packets, and is a tuple that can have the following attributes:
+  * `src`: matches packets based on the __source IPv6 address__, which is specified with the standard notation for IPv6 addresses,
+           and similarly to its IPv4 counterpart can be _prefixed_ with a __!__ character and _suffixed_ with a __netmask (with allowed values from 1 to 128)__
+
+* `tcp`: matches TCP packets, and is a tuple that can have the following attributes:
+  * `dest`: matches packets based on the __TCP destination port__ (whose value can be prefixed with a __!__ character to negate the logical comparison with the port value in a packet)
+
+* `udp`: matches UDP packets, and is a tuple that can have the following attributes:
+  * `dest`: matches packets based on the __UDP destination port__ (whose value can be prefixed with a __!__ character to negate the logical comparison with the port value in a packet)
+
+* `action`: indicates which action should be performed by the firewall when a matching packet is received:
+            _allowed_ values are __"accept"__ and __"drop"__; if this attribute is not present, __the default action for the rule is to drop matching packets__
+
+Firewall rules are _evaluated for each received packet in the order they are defined_,
+until a matching rule (i.e. a rule where all the attributes match the packet contents) is found and the corresponding action is executed.
+_If a packet does not match any rule, it is_ __accepted__.
+
+Example contents of Ops configuration file:
+
+* accept all TCP packets to port 8080, drop all other packets:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"tcp": {"dest": "8080"}, "action": "accept"},
+	    {"action": "drop"}
+      ]
+    }
+  }
+}
+```
+
+* accept all packets coming from IP address 10.0.2.2, drop packets from other addresses unless they are to TCP port 8080:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip": {"src": "10.0.2.2"}, "action": "accept"},
+        {"tcp": {"dest": "8080"}, "action": "accept"},
+	    {"action": "drop"}
+      ]
+    }
+  }
+}
+```
+
+* drop all packets coming from IP address 10.0.2.2:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip": {"src": "10.0.2.2"}, "action": "drop"}
+      ]
+    }
+  }
+}
+```
+
+* drop IPv4 packets coming from addresses other than 10.0.2.2:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip": {"src": "!10.0.2.2"}, "action": "drop"}
+      ]
+    }
+  }
+}
+```
+
+* drop all UDP packets coming from IP addresses in the range 10.0.2.0-10.0.2.255:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip": {"src": "10.0.2.0/24"}, "udp": {}, "action": "drop"}
+      ]
+    }
+  }
+}
+```
+
+* drop all packets coming from IPv6 address FE80::FF:7762:
+
+```json
+{
+  "RunConfig": {
+    "Klibs": ["firewall"]
+  },
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip6": {"src": "FE80::FF:7762"}, "action": "drop"}
+      ]
+    }
+  }
+}
 ```
