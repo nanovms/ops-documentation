@@ -1002,6 +1002,19 @@ turned on.
 }
 ```
 
+#### Program Overwrite Protection {#program_overwrite}
+
+By default, the user application is not allowed to overwrite the __program__ binary file (and __interpreter__, if present).
+This default behavior can be overridden by inserting a `program_overwrite` attribute in the root tuple of the manifest.
+
+```json
+{
+    "ManifestPassthrough": {
+        "program_overwrite": "t"
+    }
+}
+```
+
 #### CWD {#manifestpassthrough.cwd}
 Some applications expect to have a working directory in a different
 place than where they have been placed. You can adjust this via the
