@@ -1049,6 +1049,26 @@ It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
 }
 ```
 
+#### trace {#manifestpassthrough.trace}
+
+This is an optional configuration setting that allows specifying trace flags (i.e. a comma-delimited set of trace message types) in the `trace` symbol of the root tuple.
+_A given trace message is output only if its message type is enabled in the trace flags._
+
+- `pf` - page-fault-related messages - sets `TRACE_PAGE_FAULT`
+- `threadrun` - messages output when returning to user threads - sets `TRACE_THREAD_RUN`
+- `all` - all tracing messages are enabled
+- for backward compatibility, __any unknown trace flag__ *enables all messages output via calls to thread_log()*. - sets `TRACE_OTHER`
+
+_Example_: a `"trace:pf,other"` value in the manifest enables page-fault-related messages and messages classified as "other".
+
+```json
+{
+    "ManifestPassthrough": {
+        "trace:pf,threadrun,all": {}
+    }
+}
+```
+
 #### so_rcvbuf {#manifestpassthrough.so_rcvbuf}
 This is an optional configuration setting used to manage the size (in bytes) of the socket receive buffer.
 The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, you could use the following config:
@@ -1066,7 +1086,7 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 
 ```json
 {
-    "Debugflags": ["trace", "debugsyscalls"]
+    "Debugflags": ["trace:pf,threadrun,all", "debugsyscalls"]
 }
 ```
 
