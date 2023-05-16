@@ -414,6 +414,15 @@ _File  layout on VM:_
 }
 ```
 
+#### Klibs {#klibs}
+Defines a list of klibs to include. For example to run the NTP klib (eg: ntpd):
+
+```json
+{
+    "Klibs":["ntp"]
+}
+```
+
 ### MapDirs {#mapdirs}
 `MapDirs` sets map of a local directory to a different path on the guest VM. For example the below
 adds all files under `/etc/ssl/certs` on host to `/usr/lib/ssl/certs` on VM.
@@ -795,16 +804,6 @@ Defines the static IPv6 address of the network interface.
 }
 ```
 
-#### Klibs {#runconfig.klibs}
-Defines a list of klibs to include. For example to run the NTP klib (eg: ntpd):
-
-```json
-{
-    "RunConfig":{
-        "Klibs":["ntp"]
-    }
-}
-```
 
 #### Memory {#runconfig.memory}
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.
