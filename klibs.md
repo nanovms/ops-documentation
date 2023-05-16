@@ -42,9 +42,7 @@ The allowed configuration properties are:
 Use the configuration file to enable the `ntp` klib and setup the settings.
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["ntp"]
-  },
+  "Klibs": ["ntp"],
   "ManifestPassthrough": {
     "ntp_servers": ["127.0.0.1:1234"],
     "ntp_poll_min": "5",
@@ -61,9 +59,7 @@ then manually adjust the clock on qemu:
 ```json
 ➜  g cat config.json
 {
-  "RunConfig": {
-    "Klibs": ["ntp"]
-  },
+  "Klibs": ["ntp"],
   "ManifestPassthrough": {
     "ntp_servers": ["0.us.pool.ntp.org:123"],
     "ntp_poll_min": "4",
@@ -144,9 +140,7 @@ For example, if running locally via user-mode you can use 10.0.2.2:
       "server": "10.0.2.2"
     }
   },
-  "RunConfig": {
-    "Klibs": ["syslog"]
-  }
+  "Klibs": ["syslog"]
 }
 ```
 
@@ -231,9 +225,7 @@ Example config - _no overwrite_ - existing destination file won't be changed/ove
 ```json
 {
   "BaseVolumeSz": "20m",
-  "RunConfig": {
-    "Klibs": ["cloud_init", "tls"]
-  },
+  "Klibs": ["cloud_init", "tls"],
 
   "ManifestPassthrough": {
     "cloud_init": {
@@ -254,9 +246,7 @@ Example config - _overwrite_ - existing destination file will be replaced/overwr
 ```json
 {
   "BaseVolumeSz": "20m",
-  "RunConfig": {
-    "Klibs": ["cloud_init", "tls"]
-  },
+  "Klibs": ["cloud_init", "tls"],
 
   "ManifestPassthrough": {
     "cloud_init": {
@@ -278,9 +268,7 @@ Example config, basic access authentication - _auth_ - `Authorization` header wi
 ```json
 {
   "BaseVolumeSz": "20m",
-  "RunConfig": {
-    "Klibs": ["cloud_init", "tls"]
-  },
+  "Klibs": ["cloud_init", "tls"],
 
   "ManifestPassthrough": {
     "cloud_init": {
@@ -372,12 +360,10 @@ nanos config:
 ```json
 {
   "BaseVolumeSz": "20m",
-  "RunConfig": {
-    "Klibs": [
-      "cloud_init",
-      "tls"
-    ]
-  },
+  "Klibs": [
+    "cloud_init",
+    "tls"
+  ],
   "ManifestPassthrough": {
     "cloud_init": {
       "download": [
@@ -495,9 +481,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
@@ -513,9 +497,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
@@ -532,9 +514,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
@@ -549,9 +529,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
@@ -566,9 +544,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
@@ -583,9 +559,7 @@ Example contents of Ops configuration file:
 
 ```json
 {
-  "RunConfig": {
-    "Klibs": ["firewall"]
-  },
+  "Klibs": ["firewall"],
   "ManifestPassthrough": {
     "firewall": {
       "rules": [
