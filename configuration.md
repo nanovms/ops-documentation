@@ -1,5 +1,6 @@
 Configuration
 =============
+
 The configuration file used by `ops` (such as one passed as a parameter,
 e.g. `ops --config myconfig.json`) specifies various options and attributes
 of code execution, such as files to include, arguments, and environment
@@ -13,6 +14,7 @@ or other configuration that you would like to inject from your
 environment. This is helpful to reduce duplicate config:
 
 For example:
+
 ```sh
 secret=test ops_render_config=true ops run -c config.json
 ```
@@ -30,16 +32,18 @@ Will populate 'secret' with 'test':
 ## Configuration Attributes
 
 ### OPS_HOME
+
 The OPS_HOME environment variable points to the location of where ops
 will store build images and releases locally. By default it is set to
 ~/.ops . However there are some use-cases where you might want it set to
 something else like so:
 
-```
+```bash
 OPS_HOME=/opt/ops
 ```
 
 ### Args {#args}
+
 `Args` is an array of arguments passed to your program to execute when running the image. Most programs will consider the program name as arg[0] but not all.
 
 ```json
@@ -49,6 +53,7 @@ OPS_HOME=/opt/ops
 ```
 
 ### DisableArgsCopy {#disable_args_copy}
+
 `DisableArgsCopy`, when set to _true_, disables the auto copy of files from host to image when present in args.
 
 ```json
@@ -59,11 +64,13 @@ OPS_HOME=/opt/ops
 ```
 
 ### BaseVolumeSz {#base_volume_size}
+
 The `BaseVolumeSz` is an optional parameter you can pass to specify
 the size of the base volume. By default the size is the end of blocks
 written by TFS.
 
 To specify 100 megabytes:
+
 ```json
 {
     "BaseVolumeSz": "100m"
@@ -71,6 +78,7 @@ To specify 100 megabytes:
 ```
 
 To specify 1 gigabyte:
+
 ```json
 {
     "BaseVolumeSz": "1g"
@@ -78,6 +86,7 @@ To specify 1 gigabyte:
 ```
 
 ### Boot {#boot}
+
 `Boot` sets the path of bootloader file.
 
 ```json
@@ -87,6 +96,7 @@ To specify 1 gigabyte:
 ```
 
 ### Uefi {#uefi}
+
 `Uefi` indicates whether image should support booting via UEFI. Default is `false`.
 
 ```json
@@ -96,6 +106,7 @@ To specify 1 gigabyte:
 ```
 
 ### UefiBoot {#uefi_boot}
+
 `UefiBoot` sets the path of UEFI bootloader file.
 
 ```json
@@ -105,6 +116,7 @@ To specify 1 gigabyte:
 ```
 
 ### BuildDir {#build_dir}
+
 `BuildDir` path to the temporary directory used during image build.
 
 ```json
@@ -114,9 +126,11 @@ To specify 1 gigabyte:
 ```
 
 ### CloudConfig {#cloudconfig}
+
 The `CloudConfig` configures various attributes about the cloud provider, we want to use with ops.
 
 #### BucketName {#cloudconfig.bucket_name}
+
 `BucketName` specifies the bucket to store the Ops built image artifacts.
 
 ```json
@@ -128,6 +142,7 @@ The `CloudConfig` configures various attributes about the cloud provider, we wan
 ```
 
 #### BucketNamespace {#cloudconfig.bucket_namespace}
+
 `BucketNamespace` is required on uploading files to cloud providers as oci.
 
 ```json
@@ -139,6 +154,7 @@ The `CloudConfig` configures various attributes about the cloud provider, we wan
 ```
 
 #### DedicatedHostId {#cloudconfig.dedicated_hostid}
+
 This option is supported on [**AWS**](https://aws.amazon.com/ec2/dedicated-hosts/pricing/#Dedicated_Hosts_Configuration_Table) only.
 Please keep in mind that, depending on the dedicated host type, only some instance flavors may be available.
 
@@ -155,6 +171,7 @@ Please keep in mind that, depending on the dedicated host type, only some instan
 ```
 
 #### DomainName {#cloudconfig.domain_name}
+
 `DomainName` is used to update DNS entry with the started instance IP.
 
 ```json
@@ -166,6 +183,7 @@ Please keep in mind that, depending on the dedicated host type, only some instan
 ```
 
 #### StaticIP {#cloudconfig.static_ip}
+
 This option is only supported on **AWS**, **GCP**.
 
 `StaticIP` by cloud provider to assign a public static IP to a NIC.
@@ -179,6 +197,7 @@ This option is only supported on **AWS**, **GCP**.
 ```
 
 #### EnableIPv6 {#cloudconfig.enable_ipv6}
+
 This option is only supported on **AWS**, **GCP**.
 
 If `EnableIPv6` is set to true and a VPC is created, the new VPC will have ipv6 support. Otherwise, it doesn't affect the selected VPC ipv6 support.
@@ -192,6 +211,7 @@ If `EnableIPv6` is set to true and a VPC is created, the new VPC will have ipv6 
 ```
 
 #### Flavor {#cloudconfig.flavor}
+
 `Flavor` specifies the machine type used to create an instance. Each cloud provider has different types descriptions.
 
 ```json
@@ -203,6 +223,7 @@ If `EnableIPv6` is set to true and a VPC is created, the new VPC will have ipv6 
 ```
 
 #### ImageType {#cloudconfig.image_type}
+
 `ImageType` allows the user to specify an image type (whose possible values are target platform-specific) when creating an image.
 Can be used to create images for Hyper-V generation 2 instances.
 
@@ -215,6 +236,7 @@ Can be used to create images for Hyper-V generation 2 instances.
 ```
 
 #### ImageName {#cloudconfig.image_name}
+
 `ImageName` specifies the image name in the cloud provider.
 
 ```json
@@ -226,6 +248,7 @@ Can be used to create images for Hyper-V generation 2 instances.
 ```
 
 #### InstanceProfile
+
 `InstanceProfile` sets up an IAM role for an instance. Currently, this is only used for **AWS** but, in the future, it might be used to set roles for other cloud providers.
 
 ```json
@@ -237,9 +260,11 @@ Can be used to create images for Hyper-V generation 2 instances.
 ```
 
 #### Platform {#cloudconfig.platform}
+
 `Platform` defines the cloud provider to use with the ops CLI.
 
 Currently supported platforms:
+
 * Default `onprem`
 * Google Cloud Platform `gcp`
 * AWS `aws`
@@ -266,6 +291,7 @@ See further instructions about the cloud provider in dedicated documentation pag
 ```
 
 #### ProjectID {#cloudconfig.projectid}
+
 `ProjectID` is used in some cloud providers to identify a workspace.
 
 ```json
@@ -277,6 +303,7 @@ See further instructions about the cloud provider in dedicated documentation pag
 ```
 
 #### SecurityGroup {#cloudconfig.security_group}
+
 `SecurityGroup` allows an instance to use an existing security group in the cloud provider.
 
 On **AWS**, both the name and the id of the security group may be used as value.
@@ -290,6 +317,7 @@ On **AWS**, both the name and the id of the security group may be used as value.
 ```
 
 #### Subnet {#cloudconfig.subnet}
+
 `Subnet` allows an instance to use an existing subnet in the cloud provider.
 
 On **AWS**, both the _name_ and the _id_ of the subnet may be used as value.
@@ -303,6 +331,7 @@ On **AWS**, both the _name_ and the _id_ of the subnet may be used as value.
 ```
 
 #### Tags {#cloudconfig.tags}
+
 `Tags` is a list of keys and values to provide more context about an instance or an image. There are a set of pre-defined tags to identify the resources created by `ops`.
 
 ```json
@@ -323,6 +352,7 @@ On **AWS**, both the _name_ and the _id_ of the subnet may be used as value.
 ```
 
 #### VPC {#cloudconfig.vpc}
+
 `VPC` allows instance to use an existing vpc in the cloud provider.
 
 On AWS, both the _name_ and the _id_ of the vpc may be used as value.
@@ -336,6 +366,7 @@ On AWS, both the _name_ and the _id_ of the vpc may be used as value.
 ```
 
 #### Zone {#cloudconfig.zone}
+
 `Zone` is used in some cloud providers to identify the location where cloud resources are stored.
 
 ```json
@@ -347,6 +378,7 @@ On AWS, both the _name_ and the _id_ of the vpc may be used as value.
 ```
 
 ### Dirs {#dirs}
+
 `Dirs` defines an array of directory locations to include into the image.
 
 ```json
@@ -356,6 +388,7 @@ On AWS, both the _name_ and the _id_ of the vpc may be used as value.
 ```
 
 _File layout on local host machine:_
+
 ```
 -myapp
     app
@@ -366,6 +399,7 @@ _File layout on local host machine:_
 ```
 
 _File  layout on VM:_
+
 ```
 /myapp
     app
@@ -376,6 +410,7 @@ _File  layout on VM:_
 ```
 
 ### Env {#env}
+
 `Env` defines a map of environment variables to specify for the image runtime.
 
 ```json
@@ -388,6 +423,7 @@ _File  layout on VM:_
 ```
 
 ### Files {#files}
+
 `Files` defines an array of file locations to include into the image.
 
 ```json
@@ -397,6 +433,7 @@ _File  layout on VM:_
 ```
 
 ### Kernel {#kernel}
+
 `Kernel` sets the path of kernel image file.
 
 ```json
@@ -406,6 +443,7 @@ _File  layout on VM:_
 ```
 
 ### KlibDir {#klib_dir}
+
 `KlibDir` sets the host directory where kernel libs are located.
 
 ```json
@@ -424,6 +462,7 @@ Defines a list of klibs to include. For example to run the NTP klib (eg: ntpd):
 ```
 
 ### MapDirs {#mapdirs}
+
 `MapDirs` sets map of a local directory to a different path on the guest VM. For example the below
 adds all files under `/etc/ssl/certs` on host to `/usr/lib/ssl/certs` on VM.
 
@@ -434,6 +473,7 @@ adds all files under `/etc/ssl/certs` on host to `/usr/lib/ssl/certs` on VM.
 ```
 
 ### Mounts {#mounts}
+
 `Mounts` is used to mount a volume in an instance.
 See further instructions about volumes in dedicated documentation page.
 
@@ -446,6 +486,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### NameServers {#nameservers}
+
 `NameServers` is an array of DNS servers to use for DNS resolution. By default it is Google's `8.8.8.8`.
 
 ```json
@@ -455,6 +496,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### NanosVersion {#nanos_version}
+
 `NanosVersion` sets nanos version to be used on image manifest.
 
 ```json
@@ -464,6 +506,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### NightlyBuild {#nightly_build}
+
 `NightlyBuild` flag forces the use of latest dev builds.
 
 ```json
@@ -473,6 +516,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### NoTrace {#no_trace}
+
 `NoTrace` is an array of syscalls to mute tracing for.
 
 ```json
@@ -482,6 +526,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### Program {#program}
+
 `Program` specifies the path of the program to refer to on attach/detach.
 
 ```json
@@ -491,6 +536,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### ProgramPath {#program_path}
+
 `ProgramPath` specifies the original path of the program to refer to on attach/detach.
 
 ```json
@@ -500,6 +546,7 @@ See further instructions about volumes in dedicated documentation page.
 ```
 
 ### RebootOnExit
+
 `RebootOnExit` reboot your application immediately if it crashes (_exit code is not 0_). Is turned off by default, but you can enable it.
 
 ```json
@@ -507,6 +554,7 @@ See further instructions about volumes in dedicated documentation page.
     "RebootOnExit": true
 }
 ```
+
 same as
 
 ```json
@@ -516,6 +564,7 @@ same as
 ```
 
 ### LocalFilesParentDirectory
+
 `LocalFilesParentDirectory` is the parent directory of the files/directories specified in Files and Dirs.
 The default value is the directory from where the ops command is running
 
@@ -526,6 +575,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### TargetRoot {#target_root}
+
 `TargetRoot` _TODO_
 
 ```json
@@ -535,6 +585,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### VolumesDir
+
 `VolumesDir` is the directory used to store and fetch volumes.
 
 ```json
@@ -544,6 +595,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### PackageBaseURL
+
 `PackageBaseURL` provides the URL for downloading the packages.
 
 ```json
@@ -553,6 +605,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### PackageManifestURL
+
 `PackageManifestURL` provides the URL to download the manifest file that stores info about all packages.
 
 ```json
@@ -562,6 +615,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### Version {#version}
+
 `Version` ops package version. Like docker if the user doesn't provide version of the image we consider "latest" as the version.
 
 ```json
@@ -571,6 +625,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### Language
+
 `Language` ops package language.
 
 ```json
@@ -580,6 +635,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### Runtime
+
 `Runtime` ops package runtime.
 
 ```json
@@ -589,6 +645,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### Description
+
 `Description` ops package description.
 
 ```json
@@ -598,6 +655,7 @@ The default value is the directory from where the ops command is running
 ```
 
 ### TargetConfig {#target_config}
+
 `TargetConfig` provides a limited support to adding cloud provider specific config.
 This is done as to not overload the other configuration settings.
 
@@ -622,9 +680,11 @@ Currently only the `proxmox` target has support here. For example:
 ```
 
 ### RunConfig {#runconfig}
+
 The `RunConfig` configures various attributes about the runtime of the ops instance, such as allocated memory and exposed ports.
 
 #### Accel {#runconfig.accel}
+
 Defines whether hardware acceleration should be enabled in qemu. This option is enabled by default, but will be disabled when [Debug](#runconfig.debug) is set to true.
 
 ```json
@@ -636,6 +696,7 @@ Defines whether hardware acceleration should be enabled in qemu. This option is 
 ```
 
 #### Bridged {#runconfig.bridged}
+
 Connects the unikernel network interface to a bridge with the name `br0`. The bridge name may be overriden with the property [BridgeName](#runconfig.bridge_name).
 
 ```json
@@ -647,6 +708,7 @@ Connects the unikernel network interface to a bridge with the name `br0`. The br
 ```
 
 #### BridgeName {#runconfig.bridge_name}
+
 Connects the unikernel network interface to a bridge with the name specified. If the bridge does not exist in host machine it is created.
 
 ```json
@@ -658,6 +720,7 @@ Connects the unikernel network interface to a bridge with the name specified. If
 ```
 
 #### CanIPForward {#runconfig.can_ip_forward}
+
 Enable IP forwarding when creating an instance. Only **GCP** provider.
 
 ```json
@@ -669,6 +732,7 @@ Enable IP forwarding when creating an instance. Only **GCP** provider.
 ```
 
 #### CPUs {#runconfig.cpus}
+
 Specifies the number of CPU cores the unikernel is allowed to use.
 
 ```json
@@ -680,6 +744,7 @@ Specifies the number of CPU cores the unikernel is allowed to use.
 ```
 
 #### GPUs {#runconfig.gpus}
+
 Specifies the number of GPUs the unikernel is allowed to use. Only **GCP** provider.
 
 ```json
@@ -692,6 +757,7 @@ Specifies the number of GPUs the unikernel is allowed to use. Only **GCP** provi
 ```
 
 #### GPUType {#runconfig.gputype}
+
 Specifies the type of GPU available. Only **GCP** provider.
 
 ```json
@@ -704,6 +770,7 @@ Specifies the type of GPU available. Only **GCP** provider.
 ```
 
 #### Debug {#runconfig.debug}
+
 Opens a port in unikernel to allow a connection with the GDB debugger. See further instructions in [Debugging](debugging.md). If debug is set to true the hardware acceleration [Accel](#runconfig.accel) is disabled.
 
 ```json
@@ -715,6 +782,7 @@ Opens a port in unikernel to allow a connection with the GDB debugger. See furth
 ```
 
 #### Gateway {#runconfig.gateway}
+
 Defines the default gateway IP of the network interface.
 
 ```json
@@ -726,6 +794,7 @@ Defines the default gateway IP of the network interface.
 ```
 
 #### GdbPort {#runconfig.gdb_port}
+
 Define the gdb debugger port. It only takes effect if debug is enabled. By default the `GdbPort` is `1234`.
 
 ```json
@@ -738,6 +807,7 @@ Define the gdb debugger port. It only takes effect if debug is enabled. By defau
 ```
 
 #### Imagename {#runconfig.image}
+
 Sets the name of the image file.
 
 ```json
@@ -749,6 +819,7 @@ Sets the name of the image file.
 ```
 
 #### InstanceName {#runconfig.instance_name}
+
 Sets the name of the instance.
 
 ```json
@@ -760,6 +831,7 @@ Sets the name of the instance.
 ```
 
 #### InstanceGroup {#runconfig.instance_group_}
+
 Sets the group of the instance.
 
 ```json
@@ -771,6 +843,7 @@ Sets the group of the instance.
 ```
 
 #### IPAddress {#runconfig.ipaddress}
+
 Defines the IP address of the network interface.
 
 ```json
@@ -794,6 +867,7 @@ The IP address has to be specified along with the [netmask](#runconfig.netmask) 
 ```
 
 #### IPv6Address {#runconfig.ipv6address}
+
 Defines the static IPv6 address of the network interface.
 
 ```json
@@ -806,6 +880,7 @@ Defines the static IPv6 address of the network interface.
 
 
 #### Memory {#runconfig.memory}
+
 Configures the amount of memory to allocated to `qemu`. Default is 128 MiB.
 Optionally, a suffix of "M" or "G" can be used to signify a value in megabytes
 or gigabytes respectively.
@@ -819,6 +894,7 @@ or gigabytes respectively.
 ```
 
 ### Vga {#runconfig.vga}
+
 Defines whether to emulate a VGA output device in `qemu`.
 
 ```json
@@ -830,6 +906,7 @@ Defines whether to emulate a VGA output device in `qemu`.
 ```
 
 #### Mounts {#runconfig.mounts}
+
 Defines a list of directories paths in the host machine whose data will be copied to the unikernel.
 
 ```json
@@ -841,6 +918,7 @@ Defines a list of directories paths in the host machine whose data will be copie
 ```
 
 #### NetMask {#runconfig.net_mask}
+
 Defines the netmask of the network interface.
 
 ```json
@@ -852,6 +930,7 @@ Defines the netmask of the network interface.
 ```
 
 ### Nics {#runconfig.nics}
+
 Is a list of pre-configured network cards.Meant to eventually deprecate the existing single-nic configuration.
 Currently only supported for **Proxmox**
 
@@ -869,6 +948,7 @@ Currently only supported for **Proxmox**
 ```
 
 #### Background {#runconfig.background}
+
 Starts unikernels in background. You can stop the unikernel using the onprem instances stop command.
 
 ```json
@@ -880,6 +960,7 @@ Starts unikernels in background. You can stop the unikernel using the onprem ins
 ```
 
 #### Ports {#runconfig.ports}
+
 A list of ports to expose. Alternatively, you can also use `-p` in the command
 line.
 
@@ -892,6 +973,7 @@ line.
 ```
 
 #### ShowDebug {#runconfig.show_debug}
+
 Enables printing more details about what ops is doing at the moment. Also, enables the printing of warnings and errors.
 
 ```json
@@ -903,6 +985,7 @@ Enables printing more details about what ops is doing at the moment. Also, enabl
 ```
 
 #### ShowErrors {#runconfig.show_errors}
+
 Enables printing errors with more details.
 
 ```json
@@ -914,6 +997,7 @@ Enables printing errors with more details.
 ```
 
 #### ShowWarnings {#runconfig.show_warnings}
+
 Enables printing warnings details.
 
 ```json
@@ -925,6 +1009,7 @@ Enables printing warnings details.
 ```
 
 #### TapName {#runconfig.tap_name}
+
 Connects the unikernel to a network interface with the name specified. If the `tap` does not exist in host machine it is created.
 
 ```json
@@ -936,7 +1021,9 @@ Connects the unikernel to a network interface with the name specified. If the `t
 ```
 
 #### UDPPorts {#runconfig.udp_ports}
+
 Opens ports that use UDP protocol.
+
 ```json
 {
     "RunConfig": {
@@ -946,6 +1033,7 @@ Opens ports that use UDP protocol.
 ```
 
 #### Verbose {#runconfig.verbose}
+
 Enables verbose logging for the runtime environment. As of now, it prints the
 command used to start `qemu`.
 
@@ -958,6 +1046,7 @@ command used to start `qemu`.
 ```
 
 #### VolumeSizeInGb {#runconfig.volume_size_in_gb}
+
 This property is only used by cloud provider **openstack** and sets the instance volume size. Default size is 1 GB.
 
 ```json
@@ -979,6 +1068,32 @@ There is the concept of the [manifest](https://nanos.org/thebook#manifest) in Na
     }
 }
 ```
+
+#### Consoles {#consoles}
+
+Nanos offers a 'consoles' feature that allows multiple methods for monitoring a running unikernel.
+By default, the 'serial' and 'vga' consoles are enabled for testing purposes. However, in a production
+environment, it is highly advised against using these consoles as they significantly slow down the unikernel,
+rendering it nearly non-functional.
+
+To activate or deactivate consoles, you can use the '+' or '-' symbols. Here is an example configuration:
+
+```json
+"ManifestPassthrough": {
+  "consoles": [
+    "+net",
+    "-serial",
+    "-vga"
+  ]
+}
+```
+
+In the above example, `+net` enables the net console locally for debugging purposes. The net console
+is faster than 'serial' when it comes to testing performance.
+
+The net console also provides two options: `netconsole_port` and `netconsole_ip`. These options allow
+you to send logs to a remote machine for debugging. However, it is advisable to use 'syslog' instead
+of net console for production workloads.
 
 #### Exec Protection {#exec_protection}
 
@@ -1003,7 +1118,7 @@ turned on.
 
 #### Program Overwrite Protection {#program_overwrite}
 
-By default, the user application is not allowed to overwrite the __program__ binary file (and __interpreter__, if present).
+By default, the user application is not allowed to overwrite the **program** binary file (and **interpreter**, if present).
 This default behavior can be overridden by inserting a `program_overwrite` attribute in the root tuple of the manifest.
 
 ```json
@@ -1015,6 +1130,7 @@ This default behavior can be overridden by inserting a `program_overwrite` attri
 ```
 
 #### CWD {#manifestpassthrough.cwd}
+
 Some applications expect to have a working directory in a different
 place than where they have been placed. You can adjust this via the
 manifest variable 'cwd':
@@ -1028,6 +1144,7 @@ manifest variable 'cwd':
 ```
 
 #### Mmap Min Address {#manifestpassthrough.mmap_min_addr}
+
 This is an optional configuration setting that defines the minimum virtual address that a process is allowed to mmap. If set to zero, allow zero-page mappings to occur.
 
 ```json
@@ -1039,6 +1156,7 @@ This is an optional configuration setting that defines the minimum virtual addre
 ```
 
 #### Exec Wait For IPv4 {#manifestpassthrough.exec_wait_for_ipv4}
+
 This is an optional configuration setting that allows Nanos to wait for a valid ipv4 address to become available via DHCP using the timeout of 'exec_wait_for_ip4_secs'. If static ip is set than there is no effect. This configuration is not on by default.
 
 ```json
@@ -1050,6 +1168,7 @@ This is an optional configuration setting that allows Nanos to wait for a valid 
 ```
 
 #### ltrace {#manifestpassthrough.ltrace}
+
 This enables tracing calls made by the application binary to dynamic library functions.
 It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
 
@@ -1066,10 +1185,10 @@ It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
 This is an optional configuration setting that allows specifying trace flags (i.e. a comma-delimited set of trace message types) in the `trace` symbol of the root tuple.
 _A given trace message is output only if its message type is enabled in the trace flags._
 
-- `pf` - page-fault-related messages - sets `TRACE_PAGE_FAULT`
-- `threadrun` - messages output when returning to user threads - sets `TRACE_THREAD_RUN`
-- `all` - all tracing messages are enabled
-- for backward compatibility, __any unknown trace flag__ *enables all messages output via calls to thread_log()*. - sets `TRACE_OTHER`
+* `pf` - page-fault-related messages - sets `TRACE_PAGE_FAULT`
+* `threadrun` - messages output when returning to user threads - sets `TRACE_THREAD_RUN`
+* `all` - all tracing messages are enabled
+* for backward compatibility, **any unknown trace flag** _enables all messages output via calls to thread_log()_. - sets `TRACE_OTHER`
 
 _Example_: a `"trace:pf,other"` value in the manifest enables page-fault-related messages and messages classified as "other".
 
@@ -1082,6 +1201,7 @@ _Example_: a `"trace:pf,other"` value in the manifest enables page-fault-related
 ```
 
 #### so_rcvbuf {#manifestpassthrough.so_rcvbuf}
+
 This is an optional configuration setting used to manage the size (in bytes) of the socket receive buffer.
 The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, you could use the following config:
 
@@ -1094,6 +1214,7 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 ```
 
 ### Debugflags {#debugflags}
+
 `Debugflags` adds additional debug flags to the runtime.
 
 ```json
@@ -1103,6 +1224,7 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 ```
 
 #### idle_on_exit {#debugflags.idle_on_exit}
+
 `idle_on_exit` keeps a VM running after the user program exits successfully (_exit code is 0_). The VCPUs remain halted.
 
 ```json
@@ -1112,6 +1234,7 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 ```
 
 #### reboot_on_exit {#debugflags.reboot_on_exit}
+
 `reboot_on_exit` reboot your application immediately if it crashes (_exit code is not 0_). Is turned off by default, but you can enable it.
 
 ```json
@@ -1121,32 +1244,35 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 ```
 
 ### Force {#force}
+
 _TODO_
 
 ## Sample Configuration File {#sample}
+
 Below is a sample configuration file for a nodejs application.
+
 ```json
 {
-	"Files": ["ex.js"],
-	"Dirs": ["src"],
-	"Args": ["ex.js "],
-	"Env": {
-		"NODE_DEBUG": "*",
-		"NODE_DEBUG_NATIVE": "*"
-	},
-	"MapsDirs": {
-		"src": "/myapp/code"
-	},
-	"Boot": "./staging/boot2.img",
-	"Kernel": "./staging/stage4.img",
-	"Mkfs": "./staging/mkfs",
-	"DiskImage": "disk-image",
-	"NameServers": ["10.8.0.1"],
-	"RunConfig": {
-		"Verbose": true,
-		"Bridged": true,
-		"Ports": [8008],
-		"Memory": "2G"
-	}
+ "Files": ["ex.js"],
+ "Dirs": ["src"],
+ "Args": ["ex.js "],
+ "Env": {
+  "NODE_DEBUG": "*",
+  "NODE_DEBUG_NATIVE": "*"
+ },
+ "MapsDirs": {
+  "src": "/myapp/code"
+ },
+ "Boot": "./staging/boot2.img",
+ "Kernel": "./staging/stage4.img",
+ "Mkfs": "./staging/mkfs",
+ "DiskImage": "disk-image",
+ "NameServers": ["10.8.0.1"],
+ "RunConfig": {
+  "Verbose": true,
+  "Bridged": true,
+  "Ports": [8008],
+  "Memory": "2G"
+ }
 }
 ```
