@@ -31,6 +31,7 @@
 * [Azure](azure.md)
 * [AWS](aws.md)
 * [Bhyve](bhyve.md)
+* [Compose](compose.md)
 * [Digital Ocean](digital_ocean.md)
 * [Firecracker](firecracker.md)
 * [Hyper-V](hyper-v.md)
