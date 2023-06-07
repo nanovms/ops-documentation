@@ -1213,6 +1213,19 @@ The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, yo
 }
 ```
 
+#### mtu {#manifestpassthrough.mtu}
+
+This is an optional configuration setting that changes the _MTU_ (Maximum Transmission Unit) size of the network interface(s).
+This **doesn't** affect _TUN_ interface(s).
+
+```json
+{
+    "ManifestPassthrough": {
+        "mtu": "1420"
+    }
+}
+```
+
 ### Debugflags {#debugflags}
 
 `Debugflags` adds additional debug flags to the runtime.
