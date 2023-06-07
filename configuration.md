@@ -721,7 +721,7 @@ Connects the unikernel network interface to a bridge with the name specified. If
 
 #### CanIPForward {#runconfig.can_ip_forward}
 
-Enable IP forwarding when creating an instance. Only **GCP** provider.
+Enable IP forwarding when creating an instance. Only **GCP**, **Azure** provider.
 
 ```json
 {
