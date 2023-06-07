@@ -14,7 +14,7 @@ OPS can run on Microsoft Azure assuming your environment is setup.
     ```
 
 4. Create a quickstart auth:
- 
+
     ```sh
       az ad sp create-for-rbac --sdk-auth > quickstart.auth
     ```
@@ -119,6 +119,20 @@ You can select a different VPC, subnet or security group using the configuration
         "VPC": "vpc-name",
         "Subnet": "subnet-name",
         "SecurityGroup": "sg-name"
+    }
+}
+```
+
+#### IP Forwarding
+
+By default, IP forwarding is `disabled` on Azure.
+
+If you would like to enable IP forwarding when creating the instance you can use the following:
+
+```json
+{
+    "RunConfig":{
+      "CanIPForward": true
     }
 }
 ```
