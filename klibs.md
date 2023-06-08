@@ -3,7 +3,7 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of Nanos [016b5f3](https://github.com/nanovms/nanos/commit/016b5f39d5e5d9db1ae8da12fa1a6b4e066f2ef2) there are 12 klibs:
+As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d429a24cf5c3ca48ca0566acb) there are 13 klibs:
 
 * __cloud_init__ - used for Azure && env config init
   * __cloud_azure__ - use to check in to the Azure meta-data service
@@ -13,6 +13,7 @@ As of Nanos [016b5f3](https://github.com/nanovms/nanos/commit/016b5f39d5e5d9db1a
 * __gcp__
 * __ntp__ - used for clock syncing
 * __radar__ - a klib if using the external Radar service
+* __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
 * __syslog__ - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
 * __tls__ - used for radar/ntp and other klibs that require it
 * __tun__ - supports tun devices (eg: vpn gateways)
@@ -569,3 +570,164 @@ Example contents of Ops configuration file:
   }
 }
 ```
+
+## Sandbox
+
+This klib implements a __sandboxing mechanism__ by which the capabilities of the running process can be _restricted_ by _overriding certain syscall handlers_.
+
+The current implementation supports the following OpenBSD syscalls:
+ - `pledge` - https://man.openbsd.org/pledge.2
+ - `unveil` - https://man.openbsd.org/unveil.2
+
+A `pledge` invocation forces the process into a restricted-service operating mode by limiting the set of syscalls (and in some cases the allowed values of syscall arguments) that can be invoked.
+Syscalls that are present in both Nanos and OpenBSD are handled by following the pledge implementation in OpenBSD, except for syscalls that are not applicable to unikernels (e.g. those related to inter-process communication).
+Syscalls that are present (or could be implemented in the future) in Nanos but not in OpenBSD are handled based in the same way as "similar" or related OpenBSD syscalls when such syscalls could be found,
+and are always forbidden when no related syscalls could be found in OpenBSD.
+
+The `unveil` syscall allows adding and removing (or restricting) visibility of filesystem paths for the running process.
+
+The `pledge` and `unveil` features are enabled in the __sandbox__ _klib_ if the __manifest__ contains a `sandbox` tuple with a `pledge` and `unveil` tuple, respectively.
+
+```json
+{
+  "Klibs": ["sandbox"],
+  "ManifestPassthrough": {
+    "sandbox": {
+      "pledge": {},
+      "unveil": {}
+    }
+  }
+}
+
+```
+
+### C
+
+The `pledge` syscall can be invoked in a C program by calling the `pledge()` function from the following code:
+
+```c
+int pledge(const char *promises, const char *execpromises)
+{
+    return syscall(335, promises, execpromises);
+}
+```
+
+
+It can be invoked in a C program by calling the `unveil()` function from the following code:
+
+```c
+int unveil(const char *path, const char *permissions)
+{
+    return syscall(336, path, permissions);
+}
+```
+
+### Go
+
+The following Go code provides the basis for a `nanos_sandbox` package:
+
+```go
+package nanos_sandbox
+
+import (
+	"syscall"
+	"unsafe"
+)
+
+const (
+	// OpenBSD syscalls, mapped to unused syscall numbers in Linux
+	SYS_pledge = 335
+	SYS_unveil = 336
+)
+
+// Pledge implements the pledge syscall.
+//
+// For more information see pledge(2).
+func Pledge(promises, execpromises string) error {
+	pptr, err := syscall.BytePtrFromString(promises)
+	if err != nil {
+		return err
+	}
+
+	// pass execpromises to the syscall.
+	exptr, err := syscall.BytePtrFromString(execpromises)
+	if err != nil {
+		return err
+	}
+
+	_, _, e := syscall.Syscall(SYS_pledge, uintptr(unsafe.Pointer(pptr)), uintptr(unsafe.Pointer(exptr)), 0)
+	if e != 0 {
+		return e
+	}
+
+	return nil
+}
+
+// PledgePromises implements the pledge syscall.
+//
+// This changes the promises and leaves the execpromises untouched.
+//
+// For more information see pledge(2).
+func PledgePromises(promises string) error {
+	// This variable holds the execpromises and is always nil.
+	var exptr unsafe.Pointer
+
+	pptr, err := syscall.BytePtrFromString(promises)
+	if err != nil {
+		return err
+	}
+
+	_, _, e := syscall.Syscall(SYS_pledge, uintptr(unsafe.Pointer(pptr)), uintptr(exptr), 0)
+	if e != 0 {
+		return e
+	}
+
+	return nil
+}
+
+// Unveil implements the unveil syscall.
+// For more information see unveil(2).
+// Note that the special case of blocking further
+// unveil calls is handled by UnveilBlock.
+func Unveil(path string, flags string) error {
+	pathPtr, err := syscall.BytePtrFromString(path)
+	if err != nil {
+		return err
+	}
+
+	flagsPtr, err := syscall.BytePtrFromString(flags)
+	if err != nil {
+		return err
+	}
+
+	_, _, e := syscall.Syscall(SYS_unveil, uintptr(unsafe.Pointer(pathPtr)), uintptr(unsafe.Pointer(flagsPtr)), 0)
+	if e != 0 {
+		return e
+	}
+
+	return nil
+}
+
+// UnveilBlock blocks future unveil calls.
+// For more information see unveil(2).
+func UnveilBlock() error {
+	// Both pointers must be nil.
+	var pathUnsafe, flagsUnsafe unsafe.Pointer
+
+	_, _, e := syscall.Syscall(SYS_unveil, uintptr(pathUnsafe), uintptr(flagsUnsafe), 0)
+	if e != 0 {
+		return e
+	}
+
+	return nil
+}
+
+```
+
+
+### JavaScript
+
+There are 2 npm packages published and ready for use.
+
+- `pledge` - https://www.npmjs.com/package/nanos-pledge
+- `unveil` - https://www.npmjs.com/package/nanos-unveil
