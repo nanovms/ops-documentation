@@ -33,13 +33,56 @@ we'll auto-include the cloud_init and tls klibs.
 The `ntp` klib allows to set the configuration properties to synchronize the unikernel clock with a ntp server.
 
 The allowed configuration properties are:
-- `ntp_servers` - array of ntp servers, with each server specified using the format `<address>[:<port]`. The `<address>` string can contain an IP address or a fully qualified domain name; if it contains a numeric IPv6 address, it must be enclosed in square brackets, as per RFC 3986 (example: `"ntp_servers": ["[2610:20:6f97:97::4]", "[2610:20:6f97:97::5]:1234"]`)
-- `ntp_poll_min` - the minimum poll time is expressed as a power of two. The default value is 4, corresponding to 16 seconds (2^4 = 16)
-- `ntp_poll_max` - the maximum poll time is expressed as a power of two. The default value is 10, corresponding to 1024 seconds (2^10 = 1024)
-- `ntp_reset_threshold` - This is a difference threshold expressed in seconds to use step/jump versus smearing on ntp - the default is set to 0 meaning it will never step/jump. If the difference is over this threshold then step/jump will be used allowing correction over much longer periods
-- `ntp_max_slew_ppm` - maximum slewing rate for clock offset error correction, expressed in PPM; default value: 83333
-- `ntp_max_freq_ppm` - maximum clock frequency error rate, expressed in PPM; default value: 25000
+- `ntp_servers` - array of ntp servers, with each server specified using the format `<address>[:<port]`.
+                  The `<address>` string can contain an IP address or a fully qualified domain name;
+                  if it contains a numeric IPv6 address, it must be enclosed in square brackets, as per RFC 3986 (example: `"ntp_servers": ["[2610:20:6f97:97::4]", "[2610:20:6f97:97::5]:1234"]`).
+                  The default value is **pool.ntp.org:123**.
+- `ntp_poll_min` - the minimum poll time is expressed as a power of two.
+                   The default value is **4**, corresponding to 16 seconds (2^4 = 16).
+                   The minimum value is **4**, corresponding to 16 seconds (2^4 = 16).
+- `ntp_poll_max` - the maximum poll time is expressed as a power of two.
+                   The default value is **10**, corresponding to 1024 seconds (2^10 = 1024).
+                   The maximum value is **17**, corresponding to 131072 seconds (2^17 = 131072 = ~36.4 hours).
+- `ntp_reset_threshold` - This is a difference threshold expressed in **seconds** to use _step/jump_ versus _smearing_ on ntp - the default is set to **0** _meaning it will never step/jump_.
+                          If the difference is over this threshold then step/jump will be used allowing correction over much longer periods.
+- `ntp_max_slew_ppm` - maximum slewing rate for clock offset error correction, expressed in PPM; default value: **83333**
+- `ntp_max_freq_ppm` - maximum clock frequency error rate, expressed in PPM; default value: **25000**
 
+The `ntp` klib needs to collect some data samples from ntp server(s) before deciding the actions needed to update the clock (if any).
+- It needs a minimum of **4** _samples_ to analyze the needed changes - `MIN_SAMPLES 4`
+- It keeps a maximum of **30** _samples_ to analyze the needed changes - `MAX_SAMPLES 30`
+
+It is important to understand that until `ntp` has collected at least 4 samples, no actions will be taken to update the clock.
+During that time the system will operate under the clock value provided by the hypervisor, which may or may not be correct.
+This means that, with default config setup and no ntp request failures, it will take about **53** _seconds_ after boot for the klib to update the system clock if needed.
+
+This can be observed from a debug build of the klib:
+
+```
+en1: assigned 10.0.2.15
+[0.319779, 0, ntp] adding server 0.us.pool.ntp.org (port 123)
+en1: assigned FE80::447A:E3FF:FECF:B36F
+[5.697626, 0, ntp] selecting 0.us.pool.ntp.org as current server
+[5.700948, 0, ntp] insert 0: 1618876805.261140, off=67692786.324026320, rtd=0.317320199, jit=67692786.324026320
+[21.595184, 0, ntp] insert 1: 1618876821.208357, off=67692786.382279612, rtd=0.211364274, jit=0.058253291
+[37.591244, 0, ntp] insert 2: 1618876837.206483, off=67692786.380658678, rtd=0.207233731, jit=-0.001620934
+[53.585795, 0, ntp] insert 3: 1618876853.203833, off=67692786.377978558, rtd=0.201635557, jit=-0.002680119
+[53.591257, 0, ntp] packet offset=67692786.377978558 est_offset(total)=67692786.376225217(67692786.376225217) est_freq(total)=0.000087361(0.000087361) offset_sd=0.008933535 skew=0.118788699
+[69.587293, 0, ntp] insert 4: 1686569655.580903, off=0.000968804, rtd=0.202942327, jit=-0.000793821
+[69.592481, 0, ntp] packet offset=0.000968804 est_offset(total)=0.003349950(0.003349950) est_freq(total)=-0.000005103(0.000082258) offset_sd=0.009849557 skew=0.040548864
+[85.590427, 0, ntp] insert 5: 1686569671.587333, off=-0.001286386, rtd=0.205845955, jit=0.001095304
+[85.595407, 0, ntp] packet offset=-0.001286386 est_offset(total)=-0.000979362(-0.000979362) est_freq(total)=-0.000023029(0.000059228) offset_sd=0.007714219 skew=0.012092993
+...
+[758.312460, 0, ntp] insert 28: 1686570344.311070, off=-0.011912567, rtd=0.269852664, jit=-0.002127423
+[758.318662, 0, ntp] packet offset=-0.011912567 est_offset(total)=-0.000798835(-0.000798835) est_freq(total)=-0.000001312(0.000040926) offset_sd=0.003480576 skew=0.000028015
+[774.309514, 0, ntp] insert 29: 1686570360.309574, off=-0.010015399, rtd=0.266696978, jit=0.001098517
+[774.312045, 0, ntp] packet offset=-0.010015399 est_offset(total)=-0.000703166(-0.000703166) est_freq(total)=-0.000001130(0.000039796) offset_sd=0.003435532 skew=0.000027003
+[790.313905, 0, ntp] insert 0: 1686570376.311817, off=-0.006775507, rtd=0.270922496, jit=0.002536878
+[790.315987, 0, ntp] packet offset=-0.006775507 est_offset(total)=-0.001349425(-0.001349425) est_freq(total)=-0.000003542(0.000036254) offset_sd=0.002574216 skew=0.000019820
+[806.313070, 0, ntp] insert 1: 1686570392.310801, off=-0.005923203, rtd=0.269834293, jit=-0.000496634
+[806.316524, 0, ntp] packet offset=-0.005923203 est_offset(total)=-0.000628994(-0.000628994) est_freq(total)=-0.000001222(0.000035031) offset_sd=0.002575573 skew=0.000019651
+...
+```
 Use the configuration file to enable the `ntp` klib and setup the settings.
 ```json
 {
@@ -47,7 +90,10 @@ Use the configuration file to enable the `ntp` klib and setup the settings.
   "ManifestPassthrough": {
     "ntp_servers": ["127.0.0.1:1234"],
     "ntp_poll_min": "5",
-    "ntp_poll_max": "10"
+    "ntp_poll_max": "10",
+    "ntp_reset_threshold": "0",
+    "ntp_max_slew_ppm": "83333",
+    "ntp_max_freq_ppm": "25000"
   }
 }
 ```
