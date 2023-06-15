@@ -188,6 +188,50 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance logs -t aws -p prod-1033 -z us-west-2 i-08815dc4b29b44294
 ```
 
+On Nitro based systems the serial console will only show output whne
+you are connected to it.
+
+For production use we recommend shipping your logs to
+[syslog](https://docs.ops.city/ops/klibs#syslog) or using cloudwatch.
+
+To utilize cloudwatch you need to specify an IAM role (Instance
+Profile), include the cloudwatch and tls klibs and specify your log
+group and log stream like so:
+
+```
+{
+  "RunConfig": {
+    "Klibs": ["cloudwatch", "tls"],
+    "Ports": ["8080"]
+  },
+  "CloudConfig" :{
+    "BucketName":"nanos-test",
+    "InstanceProfile": "CloudWatchAgentServerRole"
+  },
+  "ManifestPassthrough": {
+    "cloudwatch": {
+      "mem_metrics_interval": "5",
+      "logging": {"log_group":"my-log-group","log_stream":"my_log_stream"}
+    }
+  }
+}
+```
+
+Then you can tail your logs in real-time:
+
+```
+aws logs tail my-log-group --follow
+```
+
+Furthermore, it should be stated that shipping a lot of output through
+the serial console is going to degrade performance. You can explicitly disable both serial and vga using the following config:
+
+```
+    "ManifestPassthrough": {
+        "consoles": {"-serial", "-vga"}
+    }
+```
+
 ### Delete Instance
 
 `ops instance delete` command can be used to delete instance on AWS.
