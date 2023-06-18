@@ -6,9 +6,9 @@ Klibs are plugins which provide extra functionality to unikernels.
 As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d429a24cf5c3ca48ca0566acb) there are 13 klibs:
 
 * __cloud_init__ - used for Azure && env config init
-  * __cloud_azure__ - use to check in to the Azure meta-data service
+  * __cloud_azure__ - use to check in to the Azure meta-data service - not available in config (auto-included by __cloud_init__)
 * __cloudwatch__ - use to implement cloudwatch agent for AWS
-  * __aws__
+  * __aws__ - not available in config (auto-included by __cloudwatch__)
 * __firewall__ - use to implement network firewall
 * __gcp__
 * __ntp__ - used for clock syncing
@@ -19,8 +19,12 @@ As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d42
 * __tun__ - supports tun devices (eg: vpn gateways)
 * __test__ - a simple test/template klib
 
-Not all of these are available to be included in your config (__cloud_azure__, __aws__) . Only the
-ones found in your ~/.ops/release/klibs folder can be specified.
+Not all of these are available to be included in your config (__cloud_azure__, __aws__).
+Only the ones found in your `~/.ops/NANOS-VERSION/klibs` folder can be specified,
+where `NANOS-VERSION` is the version of nanos you are using, ie:
+
+- **0.1.45**  - `~/.ops/0.1.45/klibs`
+- **nightly** - `~/.ops/nightly/klibs`
 
 Some of these are auto-included as they provide support that is required
 by certain clouds/hypervisors. You should only include a klib if you
