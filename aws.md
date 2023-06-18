@@ -198,10 +198,10 @@ To utilize cloudwatch you need to specify an IAM role (Instance
 Profile), include the cloudwatch and tls klibs and specify your log
 group and log stream like so:
 
-```
+```json
 {
+  "Klibs": ["cloudwatch", "tls"],
   "RunConfig": {
-    "Klibs": ["cloudwatch", "tls"],
     "Ports": ["8080"]
   },
   "CloudConfig" :{
