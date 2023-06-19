@@ -34,11 +34,11 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 
 ```json
 {
-    "CloudConfig" :{
-        "ProjectID" :"prod-1000",
-        "Zone": "us-west-1",
-        "BucketName":"my-s3-bucket"
-    }
+  "CloudConfig" :{
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west-1",
+    "BucketName":"my-s3-bucket"
+  }
 }
 ```
 
@@ -74,7 +74,7 @@ $ ops image list -t aws -z us-west-1
 
 `ops image delete -i <imagename>` can be used to delete an image from AWS.
 
-```
+```sh
 $ ops delete image -i nanos-main-image
 ```
 
@@ -83,7 +83,7 @@ $ ops delete image -i nanos-main-image
 
 After the successful creation of an image in AWS, we can create an instance from an existing image.
 
-```
+```sh
 $ ops instance create <image_name>
 ```
 
@@ -94,13 +94,15 @@ $ ops instance create <image_name> -p prod-1000 -z us-west-2
 ```
 
 You can also pass config, if you have mentioned project-id and zone in project's config.json.
-```
+
+```sh
 $ ops instance create <image_name> -c config.json
 ```
 
 You can provide list of ports to be exposed on aws instance via config and command line.
 
-CLI example
+CLI example:
+
 ``` sh
 $ ops instance create <image_name> -p prod-1000 -z us-west-2 --port 80 --port 443
 ```
@@ -109,15 +111,15 @@ Sample config
 
 ```json
 {
-    "CloudConfig" :{
-        "Platform" :"aws",
-        "ProjectID" :"prod-1000",
-        "Zone": "us-west-1",
-        "BucketName":"my-s3-bucket"
-    },
-    "RunConfig": {
-        "Ports" : [80, 443]
-    }
+  "CloudConfig" :{
+    "Platform" :"aws",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west-1",
+    "BucketName":"my-s3-bucket"
+  },
+  "RunConfig": {
+    "Ports" : [80, 443]
+  }
 }
 ```
 
@@ -132,12 +134,13 @@ a volume to an instance.
 By default, ops uses the first VPC found in aws and creates a security group per instance.
 
 You can select a different VPC or use a existing security group using the configuration file. The keys to set are `RunConfig.VPC` and `RunConfig.SecurityGroup`.
+
 ```json
 {
-    "RunConfig":{
-        "VPC": "vpc-name",
-        "SecurityGroup": "sg-name"
-    }
+  "RunConfig":{
+    "VPC": "vpc-name",
+    "SecurityGroup": "sg-name"
+  }
 }
 ```
 
@@ -149,13 +152,13 @@ If you would like to set a static private ip you can use the following:
 
 ```json
 {
-    "RunConfig":{
-      "IPAddress": "172.31.33.7"
-    }
+  "RunConfig":{
+    "IPAddress": "172.31.33.7"
+  }
 }
 ```
 
-Note: You must choose an available IP that is within your chosen/default VPC.
+__Note__: You must choose an __available IP__ that is _within your chosen/default VPC_.
 
 ### List Instances
 
@@ -171,6 +174,7 @@ $ ops instance list
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance list -p prod-1000 -z us-west1-b
 ```
@@ -184,19 +188,18 @@ $ ops instance logs <instance_name>
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance logs -t aws -p prod-1033 -z us-west-2 i-08815dc4b29b44294
 ```
 
-On Nitro based systems the serial console will only show output whne
-you are connected to it.
+On Nitro based systems the serial console will only show output when you are connected to it.
 
 For production use we recommend shipping your logs to
 [syslog](https://docs.ops.city/ops/klibs#syslog) or using cloudwatch.
 
-To utilize cloudwatch you need to specify an IAM role (Instance
-Profile), include the cloudwatch and tls klibs and specify your log
-group and log stream like so:
+To utilize cloudwatch you need to specify an IAM role (`CloudConfig.InstanceProfile`), include the `cloudwatch` and `tls` klibs and
+specify your log group and log stream like so:
 
 ```json
 {
@@ -211,7 +214,10 @@ group and log stream like so:
   "ManifestPassthrough": {
     "cloudwatch": {
       "mem_metrics_interval": "5",
-      "logging": {"log_group":"my-log-group","log_stream":"my_log_stream"}
+      "logging": {
+        "log_group": "my-log-group",
+        "log_stream":"my_log_stream"
+      }
     }
   }
 }
@@ -219,28 +225,31 @@ group and log stream like so:
 
 Then you can tail your logs in real-time:
 
-```
+```sh
 aws logs tail my-log-group --follow
 ```
 
 Furthermore, it should be stated that shipping a lot of output through
 the serial console is going to degrade performance. You can explicitly disable both serial and vga using the following config:
 
-```
-    "ManifestPassthrough": {
-        "consoles": {"-serial", "-vga"}
-    }
+```json
+{
+  "ManifestPassthrough": {
+    "consoles": {"-serial", "-vga"}
+  }
+}
 ```
 
 ### Delete Instance
 
 `ops instance delete` command can be used to delete instance on AWS.
 
-```
+```sh
 $ ops instance delete my-instance-running
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance delete -p prod-1000 -z us-west1-b my-instance-running
 ```
@@ -264,9 +273,11 @@ $ ops instance create <image_name> -t aws -z us-west1-a --instance-group my-inst
 If you have already provisioned an elastic ip you may use it by setting
 it in the Cloud Config:
 
-```
-"CloudConfig" :{
-  "StaticIP": "1.2.3.4"
+```json
+{
+  "CloudConfig" :{
+    "StaticIP": "1.2.3.4"
+  }
 }
 ```
 
@@ -278,7 +289,7 @@ aware that a subnet must have IPv6 enabled.
 
 A sample config for assigning an ip:
 
-```
+```json
 ➜  g cat config.json
 {
   "CloudConfig" :{
@@ -300,7 +311,7 @@ A sample config for assigning an ip:
 
 To test:
 
-```
+```sh
 [ec2-user@ip-172-33-75-200 ~]$ ping6 2600:1f1c:604:9a00:7a34:8c37:5b08:f104
 PING 2600:1f1c:604:9a00:7a34:8c37:5b08:f104(2600:1f1c:604:9a00:7a34:8c37:5b08:f104) 56 data bytes
 64 bytes from 2600:1f1c:604:9a00:7a34:8c37:5b08:f104: icmp_seq=1 ttl=255 time=0.573 ms
@@ -317,15 +328,14 @@ AWS to test connectivity.
 When you mount a volume to an AWS instance you must specify the zone
 modifier for the region. So instead of using:
 
-```
+```json
 "Zone": "us-west-1",
 ```
 
 Use
 
-```
+```json
 "Zone": "us-west-1c",
 ```
 
-OPS will strip the zone 'c' from other operations that only
-require/desire region.
+OPS will strip the zone 'c' from other operations that only require/desire region.
