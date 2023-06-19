@@ -10,7 +10,7 @@ As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d42
 * __cloudwatch__ - use to implement cloudwatch agent for AWS
   * __aws__ - not available in config (auto-included by __cloudwatch__)
 * __firewall__ - use to implement network firewall
-* __gcp__
+* __gcp__ - logging and memory metrics for GCP
 * __ntp__ - used for clock syncing
 * __radar__ - a klib if using the external Radar service
 * __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
@@ -31,6 +31,97 @@ by certain clouds/hypervisors. You should only include a klib if you
 think you need it. The ones that are required for certain functionality
 will be auto-included by ops. For instance if you are deploying to Azure
 we'll auto-include the cloud_init and tls klibs.
+
+
+## GCP
+
+The `gcp` klib implements two functionalities that can be used on GCP cloud:
+
+1. `logging` - _console driver_ that sends __console output__ to __GCP logs__
+2. `metrics` - emulates some functions of GCP ops agent to send __memory usage metrics__ to the __GCP monitoring service__
+
+
+__Note:__ When executing the ops instance create command to create a GCP instance, if the `CloudConfig.InstanceProfile` configuration parameter is a non-empty string,
+the instance being created is associated to the service account identified by this string, with cloud-platform access scope.
+GCP service accounts are identified by an email address; the special string "default" indicates the default service account for a given project.
+The service account specified in the configuration must exist in the GCP project when an instance is being created, otherwise an error is returned.
+For more information about GCP service accounts, see https://cloud.google.com/compute/docs/access/service-accounts.
+
+### GCP logging
+
+The __gcp__ _klib_ implements a _console driver_ that sends _console output_ to GCP logs.
+Instance-specific information that needs to be known in order to interface with the GCP logging API is retrieved from the instance metadata server, which is reachable at address `169.254.169.254`.
+GCP logging is enabled by loading the gcp and tls klibs and adding to the root tuple a `"gcp"` tuple that contains a `"logging"` tuple.
+The `"logging"` tuple may optionally contain a `"log_id"` attribute that specifies the __[LOG_ID]__ string that is sent in the __"logName"__ parameter (which is formatted as `"projects/[PROJECT_ID]/logs/[LOG_ID]"`)
+associated to GCP log entries; __if not present__, the _log ID is derived from the instance hostname as retrieved from the metadata server_.
+
+In order for the GCP klib to retrieve the appropriate credentials needed to communicate with the GCP logging server,
+the instance on which it runs must be associated to a service account (see https://cloud.google.com/compute/docs/access/service-accounts).
+
+Instances created by Ops are associated to a service account via the `CloudConfig.InstanceProfile` configuration parameter.
+
+Example contents of Ops configuration file:
+
+```json
+{
+  "CloudConfig" :{
+    "Platform" :"gcp",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName":"my-s3-bucket",
+    "InstanceProfile":"default"
+  },
+
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "logging": {
+        "log_id": "my_log"
+      }
+    }
+  }
+
+}
+```
+
+### GCP metrics
+
+The __gcp__ _klib_ can be configured for sending memory usage metrics to the __GCP monitoring service__, thus emulating the __GCP ops agent__.
+The `ID` of the running instance and the `zone` where it is running (which are necessary to be able to send API requests to the monitoring server) are retrieved from the instance _metadata server_.
+The metrics being sent are related to __memory__ usage (see https://cloud.google.com/monitoring/api/metrics_opsagent#agent-memory),
+and more specifically are the `bytes_used` and `bytes_percent` metric types; for each type, a value is sent for each of the __"cached"__, __"free"__ and __"used"__ states.
+Sending of memory metrics is enabled by inserting a` "metrics"` tuple in the `"gcp"` configuration tuple.
+It is possible to modify the time interval at which metrics are sent by inserting an `"interval"` attribute in the `"metrics"` tuple, with the interval value expressed in seconds.
+The default (and minimum allowed) interval value is `60 seconds`.
+
+In order for the gcp klib to retrieve the appropriate credentials needed to communicate with the GCP monitoring server,
+the instance on which it runs must be associated to a service account (see https://cloud.google.com/compute/docs/access/service-accounts).
+
+Instances created by Ops are associated to a service account via the `CloudConfig.InstanceProfile` configuration parameter.
+
+Example Ops configuration to enable sending memory metrics every `2 minutes`:
+
+```json
+{
+  "CloudConfig" :{
+    "Platform" :"gcp",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName":"my-s3-bucket",
+    "InstanceProfile":"default"
+  },
+
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "metrics": {
+        "interval":"120"
+      }
+    }
+  }
+
+}
+```
 
 ## NTP
 

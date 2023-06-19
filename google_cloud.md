@@ -4,6 +4,8 @@ Google Cloud Integration
 Ops can integrate with your existing Google Cloud Platform (GCP) account. You can use Ops CLI to create and upload an image in GCP account.
 Once, you have uploaded image, you can also create an instance with a particular image using CLI.
 
+By using the __gcp__ _klib_ it is possible to send `memory usage metrics` to the GCP monitoring service, thus emulating the __GCP ops agent__.
+
 ## Pre-requisites
 
 1. Create a Service Account (SA) in your GCP account and download the Service Account key json file.
@@ -11,6 +13,7 @@ Once, you have uploaded image, you can also create an instance with a particular
 3. Get the name of your Google Cloud account project where you would be creating images and instances.
 4. Create a bucket in Google Cloud storage for image artifacts storage.
 5. Please make sure you export `GOOGLE_APPLICATION_CREDENTIALS` with the Service Account key json file path, before invoking below commands.
+
 ```sh
 $ export GOOGLE_APPLICATION_CREDENTIALS=~/service-key.json
 ```
@@ -23,14 +26,14 @@ You need to add [CloudConfig](configuration.md#cloudconfig) which mentions speci
 
 ```json
 {
-    "CloudConfig" :{
-        "ProjectID" :"prod-1000",
-        "Zone": "us-west1-b",
-        "BucketName":"my-deploy"
-    },
-    "RunConfig" : {
-        "Memory": "2G"
-    }
+  "CloudConfig": {
+    "ProjectID": "prod-1000",
+    "Zone": "us-west1-b",
+    "BucketName":"my-deploy"
+  },
+  "RunConfig": {
+    "Memory": "2G"
+  }
 }
 ```
 
@@ -81,7 +84,7 @@ $ ops image list
 
 `ops image delete <imagename>` can be used to delete an image from Google Cloud.
 
-```
+```sh
 $ ops delete image nanos-main-image
 ```
 
@@ -98,13 +101,15 @@ $ ops instance create <image_name> -g prod-1000 -z us-west1-b -t gcp
 ```
 
 Alternatively, you can pass config, if you have mentioned project-id and zone in project's config.json.
-```
+
+```sh
 $ ops instance create <image_name> -t gcp -c config.json
 ```
 
 You can provide list of ports to be exposed on gcp instance via config and command line.
 
 CLI example
+
 ``` sh
 $ ops instance create <image_name> -t gcp -p prod-1000 -z us-west1-a --port 80 --port 443
 ```
@@ -113,15 +118,22 @@ Sample config
 
 ```json
 {
-    "CloudConfig" :{
-        "Platform" :"gcp",
-        "ProjectID" :"prod-1000",
-        "Zone": "us-west1-a",
-        "BucketName":"my-s3-bucket"
-    },
-    "RunConfig": {
-        "Ports" : ["80", "443"]
+  "CloudConfig" :{
+    "Platform" :"gcp",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName":"my-s3-bucket",
+    "InstanceProfile":"default"
+  },
+  "RunConfig": {
+    "Ports" : ["80", "443"]
+  },
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "metrics": {"interval":"120"}
     }
+  }
 }
 ```
 
@@ -129,10 +141,12 @@ Sample config
 
 You maybe enable spot provisioning using the following config:
 
-```
+```json
+{
   "CloudConfig": {
     "Spot": true
   }
+}
 ```
 
 #### Private Static IP
@@ -143,9 +157,9 @@ If you would like to set a static private ip you can use the following:
 
 ```json
 {
-    "RunConfig":{
-      "IPAddress": "172.31.33.7"
-    }
+  "RunConfig":{
+    "IPAddress": "172.31.33.7"
+  }
 }
 ```
 
@@ -159,11 +173,62 @@ If you would like to enable IP forwarding when creating the instance you can use
 
 ```json
 {
-    "RunConfig":{
-      "CanIPForward": true
-    }
+  "RunConfig":{
+    "CanIPForward": true
+  }
 }
 ```
+
+#### GCP metrics - memory
+
+The __gcp__ _klib_ emulates some functions of GCP ops agent to send __memory usage metrics__ to the __GCP monitoring service__.
+
+Example Ops configuration to enable sending memory metrics every `2 minutes`:
+
+```json
+{
+  "CloudConfig" :{
+    "Platform" :"gcp",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName":"my-s3-bucket",
+    "InstanceProfile":"default"
+  },
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "metrics": {
+        "interval":"120"
+      }
+    }
+  }
+}
+```
+
+#### GCP logging - console
+
+The __gcp__ _klib_ implements a _console driver_ that sends _console output_ to GCP logs.
+
+```json
+{
+  "CloudConfig" :{
+    "Platform" :"gcp",
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName":"my-s3-bucket",
+    "InstanceProfile":"default"
+  },
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "logging": {
+        "log_id": "my_log"
+      }
+    }
+  }
+}
+```
+
 
 ### List Instances
 
@@ -183,6 +248,7 @@ $ ops instance list
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance list -g prod-1000 -z us-west1-b
 ```
@@ -200,6 +266,7 @@ $ ops instance logs <instance_name> -t gcp
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance logs -g prod-1000 -z us-west1-b
 ```
@@ -217,6 +284,7 @@ $ ops instance delete my-instance-running
 ```
 
 Alternatively you can pass project-id and zone with cli options.
+
 ```sh
 $ ops instance delete -g prod-1000 -z us-west1-b my-instance-running
 ```
@@ -244,11 +312,11 @@ You need to set the `BucketName`, `ProjectID` and `Zone` in the `CloudConfig` se
 
 ```json
 {
-    "CloudConfig" :{
-        "ProjectID" :"prod-1000",
-        "Zone": "us-west1-b",
-        "BucketName":"my-deploy"
-    }
+  "CloudConfig" :{
+    "ProjectID" :"prod-1000",
+    "Zone": "us-west1-b",
+    "BucketName":"my-deploy"
+  }
 }
 ```
 
@@ -293,6 +361,7 @@ $ ops volume delete <volume_name> -t gcp -c <configuration_file_path>
 ### Attach Volume
 
 For attaching a volume you need a running instance using a image configured with a mount point. This means you have to create a volume before running the instance. After the volume created you have to specify the volume label with the same name of the volume created. You can create the image running the next command.
+
 ```sh
 $ ops image create <elf_file|program> -i <image_name> -c config.json  --mounts <volume_label>:<mount_path>
 ```
@@ -317,9 +386,11 @@ the same vpc to talk to it.
 If you have already provisioned an elastic ip you may use it by setting
 it in the Cloud Config:
 
-```
-"CloudConfig" :{
-  "StaticIP": "1.2.3.4"
+```json
+{
+  "CloudConfig" :{
+    "StaticIP": "1.2.3.4"
+  }
 }
 ```
 
@@ -334,8 +405,8 @@ auto-created subnet.
 After you create a new VPC and subnet you can adjust the subnet to be
 dual stack like so:
 
-```
-gcloud compute networks subnets update mysubnet \
+```sh
+$ gcloud compute networks subnets update mysubnet \
   --stack-type=IPV4_IPV6 --ipv6-access-type=EXTERNAL --region=us-west2
 ```
 
@@ -344,7 +415,7 @@ you can click the 'REST' button to see it.
 
 A sample config:
 
-```
+```json
 {
   "CloudConfig" :{
     "ProjectID": "my-project",
@@ -367,14 +438,14 @@ Be aware that you might not have IPV6 connectivity from the
 laptop/server you are testing from. You can verify within an instance on
 Google or some other IPv6 capable machine via telnet:
 
-```
-telnet 2600:1900:4120:1235:: 8080
+```sh
+$ telnet 2600:1900:4120:1235:: 8080
 ```
 
 or ping:
 
-```
-ping6 2600:1900:4120:1235::
+```sh
+$ ping6 2600:1900:4120:1235::
 ```
 
 Also, keep in mind that when you create a new VPC by default there are
