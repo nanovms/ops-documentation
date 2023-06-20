@@ -12,7 +12,7 @@ As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d42
 * __firewall__ - use to implement network firewall
 * __gcp__ - logging and memory metrics for GCP
 * __ntp__ - used for clock syncing
-* __radar__ - a klib if using the external Radar service
+* __radar__ - telemetry/crash data report using the external [Radar](https://nanovms.com/radar) APM service
 * __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
 * __syslog__ - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
 * __tls__ - used for radar/ntp and other klibs that require it
@@ -337,6 +337,143 @@ en1: assigned FE80::E444:9CFF:FECA:FDCA
 Current Time in String:  2021-04-22 12:06:53.91767521 +0000 UTC
 m=+8.008671695
 ```
+
+## Radar
+
+The `radar` klib allows to send telemetry/crash data to an external [Radar](https://nanovms.com/radar) APM service.
+
+The actual __radar__ _klib_ is pre-configured to send data to `https://radar.relayered.net:443` and requires an api key `Radar-Key` that can be provided as an environment variable.
+The available configuration items that can be passes as envs are:
+
+- `RADAR_KEY` - mandatory, used to set `Radar-Key` and enable `radar` klib fuctionality
+- `RADAR_IMAGE_NAME` - optional, used to set an `"imageName"` that will be sent to the APM
+
+The `radar` klib depends on the `tls` klib for cryptographic operations.
+
+Sample config to activate the klib functionality:
+
+```json
+{
+  "Env": {
+    "RADAR_KEY": "RADAR_KEY_xyz",
+    "RADAR_IMAGE_NAME": "RADAR_IMAGE_NAME_xyz"
+  },
+  "Klibs": ["radar", "tls"]
+}
+```
+
+### Radar boot report
+
+Upon boot, the `radar` klib will send some initial data to the Radar server and expects to get back a numeric `"id"` that will be assigned to this boot event as `"bootID"`.
+
+The information sent looks like this:
+
+```
+POST /api/v1/boots HTTP/1.1
+Host: radar.relayered.net
+Content-Length: 116
+Content-Type: application/json
+Radar-Key: RADAR_KEY_xyz
+```
+
+```json
+{
+  "privateIP": "10.0.2.15",
+  "nanosVersion": "0.1.45",
+  "opsVersion": "master-dc83aee",
+  "imageName": "RADAR_IMAGE_NAME_xyz"
+}
+```
+
+The radar server should return back an unique id:
+
+```json
+{"id":1234}
+```
+
+__Note__: If there is a __crash dump__ to be sent, it will be sent before sending the _boot report_.
+
+### Radar metrics report
+
+The `radar` klib retrieves from the kernel ifromation about:
+
+- __memory usage__ - retrieved from the kernel _total memory usage in bytes_ __every minute__, and sends retrieved data to the server every __5 minutes__.
+                     The __5 samples__ are sent under `"memUsed"` attribute.
+
+- __disk usage__ - retrieved ans sent every __5 minutes__. Date is sent under ``"diskUsage"`` attribute whose value is an array of JSON objects (one for each disk mounted by the instance).
+                   Each array element contains 3 attributes:
+
+  - `"volume"`: a string that identifies the volume.
+                For the root volume, the string value is "root",
+                for any additional volumes, the string value is the volume label if present, or the volume UUID if the label is not present
+  - `"used"`: the number of bytes used by the filesystem (file contents and meta-data) in the volume
+  - `"total"`: the total number of bytes in the storage space of the volume, i.e. the upper limit for the "used" attribute value
+
+The information sent looks like this:
+
+```
+POST /api/v1/machine-stats HTTP/1.1
+Host: radar.relayered.net
+Content-Length: 138
+Content-Type: application/json
+Radar-Key: RADAR_KEY_xyz
+```
+
+```json
+{
+  "bootID": 1234,
+  "memUsed": [
+    68329472,
+    68329472,
+    68329472,
+    68329472,
+    68329472
+  ],
+  "diskUsage": [
+    {
+      "volume": "root",
+      "used": 5516288,
+      "total": 39779328
+    },
+    {
+      "volume": "2375a5a1-2d36-15cf-ea6b-2fa01df2ccde",
+      "used": 12345,
+      "total": 39779328
+    }
+  ]
+}
+```
+
+### Radar crash report
+
+A __"crash"__ is defined as either a user application fatal error (e.g. anything that causes the application to terminate with a non-zero exit code), or a kernel fatal error.
+When any of these happens, before shutting down the VM the kernel dumps on disk a trace of log messages (printed by both the user application and the kernel).
+At the next boot, the `radar` klib detects the log dump and sends it to the radar server as a crash report.
+The value of the __"id"__ field of a crash report is the same as the __"boot id"__ (sent right after each boot), so that a crash can be unequivocally associated to a boot.
+
+__Note__: The log dump is saved in a section of the disk that is being carved between _stage2_ and the _boot_ filesystem.
+
+The information sent looks like this:
+
+```
+POST /api/v1/crashes HTTP/1.1
+Host: radar.relayered.net
+Content-Length: 213
+Content-Type: application/json
+Radar-Key: RADAR_KEY_xyz
+```
+
+```json
+{
+  "bootID":1234,
+  "nanosVersion":"0.1.45",
+  "opsVersion":"master-dc83aee",
+  "imageName":"RADAR_IMAGE_NAME_xyz",
+  "dump":"en1: assigned 10.0.2.15\nen1: assigned FE80::2885:1DFF:FE7E:9D71\nProcess crash message in here\n"
+}
+```
+
+__Note__: In order for the submission to be considered successful, radar server needs to respond with a __"specific" confirmation message__, otherwise the crash dump submit will be attempted over and over.
 
 ## Syslog
 
@@ -941,7 +1078,6 @@ func UnveilBlock() error {
 }
 
 ```
-
 
 ### JavaScript
 
