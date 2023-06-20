@@ -32,6 +32,84 @@ think you need it. The ones that are required for certain functionality
 will be auto-included by ops. For instance if you are deploying to Azure
 we'll auto-include the cloud_init and tls klibs.
 
+## Cloudwatch
+
+The `cloudwatch` klib implements two functionalities that can be used on AWS cloud:
+
+1. `logging` - __console driver__ that sends __console output__ to __AWS CloudWatch__
+2. `metrics` - emulates some functions of AWS CloudWatch agent to send __memory utilization metrics__ to __AWS CloudWatch__
+
+### Cloudwatch logging
+
+The __cloudwatch__ _klib_ implements a console driver that sends log messages to AWS CloudWatch when Nanos runs on an AWS instance.
+This feature is enabled by loading the cloudwatch and tls klibs and adding a `"logging"` tuple to the `"cloudwatch"` tuple in the root tuple.
+The `"logging"` tuple may contain the following attributes:
+
+- `"log_group"`: specifies the CloudWatch log group to which log messages should be sent; if not present, the log group is derived from the image name (taken from the environment variables),
+                 or from the name of the user program if no IMAGE_NAME environment variable is present
+- `"log_stream"`: specifies the CloudWatch log stream to which log messages should be sent; if not present, the log stream is derived from an instance identifier (e.g. 'ip-172-31-23-224.us-west-1.compute.internal')
+
+The __log group__ and the __log stream__ are automatically created if not existing.
+
+In order for the cloudwatch klib to retrieve the appropriate credentials needed to communicate with the CloudWatch Logs server, the AWS instance on which it runs must be associated to an IAM role with the `CloudWatchAgentServerPolicy`,
+which must grant permissions for the following actions, as described in https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/iam-access-control-overview-cwl.html :
+
+ - `logs:PutLogEvents`
+ - `logs:CreateLogGroup`
+ - `logs:CreateLogStream`
+
+Example contents of Ops configuration file:
+
+```json
+{
+  "Klibs": ["cloudwatch", "tls"],
+  "ManifestPassthrough": {
+    "cloudwatch": {
+      "logging": {
+        "log_group": "my_log_group",
+        "log_stream": "my_log_stream"
+      }
+    }
+  }
+}
+```
+
+### Cloudwatch metrics
+
+The __cloudwatch__ _klib_ implements sending __memory utilization metrics__ to __AWS CloudWatch__.
+Analogously to the implementation in the Linux CloudWatch agent, the metrics being sent are under the __"CWAgent"__ namespace, and have
+an associated dimension whose name is "host" and whose value is an instance identifier formatted as in the following example: `"ip-111-222-111-222.us-west-1.compute.internal"`.
+
+The list of supported metrics is:
+- __mem_used__
+- __mem_used_percent__
+- __mem_available__
+- __mem_available_percent__
+- __mem_total__
+- __mem_free__
+- __mem_cached__
+
+A description for each of these metrics can be found at https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html, in the section for the Linux CloudWatch agent.
+In order for the cloudwatch klib to retrieve the appropriate credentials needed to communicate with the CloudWatch server,
+the AWS instance on which it runs must be associated to an IAM role with the CloudWatchAgentServerPolicy, as described in https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html.
+Memory metrics are defined as standard-resolution metrics, i.e. _they are stored with a resolution of 60 seconds_.
+
+The __cloudwatch__ _klib_ is configured via a `cloudwatch` tuple in the image manifest.
+Sending of memory metrics is enabled by specifying a sending interval (expressed in seconds) via a `mem_metrics_interval` attribute inside the `cloudwatch` tuple.
+The `cloudwatch` klib depends on the `tls` klib for cryptographic operations (which are needed in order to sign the requests being sent to the CloudWatch server).
+
+Example Ops configuration to send memory metrics with a `60-second` interval:
+
+```json
+{
+  "Klibs": ["cloudwatch", "tls"],
+  "ManifestPassthrough": {
+    "cloudwatch": {
+      "mem_metrics_interval": "60"
+    }
+  }
+}
+```
 
 ## GCP
 
@@ -39,7 +117,6 @@ The `gcp` klib implements two functionalities that can be used on GCP cloud:
 
 1. `logging` - _console driver_ that sends __console output__ to __GCP logs__
 2. `metrics` - emulates some functions of GCP ops agent to send __memory usage metrics__ to the __GCP monitoring service__
-
 
 __Note:__ When executing the ops instance create command to create a GCP instance, if the `CloudConfig.InstanceProfile` configuration parameter is a non-empty string,
 the instance being created is associated to the service account identified by this string, with cloud-platform access scope.
