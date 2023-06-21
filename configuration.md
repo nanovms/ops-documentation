@@ -907,6 +907,18 @@ Defines whether to emulate a VGA output device in `qemu`.
 }
 ```
 
+#### VirtfsShares {#runconfig.virtfsshares}
+
+Defines a list of directories paths in the host machine that will be shared with guest via VirtFS.
+
+```json
+{
+    "RunConfig": {
+        "VirtfsShares": ["./files","./assets"]
+    }
+}
+```
+
 #### Mounts {#runconfig.mounts}
 
 Defines a list of directories paths in the host machine whose data will be copied to the unikernel.
