@@ -74,6 +74,9 @@ Example contents of Ops configuration file:
 }
 ```
 
+__Note__: If `log_group` is not set, the `"IMAGE_NAME"` environment variable, if present, will be used to set the `log_group`,
+while the _program name_ is used as a _fallback_ setting for `log_group`.
+
 ### Cloudwatch metrics
 
 The __cloudwatch__ _klib_ implements sending __memory utilization metrics__ to __AWS CloudWatch__.
@@ -487,10 +490,16 @@ Nanos to use the syslog klib and it will ship everything over.
 Just pass in the desired syslog server along with the syslog
 klib in your config.
 
+If the `"IMAGE_NAME"` environment variable is present, it is used to populate the `APP_NAME` field in syslog messages,
+while the _program name_ is used as a _fallback_.
+
 For example, if running locally via user-mode you can use 10.0.2.2:
 
 ```json
 {
+  "Env": {
+    "IMAGE_NAME": "app-name-in-syslog-msg"
+  },
   "ManifestPassthrough": {
     "syslog": {
       "server": "10.0.2.2"
