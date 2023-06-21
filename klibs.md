@@ -527,6 +527,37 @@ sudo service rsyslog restart
 also you can disable the dupe filter or add a timetstamp to skirt around
 that.
 
+## TUN
+
+The `tun` klib is used to create TUN interfaces, namely _network TUNnel_, that simulate a network layer device operating in __layer 3__ of OSI Model carrying IP packets.
+
+Can be used when running vpn gateways (i.e userspace wireguard).
+
+The allowed configuration properties for the tun interface(s) are:
+- `interface base name` - i.e `wg`, `tun`
+  - `ipaddress` - ip address of the interface
+  - `netmask` - netmask of the interface
+  - `mtu` - configures the __mtu__ value of the interface, default value is __32768__ (32KiB)
+  - `up` - __true__/__false__ manages the interface initial state
+
+Sample config:
+
+```json
+{
+  "Klibs": ["tun"],
+  "ManifestPassthrough": {
+    "tun": {
+      "wg": {
+        "ipaddress": "172.16.0.1",
+        "netmask": "255.255.255.0",
+        "up": "true",
+        "mtu": "1420"
+      }
+    }
+  }
+}
+```
+
 ## Cloud Init - HTTP(s) to File/Env KLIB
 
 Cloud Init has 3 functions.
