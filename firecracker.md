@@ -20,7 +20,7 @@ The vm_config.json:
 {
   "boot-source": {
     "kernel_image_path": "/Users/bob/.ops/0.1.26/kernel.img",
-    "boot_args": "console=ttyS0 reboot=k panic=1 pci=off"
+    "boot_args": "anything-in-here-is-ignored-by-nanos"
   },
   "drives": [
     {
@@ -44,6 +44,9 @@ The vm_config.json:
   }
 }
 ```
+
+__Note__: At the moment, the only boot_args supported by `nanos` are those inserted by firecracker to describe the topology of __virtio_mmio__ devices (such as the _disk_ and _network interfaces_).
+          There is _no support yet_ for __user-specified args__ such as `"boot_args": "console=ttyS0 reboot=k panic=1 pci=off random.trust_cpu=on ..."`
 
 You should have dhcp listen on your tap:
 

@@ -24,6 +24,9 @@ and the `my_img.img` with the unikernel disk image of choice:
 
 `Note`: you can use `--serial file=/tmp/ch-serial.log` instead of `--serial tty`
 
+__Note__: At the moment, the only kernel args supported by `nanos` are those inserted by cloud-hypervisor to describe the topology of __virtio_mmio__ devices (such as the _disk_ and _network interfaces_).
+          There is _no support yet_ for __user-specified args__ such as `--cmdline "console=ttyS0 reboot=k panic=1 pci=off random.trust_cpu=on ..."`
+
 You should have dhcp listen on your tap:
 
 ```
