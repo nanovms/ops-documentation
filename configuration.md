@@ -239,6 +239,8 @@ Can be used to create images for Hyper-V generation 2 instances.
 
 `ImageName` specifies the image name in the cloud provider.
 
+It might be used by _ops_ to set `"IMAGE_NAME"` and `"RADAR_IMAGE_NAME"` environment variables.
+
 ```json
 {
     "CloudConfig": {
