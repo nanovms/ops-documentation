@@ -67,6 +67,13 @@ Using configuration file, you have to set the `Mounts` property.
   }
 }
 
+// VirtFS VirtIO 9p Example
+{
+  "Mounts": {
+    "/path-on-host-dir": "/files"
+  }
+}
+
 ```
 And, then you can use the configuration file on creating the image.
 ```
@@ -82,6 +89,9 @@ $ ops image create webapp --mounts vol:/files
 
 // Virtual ID Example
 $ ops image create webapp --mounts %1:/files
+
+// VirtFS VirtIO 9p Example
+$ ops image create webapp --mounts /path-on-host-dir:/files
 ```
 
 The mounts must be specified on creating an image. All commands that require to build an image accept the mounts details.
@@ -193,6 +203,86 @@ func main() {
         fmt.Print(string(body))
 }
 ```
+
+## Accessing host filesystem from nanos guest using 9p
+
+When running `onprem`, `Ops` contains logic to detect whether a mount directive is for a host directory (as opposed to a pre-made volume), and set up the configuration so that:
+
+ 1. Qemu properly exports the directory as a virtfs share, and
+ 2. the guest can mount that share as a 9P filesystem.
+
+- sample go http server
+
+```go
+package main
+
+import (
+	"net/http"
+)
+
+func main() {
+	fs := http.FileServer(http.Dir("static/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.ListenAndServe(":8080", nil)
+}
+```
+
+- build `my_server` binary
+
+```sh
+$ go build --ldflags "-s -w" -trimpath -a -tags osusergo,netgo -o my_server
+```
+
+- create __host__ folder to be shared with __guest__
+
+```sh
+$ mkdir /tmp/vfs9p
+$ touch /tmp/vfs9p/index.html
+```
+
+- `config.json` ops config file
+
+```json
+{
+  "Mounts": {
+    "/tmp/vfs9p": "/static"
+  },
+  "RunConfig": {
+    "Ports": [
+      "8080"
+    ]
+  }
+}
+```
+
+- run `ops` with `config.json` file
+
+```sh
+$ ops run -c config.json my_server -f
+```
+
+- or run `ops` without using `config.json` file
+
+```sh
+$ ops run my_server --mounts /tmp/vfs9p:/static -p 8080 -f
+```
+
+- modify content on the host and check that guest has the updates available
+
+```sh
+$ echo "1." >> /tmp/vfs9p/index.html
+
+$ curl -L localhost:8080/static/
+1.
+
+$ echo "2." >> /tmp/vfs9p/index.html
+
+$ curl -L localhost:8080/static/
+1.
+2.
+```
+
+- Read more in our [9p tutorial](https://nanovms.com/dev/tutorials/accessing-host-filesystem-from-nanos-guest-using-9p)
 
 ## Wrap-up
 

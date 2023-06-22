@@ -477,7 +477,6 @@ adds all files under `/etc/ssl/certs` on host to `/usr/lib/ssl/certs` on VM.
 ### Mounts {#mounts}
 
 `Mounts` is used to mount a volume in an instance.
-See further instructions about volumes in dedicated documentation page.
 
 ```json
 {
@@ -486,6 +485,19 @@ See further instructions about volumes in dedicated documentation page.
     }
 }
 ```
+
+In the case of `onprem` provider, the _volume_ can be a __host directory__ (as opposed to a _pre-made volume_)
+that the guest will mount as a __9P filesystem__.
+
+```json
+{
+    "Mounts": {
+        "/tmp/files": "/files"
+    }
+}
+```
+
+See further instructions about volumes in dedicated [documentation](volumes.md) page.
 
 ### NameServers {#nameservers}
 
