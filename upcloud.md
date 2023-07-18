@@ -8,7 +8,8 @@ Once, you have uploaded image, you can also create an instance with a particular
 
 1. Create an UpCloud account ([https://upcloud.com/signup/](https://upcloud.com/signup/)).
 2. Set next environment variables.
-```
+
+```sh
 $ export UPCLOUD_USER=<your account username>
 
 $ export UPCLOUD_PASSWORD=<your account password>
@@ -18,13 +19,24 @@ $ export UPCLOUD_ZONE=<location of your images and instances>
 
 **Note:** Check the available zones in [Upcloud Documentation](https://developers.upcloud.com/1.2/5-zones/).
 
+You also need to enable API access:
+
+![enabling upcloud api](upcloud_api.png)
+
 ## Image Operations
+
+Images for UpCloud are created by directly creating storage through the api not
+by uploading to a bucket.
+
 ### Create Image
 You can create an image in UpCloud with the following command.
 
 ```sh
 $ ops image create <elf_file> -i <image_name> -t upcloud
 ```
+
+Note: Creating an image can take a while in certain regions. There is a
+default timeout of 10min but can be adjusted via https://github.com/nanovms/ops/blob/master/provider/upcloud/upcloud.go#L68 . You can see the status live via https://hub.upcloud.com/storage/devices as well.
 
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
