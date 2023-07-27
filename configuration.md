@@ -709,6 +709,18 @@ Defines whether hardware acceleration should be enabled in qemu. This option is 
 }
 ```
 
+#### AtExit {#runconfig.at_exit}
+
+Defines hooks to be ran after instance stops.
+
+```json
+{
+    "RunConfig": {
+        "AtExit": "echo `date` - START; sh shell_script.sh; echo `date` - DONE"
+    }
+}
+```
+
 #### Bridged {#runconfig.bridged}
 
 Connects the unikernel network interface to a bridge with the name `br0`. The bridge name may be overriden with the property [BridgeName](#runconfig.bridge_name).
