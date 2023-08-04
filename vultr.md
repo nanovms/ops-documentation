@@ -70,6 +70,14 @@ VULTR_SECRET=my_vultr_secret \
 ops instance create 6f5e4eebdf761 -z ewr1 -t vultr
 ```
 
+You may assign a static ("reserved ip") using the following config:
+
+```sh
+"CloudConfig": {
+    "StaticIP": "1.2.3.4"
+}
+```
+
 ### List Instances
 
 ```sh
