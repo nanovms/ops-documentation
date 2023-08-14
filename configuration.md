@@ -172,7 +172,9 @@ Please keep in mind that, depending on the dedicated host type, only some instan
 
 #### DomainName {#cloudconfig.domain_name}
 
-`DomainName` is used to update DNS entry with the started instance IP.
+This option is supported on **AWS**, **GCP** and **Vultr**.
+
+`DomainName` is used to update a A record DNS entry with the started instance IP.
 
 ```json
 {
