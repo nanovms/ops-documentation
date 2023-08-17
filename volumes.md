@@ -114,6 +114,23 @@ If your image was created with the mounts details specified and you would like t
 $ ops volume attach <instance_name> <volume_name>
 ```
 
+Locally you can attach volumes at instance boot using --mounts with `ops run`, `ops pkg load`, or `ops instance create`.
+
+If you wish to dynamically attach and detach volumes locally you'll need
+to create the instance with QMP support enabled:
+
+```
+{
+  "RunConfig": {
+    "QMP": true
+  }
+}
+```
+
+You should note that this opens a local mgmt port that uses the
+instance id's last 4 digits as the port. (This is only for local
+hotplug.)
+
 ## Detach
 
 You can detach a volume from one instance using `ops detach <instance_name> <volume_name>`
