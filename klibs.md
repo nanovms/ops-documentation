@@ -14,6 +14,7 @@ As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d42
 * __ntp__ - used for clock syncing
 * __radar__ - telemetry/crash data report using the external [Radar](https://nanovms.com/radar) APM service
 * __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
+* __special_files__ provides nanos-specific pseudo-files
 * __syslog__ - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
 * __tls__ - used for radar/ntp and other klibs that require it
 * __tun__ - supports tun devices (eg: vpn gateways)
@@ -477,6 +478,66 @@ Radar-Key: RADAR_KEY_xyz
 ```
 
 __Note__: In order for the submission to be considered successful, radar server needs to respond with a __"specific" confirmation message__, otherwise the crash dump submit will be attempted over and over.
+
+## SpecialFiles
+
+The 'special_files' klib provides a set of pseudo-files that are Nanos
+specific.
+
+In particular the config below will populate the path of
+`/sys/devices/disks` with the name of each disk attached with the volume
+name and UUID of the disk:
+
+```
+{
+  "RunConfig": {
+    "QMP": true
+  },
+  "Klibs": ["special_files"],
+  "ManifestPassthrough": {
+    "special_files": {
+      "disks": {}
+    }
+  },
+  "Mounts": {
+    "bob": "/bob"
+  }
+}
+```
+
+You can test this behavior with the below program:
+
+```
+package main
+
+import (
+        "fmt"
+        "os"
+        "time"
+)
+
+func main() {
+        for i := 0; i < 30; i++ {
+                body, err := os.ReadFile("/proc/mounts")
+                if err != nil {
+                        fmt.Println(err)
+                }
+                fmt.Print(string(body))
+
+                body, err = os.ReadFile("/sys/devices/disks")
+                if err != nil {
+                        fmt.Println(err)
+                }
+                fmt.Print(string(body))
+
+                time.Sleep(2 * time.Second)
+        }
+}
+```
+
+This functionality provides similar lsblk like functionality you might
+find on linux, however, different cloud providers do not put the same uniquely identifiable
+information into the serial/id of the device so we implemented this instead.
 
 ## Syslog
 

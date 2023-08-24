@@ -271,6 +271,12 @@ Alternatively you can pass project-id and zone with cli options.
 $ ops instance logs -g prod-1000 -z us-west1-b
 ```
 
+You may also tail the serial console using:
+
+```
+$ ops instance logs --watch my-running-instance -g prod-1000 -t gcp -z us-west2-a
+```
+
 ### Delete Instance
 
 `ops instance delete` command can be used to delete instance on Google Cloud.
