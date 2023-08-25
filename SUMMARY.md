@@ -52,6 +52,7 @@
 * [Integrations](integrations.md)
 * [Debugging](debugging.md)
 * [CrossBuilding](crossbuilding.md)
+* [MacOS](mac.md)
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
 
