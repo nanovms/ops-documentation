@@ -1195,6 +1195,41 @@ This is an optional configuration setting that allows Nanos to wait for a valid 
 }
 ```
 
+This configuration can also be associated to a specific network interface, i.e:
+
+```json
+{
+    "ManifestPassthrough": {
+        "en2": {
+            "exec_wait_for_ip4_secs": "5"
+        }
+    }
+}
+```
+
+#### Exec Wait For IPv6 {#manifestpassthrough.exec_wait_for_ipv6}
+
+This is an optional configuration setting that allows Nanos to wait for a valid ipv6 address to become available via DHCP using the timeout of 'exec_wait_for_ip6_secs'. If static ip is set than there is no effect. This configuration is not on by default.
+
+```json
+{
+    "ManifestPassthrough": {
+        "exec_wait_for_ip6_secs": "5"
+    }
+}
+```
+This configuration can also be associated to a specific network interface, i.e:
+
+```json
+{
+    "ManifestPassthrough": {
+        "en2": {
+            "exec_wait_for_ip6_secs": "5"
+        }
+    }
+}
+```
+
 #### ltrace {#manifestpassthrough.ltrace}
 
 This enables tracing calls made by the application binary to dynamic library functions.
