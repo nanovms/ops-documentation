@@ -167,29 +167,36 @@ Example contents of Ops configuration file:
 
 ### GCP metrics
 
-The __gcp__ _klib_ can be configured for sending memory usage metrics to the __GCP monitoring service__, thus emulating the __GCP ops agent__.
+The __gcp__ _klib_ can be configured for sending `memory` and `disk` usage metrics to the __GCP monitoring service__, thus emulating the __GCP ops agent__.
 The `ID` of the running instance and the `zone` where it is running (which are necessary to be able to send API requests to the monitoring server) are retrieved from the instance _metadata server_.
-The metrics being sent are related to __memory__ usage (see https://cloud.google.com/monitoring/api/metrics_opsagent#agent-memory),
-and more specifically are the `bytes_used` and `bytes_percent` metric types; for each type, a value is sent for each of the __"cached"__, __"free"__ and __"used"__ states.
-Sending of memory metrics is enabled by inserting a` "metrics"` tuple in the `"gcp"` configuration tuple.
-It is possible to modify the time interval at which metrics are sent by inserting an `"interval"` attribute in the `"metrics"` tuple, with the interval value expressed in seconds.
-The default (and minimum allowed) interval value is `60 seconds`.
+
+- __memory__ usage metrics being sent (see https://cloud.google.com/monitoring/api/metrics_opsagent#agent-memory),
+are the `bytes_used` and `bytes_percent` metric types; for each type, a value is sent for each of the __"cached"__, __"free"__ and __"used"__ states.
+
+- __disk__ usage metrics being sent (see https://cloud.google.com/monitoring/api/metrics_opsagent#agent-disk),
+are the `bytes_used` and `bytes_percent` metric types; for each type, a value is sent for each of the __"free"__ and __"used"__ states.
 
 In order for the gcp klib to retrieve the appropriate credentials needed to communicate with the GCP monitoring server,
 the instance on which it runs must be associated to a service account (see https://cloud.google.com/compute/docs/access/service-accounts).
 
 Instances created by Ops are associated to a service account via the `CloudConfig.InstanceProfile` configuration parameter.
 
-Example Ops configuration to enable sending memory metrics every `2 minutes`:
+The allowed configuration properties are:
+- `metrics` - enable metrics. By default, only __memory__ metrics are sent, __disk__ metrics are disabled.
+  - `interval` -  value expressed in __seconds__ to modify the time interval at which metrics are sent. The default (and minimum allowed) value is `60 seconds`.
+  - `disk` - enable disk metrics. By default, only __read-write__ mounted disk(s) metrics are sent, __read-only__ disk metrics are disabled.
+    - `include_readonly` - enable also __read-only__ disk metrics.
+
+Example Ops configuration to enable sending __memory__ only metrics every `2 minutes`:
 
 ```json
 {
-  "CloudConfig" :{
-    "Platform" :"gcp",
-    "ProjectID" :"prod-1000",
+  "CloudConfig": {
+    "Platform": "gcp",
+    "ProjectID": "prod-1000",
     "Zone": "us-west1-a",
-    "BucketName":"my-s3-bucket",
-    "InstanceProfile":"default"
+    "BucketName": "my-s3-bucket",
+    "InstanceProfile": "default"
   },
 
   "Klibs": ["gcp", "tls"],
@@ -197,6 +204,58 @@ Example Ops configuration to enable sending memory metrics every `2 minutes`:
     "gcp": {
       "metrics": {
         "interval":"120"
+      }
+    }
+  }
+
+}
+```
+
+Example Ops configuration to enable sending __memory__ metrics and __disk__ metrics (_read-write_ only) every `2 minutes`:
+
+```json
+{
+  "CloudConfig": {
+    "Platform": "gcp",
+    "ProjectID": "prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName": "my-s3-bucket",
+    "InstanceProfile": "default"
+  },
+
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "metrics": {
+        "interval": "120",
+        "disk": {}
+      }
+    }
+  }
+
+}
+```
+
+Example Ops configuration to enable sending __memory__ metrics and __disk__ metrics (_read-write_ and _read-only_) every `2 minutes`:
+
+```json
+{
+  "CloudConfig": {
+    "Platform": "gcp",
+    "ProjectID": "prod-1000",
+    "Zone": "us-west1-a",
+    "BucketName": "my-s3-bucket",
+    "InstanceProfile": "default"
+  },
+
+  "Klibs": ["gcp", "tls"],
+  "ManifestPassthrough": {
+    "gcp": {
+      "metrics": {
+        "interval": "120",
+        "disk": {
+          "include_readonly": "true"
+        }
       }
     }
   }
