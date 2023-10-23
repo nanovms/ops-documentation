@@ -3,7 +3,7 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d429a24cf5c3ca48ca0566acb) there are 13 klibs:
+As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d429a24cf5c3ca48ca0566acb) there are 13 klibs in the kernel source tree:
 
 * __cloud_init__ - used for Azure && env config init
   * __cloud_azure__ - use to check in to the Azure meta-data service - not available in config (auto-included by __cloud_init__)
@@ -1245,3 +1245,57 @@ There are 2 npm packages published and ready for use.
 
 - `pledge` - https://www.npmjs.com/package/nanos-pledge
 - `unveil` - https://www.npmjs.com/package/nanos-unveil
+
+## Out-of-tree klibs
+
+In addition to the above klibs, whose source code is included in the Nanos kernel source tree, out-of-tree klibs can also be created to enhance Nanos with additional functionality. Provided that such klibs are compiled against the exact version of the kernel being used, they can be added to a given image and will be loaded by the kernel during initialization just like in-tree klibs.
+
+### gpu_nvidia
+
+This klib, whose source code is available on [GitHub](https://github.com/nanovms/gpu-nvidia/), implements a driver for NVIDIA Graphical Processing Units. It is a port to the Nanos kernel of the open-source Linux driver released by NVIDIA for its GPU cards; at the time of this writing, the gpu_nvidia klib is based on version 535.113.01 of the NVIDIA driver.
+
+As with any out-of-tree klib, in order to build this klib the source code of the Nanos kernel version being used needs to be available in the development machine; then, the following command can be used to build the klib (replace `/path/to/nanos/kernel/source` with the actual filesystem path where the kernel source is located):
+
+```bash
+make NANOS_DIR=/path/to/nanos/kernel/source
+```
+
+The resulting klib binary file will be located at kernel-open/_out/Nanos_x86_64/gpu_nvidia in the klib source tree. In order for this file to be found by Ops, either the file has to be copied (or symlinked) in the folder containing the in-tree klibs for the kernel version being used (e.g. ~/.ops/0.1.47/klibs/), or the `KlibDir` configuration option has be to added to the Ops configuration file to point to the folder where the klib file is located; example using the latter approach:
+
+```json
+{
+  "KlibDir": "/usr/src/gpu-nvidia/kernel-open/_out/Nanos_x86_64",
+  "Klibs": ["gpu_nvidia"]
+}
+```
+
+The NVIDIA driver requires a firmware file to be available in the image, so that this file can be transferred to the GPU card during initialization. A GPU firmware file is tied to a specific kernel version; in order to retrieve the correct firmware files, download the NVIDIA Linux driver package for Linux 64-bit from <https://www.nvidia.com/Download/Find.aspx?lang=en-us>, then extract the package: firmware files will be located in the `firmware` subfolder of the extracted package contents. For driver version 535.113.01, there are two separate firmware files (gsp_ga10x.bin and gsp_tu10x.bin), each of which is used for a subset of the supported GPUs; which of these files is needed by the driver during initialization depends on the type of NVIDIA card attached to the instance: for example, GeForce 3090 and 4090 cards use the gsp_ga10x.bin file. The firmware file has to be put in the unikernel image in the `/nvidia/<driver_version>/` folder; for example, to use an NVIDIA GeForce 3090 GPU with driver version 535.113.01, the /nvidia/535.113.01/gsp_ga10x.bin file has to be included in the image.
+
+The Ops configuration options to deploy a Nanos image to a GPU-equipped instance are "GPUs" (which specifies the number of GPUs to be attached to the instance) and "GPUType" (which specifies the type of GPU, and can be used on certain cloud providers such as GCP which allow attaching different GPU types to the same instance type). Example configuration for GCP:
+
+```json
+{
+  "CloudConfig" :{
+    "ProjectID" :"my-proj",
+    "Zone": "us-west1-b",
+    "BucketName":"my-bucket",
+    "Flavor":"n1-standard-1"
+  },
+  "RunConfig": {
+    "GPUs": 1,
+    "GPUType": "nvidia-tesla-t4"
+  }
+}
+```
+
+For on-prem instances, if the host machine is equipped with one or more GPUs, it is possible to attach (a subset of) these GPUs to a Nanos instance via PCI passthrough, by specifying the "GPUs" configuration option with the desired number of GPUs. For example:
+
+```json
+{
+  "RunConfig": {
+    "GPUs": 1
+  }
+}
+```
+
+PCI passthrough is only available on x86_64 Linux host machines, and requires I/O virtualization to be supported and enabled in the host: this may require enabling VT-d (for Intel CPUs) or AMD IOMMU (for AMD CPUs) in the BIOS settings, and adding the `intel_iommu=on iommu=pt` (for Intel CPUs) or `amd_iommu=on iommu=pt` (for AMD CPUs) options to the Linux kernel command line. In addition, the vfio-pci Linux kernel driver must be loaded and bound to the GPU device(s) to be attached to an instance: if the driver is built into the kernel binary, add `vfio-pci.ids=:<vvvv>:<dddd>` (where `<vvvv>` is the PCI vendor ID and `<dddd>` is the PCI device ID of the host GPU) to the kernel command line, otherwise (if the driver is built as a kernel module) ensure that the driver is loaded with the "ids" option set to the PCI vendor and device ID of the GPU (for example, create a file named /etc/modprobe.d/vfio.conf which contains `options vfio-pci ids=10de:1eb8"`). In order for VFIO devices to be accessible by the hypervisor process, their file attributes must be properly configured, e.g. with the following udev rule: `SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm"`.
