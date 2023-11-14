@@ -3,7 +3,7 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of Nanos [5e6d762](https://github.com/nanovms/nanos/commit/5e6d76221f12d30d429a24cf5c3ca48ca0566acb) there are 13 klibs in the kernel source tree:
+As of Nanos [b66be2b](https://github.com/nanovms/nanos/commit/b66be2b642069519a14ea321d9bf5843921c08ab) there are 13 klibs in the kernel source tree:
 
 * __cloud_init__ - used for Azure && env config init
   * __cloud_azure__ - use to check in to the Azure meta-data service - not available in config (auto-included by __cloud_init__)
@@ -24,7 +24,7 @@ Not all of these are available to be included in your config (__cloud_azure__, _
 Only the ones found in your `~/.ops/NANOS-VERSION/klibs` folder can be specified,
 where `NANOS-VERSION` is the version of nanos you are using, ie:
 
-- **0.1.45**  - `~/.ops/0.1.45/klibs`
+- **0.1.48**  - `~/.ops/0.1.48/klibs`
 - **nightly** - `~/.ops/nightly/klibs`
 
 Some of these are auto-included as they provide support that is required
@@ -547,7 +547,7 @@ In particular the config below will populate the path of
 `/sys/devices/disks` with the name of each disk attached with the volume
 name and UUID of the disk:
 
-```
+```json
 {
   "RunConfig": {
     "QMP": true
@@ -566,7 +566,7 @@ name and UUID of the disk:
 
 You can test this behavior with the below program:
 
-```
+```go
 package main
 
 import (
@@ -611,7 +611,7 @@ Just pass in the desired syslog server along with the syslog
 klib in your config.
 
 If the `"IMAGE_NAME"` environment variable is present, it is used to populate the `APP_NAME` field in syslog messages,
-while the _program name_ is used as a _fallback_.
+while the `program` _name_ is used as a _fallback_.
 
 For example, if running locally via user-mode you can use 10.0.2.2:
 
@@ -622,7 +622,28 @@ For example, if running locally via user-mode you can use 10.0.2.2:
   },
   "ManifestPassthrough": {
     "syslog": {
-      "server": "10.0.2.2"
+      "server": "10.0.2.2",
+      "server_port": "514"
+    }
+  },
+  "Klibs": ["syslog"]
+}
+```
+
+If you need the logs to be also stored in a file:
+
+```json
+{
+  "Env": {
+    "IMAGE_NAME": "app-name-in-syslog-msg"
+  },
+  "ManifestPassthrough": {
+    "syslog": {
+      "server": "10.0.2.2",
+      "server_port": "514",
+      "file": "/tmp/sys.log",
+      "file_max_size": "8M",
+      "file_rotate": "9"
     }
   },
   "Klibs": ["syslog"]
@@ -712,6 +733,8 @@ Certain caveats to be aware of:
 * When cloud_init cannot download one or more files, the kernel does not start the user program.
   The rationale for this is that we want all files to be ready and accessible when the program starts.
 * When used to populate the user environment, only string-valued attributes are converted to environment variables (**non-string-valued attributes are ignored**).
+* The `cloud_init` klib (`download_env` functionality) is **not meant** to be used to set environment variables _whose value is used in other klibs or in the kernel code_
+  (e.g. the `"IMAGE_NAME"` environment variable used by the `syslog` klib), because the code that uses an environment variable _can be executed before_ `cloud_init` sets a value for the variable.
 
 Also, be aware that you set an appropriate minimum image base size to
 accomodate your files.
