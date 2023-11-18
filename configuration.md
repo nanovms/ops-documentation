@@ -1128,6 +1128,18 @@ This property is only used by cloud provider **openstack** and sets the instance
 }
 ```
 
+#### VolumeSizeInGb {#runconfig.attach_volume_on_instance_create}
+
+This property is only used by cloud provider **gcp** to attach an existing cloud disk/volume to the instance being created.
+
+```json
+{
+    "RunConfig": {
+        "AttachVolumeOnInstanceCreate": true
+    }
+}
+```
+
 ### ManifestPassthrough {#manifestpassthrough}
 
 There is the concept of the [manifest](https://nanos.org/thebook#manifest) in Nanos where there exists many other config options that don't boil up to ops configuration, however, sometimes you still wish to pass these settings down to the manifest. Certain klibs, in particular, have variables that need to be set. To set them do this:
