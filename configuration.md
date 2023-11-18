@@ -338,6 +338,8 @@ On **AWS**, both the _name_ and the _id_ of the subnet may be used as value.
 
 `Tags` is a list of keys and values to provide more context about an instance or an image. There are a set of pre-defined tags to identify the resources created by `ops`.
 
+The following example demonstrates the default format used when deploying on different cloud providers.
+
 ```json
 {
     "CloudConfig": {
@@ -349,6 +351,47 @@ On **AWS**, both the _name_ and the _id_ of the subnet may be used as value.
             {
                 "key": "function",
                 "value": "web-server"
+            }
+        ]
+    }
+}
+```
+
+On **GCP** (_only_) there is also an extended configuration `attribute` that can be used to detail/control the purpose and destination of the tag
+
+```json
+{
+    "CloudConfig": {
+        "Tags": [
+            {
+                "key": "instance-owner",
+                "value": "joe-smith",
+                "attribute": {
+                    "image_label": false,
+                    "instance_label": true,
+                    "instance_network": false,
+                    "instance_metadata": false
+                }
+            },
+            {
+                "key": "function",
+                "value": "web-server",
+                "attribute": {
+                    "image_label": true,
+                    "instance_label": true,
+                    "instance_network": false,
+                    "instance_metadata": false
+                }
+            },
+            {
+                "key": "network-tag",
+                "value": "http",
+                "attribute": {
+                    "image_label": false,
+                    "instance_label": false,
+                    "instance_network": true, // will use the tag value
+                    "instance_metadata": false
+                }
             }
         ]
     }
