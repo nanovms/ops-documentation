@@ -7,7 +7,7 @@ more convenient to execute code without needing to compile your own
 interpreter(s).
 
 You can also create and upload your own public and private packages at
-https://repo.ops.city as well.
+[https://repo.ops.city](https://repo.ops.city) as well.
 
 ### Listing Packages
 To get a list of currently supported packages, run the following
@@ -40,6 +40,13 @@ Package can be downloaded to the local cache `~/.ops/packages` using `ops get` c
 
 ```sh
 $ ops pkg get <package_name>
+```
+
+Not sure what the latest package version would be? You can just grab the
+latest by substituting the version with the ':latest' tag:
+
+```
+ ops pkg load eyberg/redis:latest -p 6379
 ```
 
 ### Information of Package

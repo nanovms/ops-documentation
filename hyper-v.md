@@ -5,7 +5,7 @@ Nanos can run on hyper-v.
 
 ## Pre-requisites
 
-Hyper-v is only supported on Windows 10 Enterprise, Pro and Education.
+Hyper-v is only supported on Windows 10/11 Enterprise, Pro and Education.
 
 You need to enable the next Windows features:
 - [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
@@ -13,6 +13,17 @@ You need to enable the next Windows features:
 
 
 After enabling the required windows features you may be able to manage virtual machines with ops commands from a wsl shell with administrator permissions.
+
+If you see the error message
+
+```
+exec: "qemu-img": exeuctable file not found in $PATH
+```
+
+install qemu-utils in WSL2.
+
+As of right now OPS on Windows requires to be ran in WSL2 with admin
+privileges. You can start WSL2 by right-clicking on it.
 
 ## Image Operations
 ### Create Image
