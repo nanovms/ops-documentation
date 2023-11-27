@@ -200,3 +200,4 @@ instructions found for each cloud:
 
 [Google Cloud](google_cloud.md)
 [AWS](aws.md)
+[Azure](azure.md)

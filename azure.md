@@ -217,3 +217,19 @@ export AZURE_BASE_GROUP_NAME=""
 
 ops volume list -t azure
 ```
+
+## Networking Considerations
+
+### IPV6 Networking
+
+IPV6 support differs from cloud to cloud.
+
+You can enable IPV6 on Azure with the following config:
+
+```json
+{
+  "CloudConfig" :{
+    "EnableIPv6": true,
+    }
+}
+```

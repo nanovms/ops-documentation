@@ -38,6 +38,7 @@ $ ops instance logs --watch my-running-instance
 ### Delete Instance
 
 ## Volume Operations
+
 ### Create Volume
 
 ### List Volumes
@@ -46,4 +47,27 @@ $ ops instance logs --watch my-running-instance
 
 ### Attach Volume
 
+To dynamically attach/detach volumes at run-time for the onprem target
+you must be using QMP.
+
+```
+{
+    "RunConfig": {
+        "QMP": true
+    }
+}
+```
+
 ### Detach Volume
+
+To dynamically attach/detach volumes at run-time for the onprem target
+you must be using QMP.
+
+```
+{
+    "RunConfig": {
+        "QMP": true
+    }
+}
+```
+

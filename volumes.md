@@ -221,6 +221,11 @@ func main() {
 }
 ```
 
+## Hot-Plugging Support
+
+OPS supports hot-plugging volumes on GCP, AWS, and Azure, allowing you
+to, at runtime, attach and detach volumes and mount/unmount filesystems.
+
 ## Accessing host filesystem from nanos guest using 9p
 
 When running `onprem`, `Ops` contains logic to detect whether a mount directive is for a host directory (as opposed to a pre-made volume), and set up the configuration so that:

@@ -149,6 +149,23 @@ You maybe enable spot provisioning using the following config:
 }
 ```
 
+#### Disable SMT
+
+You can disable SMT if you so desire by flagging 'ThreadsPerCore' to 1.
+By default Nanos will have acess to all vCPUs available but this setting
+can force it to only use one thread per core. Some performance, security
+or licensing concerns might benefit from this setting. It is important
+to note that not all instances allow this setting and you will still be
+billed for all vCPUs provisioned.
+
+```json
+ { 
+  "RunConfig": {
+    "ThreadsPerCore": 1
+  }
+}
+```
+
 #### Private Static IP
 
 By default, ops uses will rely on DHCP.
