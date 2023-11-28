@@ -166,6 +166,21 @@ billed for all vCPUs provisioned.
 }
 ```
 
+#### AMD-SEV (Secure Encrypted Virtualization)
+
+You can enable encryption in-use AMD-SEV on select flavors and regions
+in Google Cloud. This will generate an encryption key that is generated
+for each new vm.
+
+```
+{
+  "CloudConfig" : {
+    "ConfidentialVM": true,
+    "Flavor": "n2d-standard-2"
+  }
+}
+```
+
 #### Private Static IP
 
 By default, ops uses will rely on DHCP.
