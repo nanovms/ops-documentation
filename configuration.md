@@ -1344,6 +1344,124 @@ This **doesn't** affect _TUN_ interface(s).
 }
 ```
 
+#### expected_exit_code {#manifestpassthrough.expected_exit_code}
+
+This is an optional configuration setting that changes the program _exit code_ to _0_, if a match is found on the configuration.
+
+Some possible configurations:
+
+```json
+{
+    "ManifestPassthrough": {
+        "expected_exit_code": "1"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "expected_exit_code": "!6"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "expected_exit_code": ["1", "6"]
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "expected_exit_code": "*"
+    }
+}
+```
+
+#### reboot_on_exit {#manifestpassthrough.reboot_on_exit}
+
+This is an optional configuration setting that reboots your application immediately if it stops with an _exit code that matches the configuration_.
+
+This is checked after `manifestpassthrough.expected_exit_code` execution (when both configured).
+
+__Note__: `poweroff/stop` operations work normally, regardless of the presence and value of the `reboot_on_exit` option, and regardless of the application exit code.
+
+Some possible configurations:
+
+```json
+{
+    "ManifestPassthrough": {
+        "reboot_on_exit": "!0"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "reboot_on_exit": "1"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "reboot_on_exit": ["0", "1", "6"]
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "reboot_on_exit": "*"
+    }
+}
+```
+
+#### idle_on_exit {#manifestpassthrough.idle_on_exit}
+
+This is an optional configuration setting that keeps a VM running after the user program exits with an _exit code that matches the configuration_. The VCPUs remain halted.
+
+Some possible configurations:
+
+```json
+{
+    "ManifestPassthrough": {
+        "idle_on_exit": "0"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "idle_on_exit": "!0"
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "idle_on_exit": ["0", "1", "6"]
+    }
+}
+```
+
+```json
+{
+    "ManifestPassthrough": {
+        "idle_on_exit": "*"
+    }
+}
+```
+
 ### Debugflags {#debugflags}
 
 `Debugflags` adds additional debug flags to the runtime.
