@@ -283,6 +283,13 @@ The allowed configuration properties are:
 - `ntp_max_slew_ppm` - maximum slewing rate for clock offset error correction, expressed in PPM; default value: **83333**
 - `ntp_max_freq_ppm` - maximum clock frequency error rate, expressed in PPM; default value: **25000**
 
+When running on AWS, the Elastic Network Adapter (ENA) interface driver on Nanos, has support for retrieving the current time from a _PTP hardware clock_, when supported by the network interface.
+
+ `ntp` klib is able to retrieve time from the _PTP clock_ **alternatively** to _using NTP_, by using the following configuration:
+ - `"chrony":{"refclock": "ptp"}`
+   - the ntp klib _attempts_ to use the PTP clock for synchronizing the system time
+   - if a _PTP clock_ is **not available**, the klib _falls back to NTP_
+
 The `ntp` klib needs to collect some data samples from ntp server(s) before deciding the actions needed to update the clock (if any).
 - It needs a minimum of **4** _samples_ to analyze the needed changes - `MIN_SAMPLES 4`
 - It keeps a maximum of **30** _samples_ to analyze the needed changes - `MAX_SAMPLES 30`
@@ -328,7 +335,10 @@ Use the configuration file to enable the `ntp` klib and setup the settings.
     "ntp_poll_max": "10",
     "ntp_reset_threshold": "0",
     "ntp_max_slew_ppm": "83333",
-    "ntp_max_freq_ppm": "25000"
+    "ntp_max_freq_ppm": "25000",
+    "chrony": {
+      "refclock": "ptp"
+    }
   }
 }
 ```
@@ -406,7 +416,7 @@ m=+8.008671695
 The `radar` klib allows to send telemetry/crash data to an external [Radar](https://nanovms.com/radar) APM service.
 
 The actual __radar__ _klib_ is pre-configured to send data to `https://radar.relayered.net:443` and requires an api key `Radar-Key` that can be provided as an environment variable.
-The available configuration items that can be passes as envs are:
+The available configuration items that can be passed as envs are:
 
 - `RADAR_KEY` - mandatory, used to set `Radar-Key` and enable `radar` klib fuctionality
 - `RADAR_IMAGE_NAME` - optional, used to set an `"imageName"` that will be sent to the APM
@@ -454,7 +464,7 @@ The radar server should return back an unique id:
 {"id":1234}
 ```
 
-__Note__: If there is a __crash dump__ to be sent, it will be sent before sending the _boot report_.
+__Note__: If there is a __crash dump__ to be sent, it will be sent **before** sending the _boot report_.
 
 ### Radar metrics report
 
@@ -463,7 +473,7 @@ The `radar` klib retrieves from the kernel ifromation about:
 - __memory usage__ - retrieved from the kernel _total memory usage in bytes_ __every minute__, and sends retrieved data to the server every __5 minutes__.
                      The __5 samples__ are sent under `"memUsed"` attribute.
 
-- __disk usage__ - retrieved ans sent every __5 minutes__. Date is sent under ``"diskUsage"`` attribute whose value is an array of JSON objects (one for each disk mounted by the instance).
+- __disk usage__ - retrieved and sent every __5 minutes__. Data is sent under ``"diskUsage"`` attribute whose value is an array of JSON objects (one for each disk mounted by the instance).
                    Each array element contains 3 attributes:
 
   - `"volume"`: a string that identifies the volume.
