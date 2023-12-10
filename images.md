@@ -8,9 +8,7 @@ cloud providers such as AWS and Google Cloud.
 All local images are stored locally in `~/.ops/images/` and can be viewed
 like:
 
-```
-$ ops image list -t onprem
-```
+```ops image list -t onprem```
 
 OPS has several commands that allow one to work on disk images when not
 running them. This can help provide debugging support.
@@ -19,7 +17,7 @@ running them. This can help provide debugging support.
 
 ```ops image ls myimage```
 
-Provides a 'ls' style listing of files in image.
+Provides a 'ls' style listing of files in a local (on-prem) image.
 
 ### cp
 
@@ -32,7 +30,13 @@ the image 'redis-server'.
 
 ```ops image tree redis-server```
 
-Displays the tree output of the image 'redis-server'.
+Displays the tree output of local (on-prem) image.
+
+### env
+
+```ops image env redis-server```
+
+Displays the list of environment variables found in a local (on-prem) image.
 
 ### mirror
 
