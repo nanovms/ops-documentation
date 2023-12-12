@@ -39,6 +39,53 @@ $ ops volume list
 
 ```
 
+## Volume Content listing (on-prem)
+
+To display the `tree` output of local (on-prem) volume, use `ops volume tree <volume_name:volume_uuid>`
+
+```sh
+$ ops volume tree vol # ops volume tree e1a9a40e-8d2b-19b7-61b7-57c43f362aaa
+/
+|   .secret
+|   db_data
+|   |   IDENTITY
+|   |   000004.log
+|   |   CURRENT
+|   |   MANIFEST-000005
+|   |   OPTIONS-000055
+|   |   LOG
+|   |   LOCK
+|   |   OPTIONS-000057
+```
+
+To display a `ls` style listing of files in a local (on-prem) volume, use `ops volume ls <volume_name:volume_uuid> [<path>]`
+
+```sh
+$ ops volume ls vol -l # ops volume ls e1a9a40e-8d2b-19b7-61b7-57c43f362aaa -l
+     212 Tue Dec 12 09:17:47 2023 .secret
+	 Tue Dec 12 09:17:47 2023 db_data/
+
+$ ops volume ls vol db_data -l # ops volume ls e1a9a40e-8d2b-19b7-61b7-57c43f362aaa db_data -l
+       0 Tue Dec 12 09:17:47 2023 LOCK
+     193 Tue Dec 12 09:17:48 2023 000004.log
+    1683 Tue Dec 12 09:17:49 2023 MANIFEST-000005
+  112810 Tue Dec 12 09:17:35 2023 OPTIONS-000055
+  167464 Tue Dec 12 09:17:47 2023 LOG
+      36 Tue Dec 12 09:17:47 2023 IDENTITY
+      16 Tue Dec 12 09:17:49 2023 CURRENT
+  112810 Tue Dec 12 09:17:35 2023 OPTIONS-000057
+```
+
+## Volume Content copy (on-prem)
+
+To recursively copy the content of a local (on-prem) volume, use `ops volume cp <volume_name:volume_uuid> <src>... <dest>`
+
+```sh
+$ ops volume cp vol / . -r -L # ops volume cp e1a9a40e-8d2b-19b7-61b7-57c43f362aaa / . -r -L
+
+$ ops volume cp vol db_data . -r -L
+```
+
 ## Setup Mount Path
 
 Mounting a volume in an instance requires an image to know beforehand which volumes it should expect and the directories where the volumes will be mounted. The unikernel recognizes the volume by its name/label, UUID, or virtual id. The virtual id may be used when you wish to have the same volume name or mount a different volume with a different volume name to the same mount point. The virtual id syntax is currently supported on GCP, Azure and AWS.
