@@ -263,6 +263,19 @@ It might be used by _ops_ to set `"IMAGE_NAME"` and `"RADAR_IMAGE_NAME"` environ
 }
 ```
 
+#### KMS
+
+`KMS` optionally encrypts AMIs if set. 'default' may be used for the default key or a KMS arn may be specified. This is only used for **AWS**.
+
+```json
+{
+    "CloudConfig": {
+        "KMS": "default"
+    }
+}
+```
+
+
 #### Platform {#cloudconfig.platform}
 
 `Platform` defines the cloud provider to use with the ops CLI.

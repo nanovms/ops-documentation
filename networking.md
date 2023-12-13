@@ -186,12 +186,15 @@ ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19
 ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
 ```
 
-It is important to know that on a MAC you typically won't be able to
-bridge since you probably don't have an actual ethernet card. There
-still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box). Virtualbox has it's own tap kext driver.
+For the mac you won't be able to use this syntax as there is no actual
+ethernet card (for most laptops).
 
-There is now experimental support to run bridged newtorking on Big Sur
-and beyond. The [macBridging](https://github.com/nanovms/ops/compare/master...macBridging) branch provides vmnet-bridged support. You can use this if you are using qemu 7.1 or qemu HEAD from brew. You currently need to be root or set the suid bit (chmod +s) to the qemu binary. We haven't enabled it because it requires a special entitlement from Apple.
+There still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box).
+Virtualbox has it's own tap kext driver.
+
+If you are on a Mac M1, M2 or M3 we recommend grabbing [OPS desktop](https://storage.googleapis.com/cli/darwin/ops.pkg) as it has vmnet-bridged support enabled by default and is pre-setup to run correctly. This way of working with bridges is much nicer too as you don't have to configure anything.
+
+If you want to build yourself you need at least qemu 7.1 or qemu HEAD from brew. You currently need to be root or set the suid bit (chmod +s) to the qemu binary.
 
 ## IPv6
 
