@@ -86,6 +86,21 @@ $ ops volume cp vol / . -r -L # ops volume cp e1a9a40e-8d2b-19b7-61b7-57c43f362a
 $ ops volume cp vol db_data . -r -L
 ```
 
+## Volume info from raw files (on-prem)
+
+To get some volume information about `label`/`uuid` from a raw volume file, use `ops volume info <volume_file_path>`
+
+```sh
+$ ops volume info /tmp/snapshot-vol-01.raw
+vol:e1a9a40e-8d2b-19b7-61b7-57c43f362aaa
+
+$ ops volume info /tmp/snapshot-vol-01.raw --json
+{
+  "label": "vol",
+  "uuid": "e1a9a40e-8d2b-19b7-61b7-57c43f362aaa"
+}
+```
+
 ## Setup Mount Path
 
 Mounting a volume in an instance requires an image to know beforehand which volumes it should expect and the directories where the volumes will be mounted. The unikernel recognizes the volume by its name/label, UUID, or virtual id. The virtual id may be used when you wish to have the same volume name or mount a different volume with a different volume name to the same mount point. The virtual id syntax is currently supported on GCP, Azure and AWS.
