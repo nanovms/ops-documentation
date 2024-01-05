@@ -19,13 +19,13 @@ The vm_config.json:
 ```
 {
   "boot-source": {
-    "kernel_image_path": "/Users/bob/.ops/0.1.26/kernel.img",
+    "kernel_image_path": "/home/eyberg/.ops/nightly/kernel.img",
     "boot_args": "console=ttyS0 reboot=k panic=1 pci=off"
   },
   "drives": [
     {
       "drive_id": "rootfs",
-      "path_on_host": "/Users/bob/.ops/images/my_img.img",
+      "path_on_host": "/home/eyberg/.ops/images/g",
       "is_root_device": true,
       "is_read_only": false
     }
@@ -39,75 +39,30 @@ The vm_config.json:
   ],
   "machine-config": {
     "vcpu_count": 1,
-    "mem_size_mib": 1024,
-    "ht_enabled": false
+    "mem_size_mib": 1024
+  },
+  "logger": {
+    "log_path": "log.fifo",
+    "level": "Info",
+    "show_level": true,
+    "show_log_origin": true
   }
 }
 ```
 
-You should have dhcp listen on your tap:
+You should have a dhcp listener. You can create a bridge and a dhcp
+server by running:
 
 ```
-sudo apt-get install isc-dhcp-server
+ops network create
 ```
 
-Create a tap device:
+If you are running via ops we'll create and attach the tap device for
+you but or firecracker you'll need to Create a tap device:
 ```
 sudo ip tuntap add dev tap0 mode tap
 sudo ip addr add 10.0.2.1/24 dev tap0
 sudo ip link set tap0 up
-```
-
-Sample dhcp config:
-```
-
-option domain-name "example.org";
-option domain-name-servers ns1.example.org, ns2.example.org;
-
-default-lease-time 600;
-max-lease-time 7200;
-
-ddns-update-style none;
-
-INTERFACES="tap0";
-
-subnet 10.0.2.0 netmask 255.255.255.0 {
-    option routers 10.0.2.1;
-range 10.0.2.10 10.0.2.255;
-}
-```
-
-```sh
-dhcpd -f -d tap0
-```
-
-If this is setup correctly you should see some arp requests fly by:
-
-```
-bob@box:/home/eyberg~ dhcpd -f -d tap0
-Internet Systems Consortium DHCP Server 4.3.5
-Copyright 2004-2016 Internet Systems Consortium.
-All rights reserved.
-For info, please visit https://www.isc.org/software/dhcp/
-Config file: /etc/dhcp/dhcpd.conf
-Database file: /var/lib/dhcp/dhcpd.leases
-PID file: /var/run/dhcpd.pid
-lease 10.0.2.0: no subnet.
-Wrote 0 leases to leases file.
-Listening on LPF/tap0/96:ea:ca:e0:76:63/10.0.2.0/24
-Sending on   LPF/tap0/96:ea:ca:e0:76:63/10.0.2.0/24
-Sending on   Socket/fallback/fallback-net
-Server starting service.
-DHCPDISCOVER from aa:fc:00:00:00:01 via tap0
-DHCPOFFER on 10.0.2.10 to aa:fc:00:00:00:01 via tap0
-DHCPREQUEST for 10.0.2.10 (10.0.2.1) from aa:fc:00:00:00:01 via tap0
-DHCPACK on 10.0.2.10 to aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPREQUEST for 10.0.2.10 from aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPACK on 10.0.2.10 to aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPREQUEST for 10.0.2.10 from aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPACK on 10.0.2.10 to aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPREQUEST for 10.0.2.10 from aa:fc:00:00:00:01 (uniboot) via tap0
-DHCPACK on 10.0.2.10 to aa:fc:00:00:00:01 (uniboot) via tap0
 ```
 
 and you should see the unikernel snag an ip:
@@ -179,19 +134,19 @@ curl --unix-socket /tmp/firecracker.socket -i \
 }'
 ```
 
+### Logs
+
 logs.sh:
 ```
 #!/bin/sh
 
 mkfifo log.fifo
-mkfifo metrics.fifo
 
 curl --unix-socket /tmp/firecracker.socket -i \
 -X PUT 'http://localhost/logger' \
 -H "accept: application/json" \
 -H "Content-Type: application/json" \
--d '{ "log_fifo": "log.fifo", "metrics_fifo": "metrics.fifo", "level":
-"Info", "show_level": true, "show_log_origin": true }'
+-d '{ "log_path": "log.fifo", "level": "Info", "show_level": true, "show_log_origin": true }'
 ```
 
 Finally read your logs:
@@ -215,4 +170,43 @@ echo "Reader exiting"
 
 ```
  ./read_fifo.sh log.fifo
+```
+
+### Configuration
+
+You can now dynamically re-configure your unikernel via the firecracker
+kernel boot_args line such as adding tracing support:
+
+```
+"boot-source": {
+    "kernel_image_path": "/Users/bob/.ops/nightly/kernel.img",
+    "boot_args": "trace=t debugsyscalls=t"
+  }
+```
+
+or you could set a static ipv4:
+
+```
+"boot-source": {
+    "kernel_image_path": "/Users/bob/.ops/nightly/kernel.img",
+    "boot_args": "en1.ipaddr=10.3.3.6 en1.netmask=255.255.0.0 en1.gateway=10.3.0.1"
+}
+```
+
+or set an env var:
+
+```
+"boot-source": {
+    "kernel_image_path": "/Users/bob/.ops/nightly/kernel.img",
+    "boot_args": "environment.PROD=1"
+}
+```
+
+or set arbitrary arguments:
+
+```
+"boot-source": {
+    "kernel_image_path": "/Users/bob/.ops/nightly/kernel.img",
+    "boot_args": "arguments.0=/python3 arguments.1=my_new_entrypoint.py"
+}
 ```
