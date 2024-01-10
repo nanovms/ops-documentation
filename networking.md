@@ -102,10 +102,62 @@ Bridged networking connects a virtual machine to a network using the host
 computer's Ethernet adapter. For more information about bridged networking,
 see this [article](https://en.wikipedia.org/wiki/Bridging_%28networking%29).
 
-Bridged networking should only be used when you want full control over
-the networking. Generally speaking this means you are on real hardware,
-running linux. If you are deploying to the public cloud you will want to
-use ops normally and *NOT* setup this as it'l be slow.
+We only recommend running bridge networking for local dev environments
+or environments where you are planning on having full control over
+orchestration. We do not recommend running this on the cloud as it'll be
+slow. You should instead use the native cloud deploy options (eg: ```ops
+instance create -t gcp```) as they will be using bridges underneath.
+
+### Via Instance Create
+
+If you are on a Mac M1, M2 or M3 we recommend grabbing [OPS
+desktop](https://storage.googleapis.com/cli/darwin/ops.pkg) as it has
+vmnet-bridged support enabled by default and is pre-setup to run
+correctly. This way of working with bridges is much nicer too as you
+don't have to configure anything. Using this 'ops instance create' for
+the on-prem target will use bridge networking by default.
+
+If you want to build yourself you need at least qemu 7.1 or qemu HEAD
+from brew. You currently need to be root, or in a proper group or set the suid bit (chmod +s)
+to the qemu binary.
+
+On Mac creating a new instance with bridge support is easy as running:
+
+```
+ops instance create -p 8080 mywebserver
+```
+
+On Linux:
+
+To create a new network and attach a dhcp server to it:
+
+```
+ops network create
+```
+
+Then you can create a new instance with this sample config:
+
+```
+{
+    "RunConfig": {
+        "Bridged": true,
+        "TapName": tap1,
+        "BridgeName": br1
+    }
+}
+```
+
+Then you can run it:
+
+```
+ops instance create -c myconfig.json mywebserver -p 8080
+```
+
+### Via Ops Run
+
+Ops run currently only supports using a bridge on linux - not a mac. If
+you are on a mac you should use 'instance create' with the 'onprem'
+provider.
 
 Here is a simple Go example demonstrating two applications sitting on
 their respective tap interfaces:
@@ -186,15 +238,8 @@ ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19
 ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
 ```
 
-For the mac you won't be able to use this syntax as there is no actual
+Note: On the mac for 'ops run', you won't be able to use this syntax as there is no actual
 ethernet card (for most laptops).
-
-There still are options by using the [virtualbox provider](https://nanovms.gitbook.io/ops/virtual_box).
-Virtualbox has it's own tap kext driver.
-
-If you are on a Mac M1, M2 or M3 we recommend grabbing [OPS desktop](https://storage.googleapis.com/cli/darwin/ops.pkg) as it has vmnet-bridged support enabled by default and is pre-setup to run correctly. This way of working with bridges is much nicer too as you don't have to configure anything.
-
-If you want to build yourself you need at least qemu 7.1 or qemu HEAD from brew. You currently need to be root or set the suid bit (chmod +s) to the qemu binary.
 
 ## IPv6
 

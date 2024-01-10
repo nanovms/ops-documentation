@@ -6,13 +6,7 @@ Nanos works on Bhyve with some caveats:
   images not necessarily build them since the default file format on
   FreeBSD is a.out.
 
-* You must build Nanos from source with UEFI support:
-
-```
-make ENABLE_UEFI=1
-```
-
-This was tested on FreeBSD 13.6.0.
+Nanos has been test on 13.6.0 and 14.x.
 
 Install bhyve firmware:
 
