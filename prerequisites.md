@@ -9,6 +9,7 @@ Currently Ops support various forms of linux operating systems.
  * Ubuntu
  * Fedora
  * Centos
+ * Windows
 
 ## Install Prerequisites
 If you plan on installing Ops using the install script vs source code, you
@@ -17,7 +18,9 @@ this page.
 
 ### Install QEMU {#qemu}
 Ensure that you install a version of QEMU that is equal to or greater than
-version 2.5
+version 7. NanoVMs will support older versions of qemu for organizations
+with support contracts, however, most developers will want to use newer
+versions of qemu to take advantage of the latest features.
 
 ##### MacOS (homebrew) {#qemu-macos}
 If you're running on a Mac, you do need to install QEMU. The easiest way to
@@ -230,7 +233,7 @@ $ sudo make install install-doc install-html install-man prefix=/usr
 
 It is a requirement to have go installed on your system. To do so, follow the
 documentation below. `ops` requires that the minimum version of go that you
-install is v1.7.
+install is v1.19.
 
 #### Build from Source
 
@@ -268,6 +271,10 @@ $ source ~/.profile
 ```sh
 $ go version
 ```
+
+It is important to note that building ops can require more than 0.5 gig
+of ram. OPS can currently run applications under this limit but
+*building* ops requires at least this much.
 
 ## Next Steps
 

@@ -76,3 +76,18 @@ Typically one invokes OPS for single commands and is scriptable and
 callable from other libraries/projects however a daemon does exist in
 daemon/ that can be built so that you can run OPS as a daemon that
 serves up JSON and GRPC.
+
+To build the daemon you'll need to have a handful of protobufs
+dependencies installed:
+
+```
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+go install github.com/bufbuild/buf/cmd/buf@latest
+
+wget https://github.com/bufbuild/buf/releases/download/v1.13.1/buf-Linux-x86_64 && sudo mv buf-Linux-x86_64 /usr/bin/buf && sudo chmod +x /usr/bin/buf
+wget https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.15.0/protoc-gen-openapiv2-v2.15.0-linux-x86_64 -o ~/go/bin/protoc-gen-openapiv2 && chmod +x ~/go/bin/protoc-gen-openapiv2
+wget https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v2.15.0/protoc-gen-grpc-gateway-v2.15.0-linux-x86_64 -o ~/go/bin/protoc-gen-grpc-gateway && chmod +x ~/go/bin/protoc-gen-grpc-gateway
+```
+
+Then you can run 'make generate' which generates the protobufs.

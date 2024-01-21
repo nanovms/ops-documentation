@@ -139,3 +139,11 @@ OPS can run on many different Unix based environments.
  * Fedora
  * Centos
  * WSL2
+
+## Libc
+
+OPS supports whatever libc you wish to utilize. Well over 99% of our
+users, customers and packages will default to glibc as that is what the
+vast majority of applications are linked to today. However other
+alt-libcs such as MUSL are supported. They come with the same/similar
+caveats that one might find when utilizing them on Linux.
