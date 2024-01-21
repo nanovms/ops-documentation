@@ -157,7 +157,7 @@ ops instance create -c myconfig.json mywebserver -p 8080
 
 Ops run currently only supports using a bridge on linux - not a mac. If
 you are on a mac you should use 'instance create' with the 'onprem'
-provider.
+provider. This automatically manages bridges for you.
 
 Here is a simple Go example demonstrating two applications sitting on
 their respective tap interfaces:
@@ -236,6 +236,12 @@ yourself sudo then you can run:
 ```sh
 ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19
 ops run client -a 192.168.42.19:8081 -b -t tap1 --ip-address 192.168.42.20
+```
+
+You may also optionally set the bridgeip like so:
+
+```
+ops run server -p 8081 -b -t tap0 --ip-address 192.168.42.19 --bridgeipaddress 192.168.42.2
 ```
 
 Note: On the mac for 'ops run', you won't be able to use this syntax as there is no actual

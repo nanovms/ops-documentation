@@ -32,10 +32,12 @@
 * [AWS](aws.md)
 * [Bhyve](bhyve.md)
 * [Compose](compose.md)
+* [Docker](docker.md)
 * [Digital Ocean](digital_ocean.md)
 * [Firecracker](firecracker.md)
 * [Hyper-V](hyper-v.md)
 * [IBM](ibm.md)
+* [Linode](linode.md)
 * [Onprem](onprem.md)
 * [OpenStack](openstack.md)
 * [ProxMox](proxmox.md)
@@ -55,6 +57,7 @@
 * [MacOS](mac.md)
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
+* [Benchmarking](benchmarking.md)
 
 ### Developer
 * [Getting Started](prerequisites.md)

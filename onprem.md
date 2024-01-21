@@ -71,3 +71,8 @@ you must be using QMP.
 }
 ```
 
+
+Typically one invokes OPS for single commands and is scriptable and
+callable from other libraries/projects however a daemon does exist in
+daemon/ that can be built so that you can run OPS as a daemon that
+serves up JSON and GRPC.

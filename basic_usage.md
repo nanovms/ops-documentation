@@ -138,4 +138,4 @@ OPS can run on many different Unix based environments.
  * [Arch](https://aur.archlinux.org/packages/ops/)
  * Fedora
  * Centos
- * WSL
+ * WSL2
