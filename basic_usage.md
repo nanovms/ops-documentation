@@ -49,12 +49,12 @@ console.log("Hello World!");
 
 Package and deploy:
 ```sh
-$ ops pkg load eyberg/node:14.2.0 -a ex.js
+$ ops pkg load eyberg/node:20.5.0 -a ex.js
 ```
 
 You should see "Hello World!" printed on your screen and then the ops command
 exits. For more examples using NodeJS, visit our [examples
-repository](https://github.com/nanovms/ops-examples/tree/master/nodejs).
+repository](https://github.com/nanovms/ops-examples/tree/master/javascript).
 
 ### Run and Pass an Environment Variable
 This can be done via the configuration file but if you want to

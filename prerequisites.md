@@ -279,4 +279,4 @@ of ram. OPS can currently run applications under this limit but
 ## Next Steps
 
 Now that we have the prerequisites installed, the next step is to install Ops.
-Go to the [installation instructions](installation.md).
+Go to the [installation instructions](source-installation.md).

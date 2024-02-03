@@ -1508,33 +1508,3 @@ Some possible configurations:
 ### Force {#force}
 
 _TODO_
-
-## Sample Configuration File {#sample}
-
-Below is a sample configuration file for a nodejs application.
-
-```json
-{
- "Files": ["ex.js"],
- "Dirs": ["src"],
- "Args": ["ex.js "],
- "Env": {
-  "NODE_DEBUG": "*",
-  "NODE_DEBUG_NATIVE": "*"
- },
- "MapsDirs": {
-  "src": "/myapp/code"
- },
- "Boot": "./staging/boot2.img",
- "Kernel": "./staging/stage4.img",
- "Mkfs": "./staging/mkfs",
- "DiskImage": "disk-image",
- "NameServers": ["10.8.0.1"],
- "RunConfig": {
-  "Verbose": true,
-  "Bridged": true,
-  "Ports": [8008],
-  "Memory": "2G"
- }
-}
-```
