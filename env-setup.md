@@ -1,6 +1,10 @@
 Getting Started
 ===============
 
+These instructions are only for those that wish to work on the OPS
+codebase itself otherwise you should consult
+[getting_started](getting_started.md).
+
 ### Supported Operating Systems
 
 Currently Ops support various forms of linux operating systems.

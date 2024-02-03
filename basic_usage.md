@@ -3,6 +3,9 @@ Basic Usage
 
 ## Build and Deploy Nanos Unikernel
 
+For a more thorough set of examples for your preferred language or
+framework check out our [examples repo](https://github.com/nanovms/ops-examples).
+
 ### [Golang](https://golang.org) Example
 Create a file called `main.go` with the content below:
 ```golang

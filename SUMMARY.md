@@ -60,7 +60,7 @@
 * [Benchmarking](benchmarking.md)
 
 ### Developer
-* [Getting Started](prerequisites.md)
+* [Env Setup](env-setup.md)
     <> * [Install QEMU](prerequisites.md#qemu)
     <> * [Install Make](prerequisites.md#make)
     <> * [Install Git](prerequisites.md#git)
