@@ -14,6 +14,10 @@ package for you:
 $ ops pkg load eyberg/node:20.5.0 -p 8083 -f -n -a hi.js
 ```
 
+Note: We have a list of pre-made node packages on the
+[repo](https://repo.ops.city/) if you are looking for a different
+version or need a different architecture (eg: arm for macs).
+
 Put this in your hi.js:
 
 ```sh
@@ -28,7 +32,7 @@ console.log('Server running at http://127.0.0.1:8083/');
 If the script complain about missing HomeBrew on Mac, please install it
 from https://brew.sh/ and re-run the command above.
 
-On Linux flavors ensure that you have QEMU version 2.5 or greater installed. It should be noted that the latest qemu version is 6.1 so if you are using something older - it's really old.
+On Linux and Mac ensure that you have QEMU version 2.5 or greater installed. It should be noted that the latest qemu version is 8.2 so if you are using something older - it's really old.
 
 ##### Debian / Ubuntu (apt-get) {#qemu-debian}
  To install `QEMU`, run the following command:
