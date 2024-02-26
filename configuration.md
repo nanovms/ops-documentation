@@ -415,7 +415,14 @@ On **GCP** (_only_) there is also an extended configuration `attribute` that can
 
 `VPC` allows instance to use an existing vpc in the cloud provider.
 
-On AWS, both the _name_ and the _id_ of the vpc may be used as value.
+On AWS, both the _name_ and the _id_ of the vpc may be used as value. On DO the uuid of the VPC needs to be used.
+
+```json
+{
+    "CloudConfig": {
+        "VPC": "vpc-1000"
+    }
+}
 
 ```json
 {
