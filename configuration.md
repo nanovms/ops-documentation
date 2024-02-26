@@ -423,13 +423,6 @@ On AWS, both the _name_ and the _id_ of the vpc may be used as value. On DO the 
         "VPC": "vpc-1000"
     }
 }
-
-```json
-{
-    "CloudConfig": {
-        "VPC": "vpc-1000"
-    }
-}
 ```
 
 #### Zone {#cloudconfig.zone}
