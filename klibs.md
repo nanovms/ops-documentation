@@ -14,9 +14,12 @@ As of Nanos [b66be2b](https://github.com/nanovms/nanos/commit/b66be2b642069519a1
 * __ntp__ - used for clock syncing
 * __radar__ - telemetry/crash data report using the external [Radar](https://nanovms.com/radar) APM service
 * __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
+* __shmem__ provides shared memory features; specifically memfd_create functionality; this relies on the tmpfs klib
 * __special_files__ provides nanos-specific pseudo-files
 * __syslog__ - used to ship stdout/stderr to an external syslog - useful if you can't/won't modify code
 * __tls__ - used for radar/ntp and other klibs that require it
+* __tmpfs__ - use to provide functionality for mounting a memory backed
+  filesystem at an arbitrary place in the root filesystem
 * __tun__ - supports tun devices (eg: vpn gateways)
 * __test__ - a simple test/template klib
 
