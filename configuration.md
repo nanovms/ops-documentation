@@ -1475,6 +1475,25 @@ Some possible configurations:
 }
 ```
 
+#### uname {#manifestpassthrough.uname}
+
+This is an optional configuration that will make the kernel return your
+chosen strings in the sysname and release fields of the uname syscall.
+Several programs expect known names or versions, to for example, enable
+certain features.
+
+The default is set to "Nanos" for the sysname field, and
+"5.0-<NANOS_VERSION>" for the release.
+
+```json
+"ManifestPassthrough": {
+  "uname": {
+    "sysname": "Linux",
+    "release": "5.0.5"
+  }
+}
+```
+
 ### Debugflags {#debugflags}
 
 `Debugflags` adds additional debug flags to the runtime.

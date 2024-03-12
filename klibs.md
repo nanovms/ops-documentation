@@ -9,6 +9,7 @@ As of Nanos [b66be2b](https://github.com/nanovms/nanos/commit/b66be2b642069519a1
   * __cloud_azure__ - use to check in to the Azure meta-data service - not available in config (auto-included by __cloud_init__)
 * __cloudwatch__ - use to implement cloudwatch agent for AWS
   * __aws__ - not available in config (auto-included by __cloudwatch__)
+* __digitalocean__ - used to send memory metrics to Digital Ocean. 
 * __firewall__ - use to implement network firewall
 * __gcp__ - logging and memory metrics for GCP
 * __ntp__ - used for clock syncing
@@ -113,6 +114,26 @@ Example Ops configuration to send memory metrics with a `60-second` interval:
   "ManifestPassthrough": {
     "cloudwatch": {
       "mem_metrics_interval": "60"
+    }
+  }
+}
+```
+
+## DigitalOcean
+
+The `digitalocean` klib provides a method for sending internal memory
+metrics to the Digital Ocean monitoring service. The default interval is
+set to 120 seconds but can be configured with the 'interval' setting.
+
+As of right now cpu and disk i/o metrics are not displayed when this
+klib is enabled as DO disables the older metrics data when the agent is
+sending metrics. This can be addressed in future versions of this klib.
+
+```json
+"ManifestPassthrough": {
+  "digitalocean": {
+    "metrics": {
+      "interval":"180"
     }
   }
 }
