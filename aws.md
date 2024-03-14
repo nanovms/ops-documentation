@@ -39,12 +39,11 @@ AWS Graviton instances 2 and 3. We also support SMP there.
 ### Create Image
 
 If you have already created an Ops project, you can update your existing `config.json`.
-You need to add [CloudConfig](configuration.md#cloudconfig) which mentions specific details like `ProjectID`, `BucketName`.
+You need to add [CloudConfig](configuration.md#cloudconfig) which mentions specific details like `BucketName`.
 
 ```json
 {
   "CloudConfig" :{
-    "ProjectID" :"prod-1000",
     "Zone": "us-west-1",
     "BucketName":"my-s3-bucket"
   }
@@ -122,7 +121,6 @@ Sample config
 {
   "CloudConfig" :{
     "Platform" :"aws",
-    "ProjectID" :"prod-1000",
     "Zone": "us-west-1",
     "BucketName":"my-s3-bucket"
   },
