@@ -125,7 +125,7 @@ Sample config
     "BucketName":"my-s3-bucket"
   },
   "RunConfig": {
-    "Ports" : [80, 443]
+    "Ports" : ["80", "443"]
   }
 }
 ```
