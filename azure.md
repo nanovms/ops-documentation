@@ -112,10 +112,10 @@ ops instance create bob -z westus2 -t azure
 
 By default, ops creates a VPC, a subnet and a security group per instance.
 
-You can select a different VPC, subnet or security group using the configuration file. The keys to set are `RunConfig.VPC`, `RunConfig.Subnet` and `RunConfig.SecurityGroup`.
+You can select a different VPC, subnet or security group using the configuration file. The keys to set are `CloudConfig.VPC`, `CloudConfig.Subnet` and `CloudConfig.SecurityGroup`.
 ```json
 {
-    "RunConfig":{
+    "CloudConfig":{
         "VPC": "vpc-name",
         "Subnet": "subnet-name",
         "SecurityGroup": "sg-name"

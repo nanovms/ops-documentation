@@ -140,11 +140,11 @@ a volume to an instance.
 
 By default, ops uses the first VPC found in aws and creates a security group per instance.
 
-You can select a different VPC or use a existing security group using the configuration file. The keys to set are `RunConfig.VPC` and `RunConfig.SecurityGroup`.
+You can select a different VPC or use a existing security group using the configuration file. The keys to set are `CloudConfig.VPC` and `CloudConfig.SecurityGroup`.
 
 ```json
 {
-  "RunConfig":{
+  "CloudConfig":{
     "VPC": "vpc-name",
     "SecurityGroup": "sg-name"
   }
