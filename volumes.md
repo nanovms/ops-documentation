@@ -285,8 +285,11 @@ func main() {
 
 ## Hot-Plugging Support
 
-OPS supports hot-plugging volumes on GCP, AWS, and Azure, allowing you
+OPS supports hot-plugging volumes on GCP, AWS, Azure, and onprem allowing you
 to, at runtime, attach and detach volumes and mount/unmount filesystems.
+
+Today there is no support for hot-plugging virtfs shares, however, since
+it is a share one can simply change the contents on the host.
 
 ## Accessing host filesystem from nanos guest using 9p
 
@@ -294,6 +297,8 @@ When running `onprem`, `Ops` contains logic to detect whether a mount directive 
 
  1. Qemu properly exports the directory as a virtfs share, and
  2. the guest can mount that share as a 9P filesystem.
+
+You can run multiple virt-fs shares locally.
 
 - sample go http server
 
@@ -314,7 +319,7 @@ func main() {
 - build `my_server` binary
 
 ```sh
-$ go build --ldflags "-s -w" -trimpath -a -tags osusergo,netgo -o my_server
+$ go build
 ```
 
 - create __host__ folder to be shared with __guest__
@@ -364,6 +369,44 @@ $ echo "2." >> /tmp/vfs9p/index.html
 $ curl -L localhost:8080/static/
 1.
 2.
+```
+
+One can use virtual identifiers on virt-fs shares, to for instance build
+images on a different host and use them elsewhere:
+
+```
+ops image create -t onprem -c imgcreate.json my_server
+```
+
+imgcreate.json:
+
+```
+{
+  "Mounts": {
+    "%1": "/static",
+  },
+  "RunConfig": {
+    "Ports": [
+      "8080"
+    ]
+  }
+}
+```
+
+However, at instance creation time you still need to provide the host
+mount point using a different configuration:
+
+```
+ops instance create -t onprem -c instcreate.json my_server
+```
+
+```
+➜  vfs cat instcreate.json
+{
+  "Mounts": {
+    "/tmp/vfs9p": "/static"
+  }
+}
 ```
 
 - Read more in our [9p tutorial](https://nanovms.com/dev/tutorials/accessing-host-filesystem-from-nanos-guest-using-9p)
