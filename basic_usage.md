@@ -129,7 +129,22 @@ images with the lastest from that channel:
 $ ops -nf run main
 ```
 
-OPS itself also tracks nightly builds.
+You may also specify a recent git commit from the Nanos repo. For
+instance if you want to try a new feature from a PR you can set the
+short git commit like via '--nanos-version' like so:
+
+```
+ops pkg load eyberg/node:20.5.0 --nanos-version=3c1fb76
+```
+
+OPS itself also tracks nightly builds:
+
+[https://storage.googleapis.com/cli/linux/release/nightly/ops](https://storage.googleapis.com/cli/linux/release/nightly/ops)
+[https://storage.googleapis.com/cli/darwin/arm64/release/nightly/ops](https://storage.googleapis.com/cli/darwin/arm64/release/nightly/ops)
+
+You can also check the md5 of any download by using the .md5 suffix:
+
+https://storage.googleapis.com/cli/linux/release/nightly/ops-linux-nightly.md5
 
 ## Supported Operating Systems
 
