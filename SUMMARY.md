@@ -27,27 +27,30 @@
 * [Packages](packages.md)
 * [Klibs](klibs.md)
 * [Hardware Acceleration](acceleration.md)
-* [Google Cloud Integration](google_cloud.md)
+
+### Clouds
 * [Azure](azure.md)
 * [AWS](aws.md)
+* [Digital Ocean](digital_ocean.md)
+* [Google Cloud Integration](google_cloud.md)
+* [IBM](ibm.md)
+* [Linode](linode.md)
+* [OCI](oci.md)
+* [UpCloud](upcloud.md)
+* [Vultr](vultr.md)
+
+### Hypervisors
 * [Bhyve](bhyve.md)
 * [Compose](compose.md)
 * [Docker](docker.md)
-* [Digital Ocean](digital_ocean.md)
 * [Firecracker](firecracker.md)
 * [Hyper-V](hyper-v.md)
-* [IBM](ibm.md)
-* [Linode](linode.md)
 * [Onprem](onprem.md)
 * [OpenStack](openstack.md)
 * [ProxMox](proxmox.md)
-* [UpCloud](upcloud.md)
 * [Virtual Box](virtual_box.md)
-* [OCI](oci.md)
-* [Vultr](vultr.md)
 * [VSphere](vsphere.md)
 * [WorkStation](workstation.md)
-* [Visual Studio Code Extension](vscode.md)
 * [Terraform](terraform.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
@@ -58,6 +61,9 @@
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
 * [Benchmarking](benchmarking.md)
+
+### Tools
+* [Visual Studio Code Extension](vscode.md)
 
 ### Developer
 * [Env Setup](env-setup.md)
