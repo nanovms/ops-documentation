@@ -228,7 +228,7 @@ into a unikernel. Currently this just grabs the binary and libraries
 necessary to run it versus the entire filesystem that might be present.
 
 ```sh
-$ ops pkg from-docker node:16.3.0 -f node
+$ ops pkg from-docker node:16.3.0 --file node
 
 $ ops pkg load -l node-16.3.0 -a a.js
 booting /Users/qtmsheep/.ops/images/program ...
@@ -255,7 +255,7 @@ docker build -t bob .
 ```
 
 ```
-ops pkg from-docker bob -n bob -f ls
+ops pkg from-docker bob -n bob --file ls
 ops pkg load --local bob
 ```
 
@@ -309,7 +309,7 @@ Then, for example, you could create a new node package from docker and
 then push it up:
 
 ```
-ops pkg from-docker node:16.3.0 -f node
+ops pkg from-docker node:16.3.0 --file node
 ops pkg push node-16.3.0
 ```
 
