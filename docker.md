@@ -21,6 +21,6 @@ export as they sometimes will differ from a Dockerfile.
 For example to export a nextjs docker container to a unikernel package:
 
 ```
-ops pkg from-docker njs2 -c -f /usr/local/bin/node -a app/server.js
+ops pkg from-docker njs2 --copy --file /usr/local/bin/node -a app/server.js
 ops pkg load --local njs --nanos-version=3c1fb76
 ```
