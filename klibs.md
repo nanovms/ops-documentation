@@ -3,13 +3,14 @@ Klibs
 
 Klibs are plugins which provide extra functionality to unikernels.
 
-As of Nanos [b66be2b](https://github.com/nanovms/nanos/commit/b66be2b642069519a14ea321d9bf5843921c08ab) there are 13 klibs in the kernel source tree:
+As of Nanos [9dc963b](https://github.com/nanovms/nanos/commit/9dc963bb2773b7a3dcb39aade3556350babae16b) there are 16 klibs in the kernel source tree:
 
 * __cloud_init__ - used for Azure && env config init
-  * __cloud_azure__ - use to check in to the Azure meta-data service - not available in config (auto-included by __cloud_init__)
+  * __cloud_azure__ - implements the Azure VM agent (not available in config, auto-included by __cloud_init__)
+* __azure__ - memory metrics for azure
 * __cloudwatch__ - use to implement cloudwatch agent for AWS
   * __aws__ - not available in config (auto-included by __cloudwatch__)
-* __digitalocean__ - used to send memory metrics to Digital Ocean. 
+* __digitalocean__ - used to send memory metrics to Digital Ocean.
 * __firewall__ - use to implement network firewall
 * __gcp__ - logging and memory metrics for GCP
 * __ntp__ - used for clock syncing
@@ -22,13 +23,14 @@ As of Nanos [b66be2b](https://github.com/nanovms/nanos/commit/b66be2b642069519a1
 * __tmpfs__ - use to provide functionality for mounting a memory backed
   filesystem at an arbitrary place in the root filesystem
 * __tun__ - supports tun devices (eg: vpn gateways)
+* __umcg__ - User-Managed Concurrency Groups (used for user-mode threading)
 * __test__ - a simple test/template klib
 
 Not all of these are available to be included in your config (__cloud_azure__, __aws__).
 Only the ones found in your `~/.ops/NANOS-VERSION/klibs` folder can be specified,
 where `NANOS-VERSION` is the version of nanos you are using, ie:
 
-- **0.1.48**  - `~/.ops/0.1.48/klibs`
+- **0.1.50**  - `~/.ops/0.1.50/klibs`
 - **nightly** - `~/.ops/nightly/klibs`
 
 Some of these are auto-included as they provide support that is required
@@ -36,6 +38,73 @@ by certain clouds/hypervisors. You should only include a klib if you
 think you need it. The ones that are required for certain functionality
 will be auto-included by ops. For instance if you are deploying to Azure
 we'll auto-include the cloud_init and tls klibs.
+
+## Azure
+
+### Overview
+
+The `azure` klib adds functionality for sending memory metrics via an Azure diagnostic extension.
+
+### Key Features
+
+1. **Azure VM Agent**:
+   - Responds to requests to enable and configure the diagnostic extension, applying settings from the manifest.
+
+2. **Azure Klib**:
+   - Implements an Azure extension similar to the Linux Diagnostic extension.
+   - Supports sending **four** types of memory metrics: available and used memory (in bytes and as a percentage of total memory):
+     - availablememory
+     - usedmemory
+     - percentavailablememory
+     - percentusedmemory
+
+### Configuration
+
+The Azure klib is configured in the manifest options via an `azure` tuple. Diagnostic functionalities are enabled and configured by inserting a `diagnostics` tuple with the following attributes:
+
+- **storage_account**: The Azure storage account for storing metrics data. Must be in the same region as the Azure instance.
+- **storage_account_sas**: Shared Access Signature token for accessing the storage account. Must have permissions to create Azure storage tables and add table entities.
+- **metrics**: Tuple that enables sending memory metrics. Optional attributes include:
+  - **sample_interval**: Interval in seconds for collecting metrics data (default: 15).
+  - **transfer_interval**: Interval in seconds for aggregating and sending metrics data to the storage account (default: 60).
+
+### Example Configuration
+
+```json
+{
+  "Klibs": ["azure", "cloud_init"],
+  "ManifestPassthrough": {
+    "azure": {
+      "diagnostics": {
+        "storage_account": "mystorageaccount",
+        "storage_account_sas": "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-05-22T14:50:28Z&st=2024-05-12T06:50:28Z&spr=https&sig=xxyyzz",
+        "metrics": {
+          "sample_interval": "15",
+          "transfer_interval": "60"
+        }
+      }
+    }
+  }
+}
+```
+### Metrics Data
+
+Aggregated memory metrics data include the number of samples, minimum, maximum, last, and average values, and the sum of all values.
+These data are inserted into an Azure storage table named in the format "WADMetricsxxxxP10DV2Syyyymmdd", where `xxxx` is the transfer interval in ISO8601 format, and `yyyymmdd` represents the 10-day date interval for the metrics.
+
+### Displaying Metrics in Azure Portal
+
+By default, the Azure portal does not display these metrics in its charts. To make metrics available in the portal:
+- Enable and configure the Linux Diagnostics Extension in a running instance via the "Diagnostic settings" section in the portal.
+- Ensure the storage account and metric aggregation interval in the Azure diagnostic settings match those in the Nanos manifest options.
+
+### Loading the Azure Klib
+
+To load the Azure klib, include it in your Ops configuration file under the `Klibs` section as shown in the example configuration above.
+
+### Notes
+
+- The Azure VM agent in the `cloud_init` klib applies settings from the manifest, not from the extension requests.
 
 ## Cloudwatch
 
