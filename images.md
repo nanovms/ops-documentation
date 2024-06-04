@@ -19,6 +19,12 @@ running them. This can help provide debugging support.
 
 Provides a 'ls' style listing of files in a local (on-prem) image.
 
+### cat
+
+```ops image cat g /etc/resolv.conf```
+
+Cats the file out of an image.
+
 ### cp
 
 ```ops image cp -r redis-server lib .```
