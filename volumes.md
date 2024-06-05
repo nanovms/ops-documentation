@@ -383,7 +383,7 @@ imgcreate.json:
 ```
 {
   "Mounts": {
-    "%1": "/static",
+    "%1": "/static"
   },
   "RunConfig": {
     "Ports": [
