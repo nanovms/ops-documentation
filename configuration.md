@@ -1475,6 +1475,21 @@ Some possible configurations:
 }
 ```
 
+#### io-queues {#manifestpassthrough.io-queues}
+
+By default the virtio-net driver utilizes as many tx/rx queues as supported by
+the attached device but limited to the number of cpus exposed to the
+instance. This setting may be changed via the following config for the
+guest:
+
+```
+"ManifestPassthrough": {
+  "en1": {
+    "io-queues": "2"
+  }
+}
+```
+
 #### uname {#manifestpassthrough.uname}
 
 This is an optional configuration that will make the kernel return your

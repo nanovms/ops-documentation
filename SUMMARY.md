@@ -26,6 +26,7 @@
 * [Networking](networking.md)
 * [Packages](packages.md)
 * [Klibs](klibs.md)
+* [GPU](gpu.md)
 * [Hardware Acceleration](acceleration.md)
 
 ### Clouds

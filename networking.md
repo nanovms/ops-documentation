@@ -141,8 +141,8 @@ Then you can create a new instance with this sample config:
 {
     "RunConfig": {
         "Bridged": true,
-        "TapName": tap1,
-        "BridgeName": br1
+        "TapName": "tap1",
+        "BridgeName": "br1"
     }
 }
 ```

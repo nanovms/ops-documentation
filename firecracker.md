@@ -210,3 +210,12 @@ or set arbitrary arguments:
     "boot_args": "arguments.0=/python3 arguments.1=my_new_entrypoint.py"
 }
 ```
+
+### Known Limitations
+
+Note the following limitations when running workloads under Firecracker.
+These are *not* Nanos limitations but limitations imposed via
+Firecracker because of its unique setup:
+
+* No GPU support.
+* No MQ (multi-queue) taps.
