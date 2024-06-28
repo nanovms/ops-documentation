@@ -219,3 +219,7 @@ Firecracker because of its unique setup:
 
 * No GPU support.
 * No MQ (multi-queue) taps.
+
+Note: If you're interested in using something like firecracker but need
+GPU support check out
+[https://www.cloudhypervisor.org/](https://www.cloudhypervisor.org/)

@@ -1141,7 +1141,7 @@ This property is only used by cloud provider **openstack** and sets the instance
 }
 ```
 
-#### VolumeSizeInGb {#runconfig.attach_volume_on_instance_create}
+#### AttachVolumeOnInstanceCreate {#runconfig.attach_volume_on_instance_create}
 
 This property is only used by cloud provider **gcp** to attach an existing cloud disk/volume to the instance being created.
 
