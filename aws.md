@@ -346,3 +346,28 @@ Use
 ```
 
 OPS will strip the zone 'c' from other operations that only require/desire region.
+
+To set the volume type:
+
+```
+ops volume create myvolume --typeof gp3 -z us-west-1c -t aws -c config.json
+```
+
+To set iops:
+
+(Note: This is required for io1 and io2 volumes. It is not supported for
+the default of gp2. There is also a 50:1 iops to volume size ratio that
+is required.)
+
+```
+ops volume create myvolume -s 100 --iops 5000 --typeof gp3 -z us-west-1c -t aws -c config.json
+```
+
+To set throughput:
+
+(Note: This is only valid for gp3 volumes.)
+
+```
+ops volume create myvolume --throughput 500 --typeof gp3 -z us-west-1c -t aws -c config.json
+```
+
