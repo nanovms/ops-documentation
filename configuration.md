@@ -329,10 +329,12 @@ For more information see the [AWS](aws.md) page.
 
 ```json
 {
-    "RootVolume": {
-      "Name": "my-root-volume",
-      "Typeof":"gp3",
-      "Size": 10
+    "CloudConfig": {
+        "RootVolume": {
+            "Name": "my-root-volume",
+            "Typeof":"gp3",
+            "Size": 10
+        }
     }
 }
 ```
