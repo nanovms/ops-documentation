@@ -34,8 +34,24 @@ The onprem target is currentlty the only target that allows you to
 ```sh
 $ ops instance logs --watch my-running-instance
 ```
-
 ### Delete Instance
+
+###  Stats
+
+The onprem target is currently the only target that allows you to get
+'stats' (for now in the form of guest memory utilization).
+
+To get all the stats for all instances:
+
+```sh
+$ ops instance stats
+```
+
+To get the stats for just one instance:
+
+```sh
+$ ops instance stats - <instance_name>
+```
 
 ## Volume Operations
 

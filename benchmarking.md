@@ -64,3 +64,90 @@ multi-threaded reasons.
 These are just a handful of suggestions to help you get more accurate
 results and helps the NanoVMs team address performance issues in a
 quicker manner.
+
+### Benchmarking with Apache Bench
+
+### Benchmarking with Wrk
+
+### Benchmarking with FIO
+
+FIO allows you to test I/O.
+
+https://github.com/axboe/fio
+
+In order to use fio you'll need to make two changes:
+
+1) Disable shared memory with fio:
+
+```sh
+./configure --disable-shm
+```
+
+2) Stub get/setpriority syscalls:
+
+```sh
++++ b/src/unix/syscall.c
+@@ -2493,6 +2493,8 @@ void register_file_syscalls(struct syscall *map)
+     register_syscall(map, io_uring_enter, io_uring_enter);
+     register_syscall(map, io_uring_register, io_uring_register);
+     register_syscall(map, getcpu, getcpu);
++    register_syscall(map, getpriority, syscall_ignore);
++    register_syscall(map, setpriority, syscall_ignore);
+ }
+```
+
+For now Nanos does not support direct io so you'll need to set
+'direct=0'. A sample config might look like so:
+
+```
+:~/$ cat testnew.fio
+[global]
+name=fio-rand-write
+filename=fio-rand-write
+rw=randwrite
+bs=4K
+direct=0
+numjobs=4
+time_based=1
+runtime=10
+filename=test
+thread
+
+[file1]
+size=500m
+ioengine=libaio
+iodepth=16
+```
+
+If you are testing remotely (eg: in the cloud) you may wish to turn on
+idle_on_exit:
+
+```
+ "ManifestPassthrough": {
+  "idle_on_exit": "*"
+  }
+```
+
+You may also wish to prevent fio from starting immediately:
+
+```
+diff --git a/fio.c b/fio.c
+index 3d6ce597..72f1aea2 100644
+--- a/fio.c
++++ b/fio.c
+@@ -22,11 +22,18 @@
+  *
+  */
+ #include "fio.h"
++#include <stdio.h>
++#include <unistd.h>
+
+ int main(int argc, char *argv[], char *envp[])
+ {
+        int ret = 1;
+
++    printf("waiting for 5\n");
++
++    sleep(5);
++    printf("done sleeping\n");
+```

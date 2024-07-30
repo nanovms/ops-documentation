@@ -1232,18 +1232,6 @@ turned on.
 }
 ```
 
-#### Program Overwrite Protection {#program_overwrite}
-
-By default, the user application is not allowed to overwrite the **program** binary file (and **interpreter**, if present).
-This default behavior can be overridden by inserting a `program_overwrite` attribute in the root tuple of the manifest.
-
-```json
-{
-    "ManifestPassthrough": {
-        "program_overwrite": "t"
-    }
-}
-```
 
 #### CWD {#manifestpassthrough.cwd}
 
@@ -1255,18 +1243,6 @@ manifest variable 'cwd':
 {
     "ManifestPassthrough": {
         "cwd": "/my_new/path"
-    }
-}
-```
-
-#### Mmap Min Address {#manifestpassthrough.mmap_min_addr}
-
-This is an optional configuration setting that defines the minimum virtual address that a process is allowed to mmap. If set to zero, allow zero-page mappings to occur.
-
-```json
-{
-    "ManifestPassthrough": {
-        "mmap_min_addr": "0"
     }
 }
 ```
@@ -1318,65 +1294,6 @@ This configuration can also be associated to a specific network interface, i.e:
 }
 ```
 
-#### ltrace {#manifestpassthrough.ltrace}
-
-This enables tracing calls made by the application binary to dynamic library functions.
-It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
-
-```json
-{
-    "ManifestPassthrough": {
-        "ltrace": {}
-    }
-}
-```
-
-#### trace {#manifestpassthrough.trace}
-
-This is an optional configuration setting that allows specifying trace flags (i.e. a comma-delimited set of trace message types) in the `trace` symbol of the root tuple.
-_A given trace message is output only if its message type is enabled in the trace flags._
-
-* `pf` - page-fault-related messages - sets `TRACE_PAGE_FAULT`
-* `threadrun` - messages output when returning to user threads - sets `TRACE_THREAD_RUN`
-* `all` - all tracing messages are enabled
-* for backward compatibility, **any unknown trace flag** _enables all messages output via calls to thread_log()_. - sets `TRACE_OTHER`
-
-_Example_: a `"trace:pf,other"` value in the manifest enables page-fault-related messages and messages classified as "other".
-
-```json
-{
-    "ManifestPassthrough": {
-        "trace:pf,threadrun,all": {}
-    }
-}
-```
-
-#### so_rcvbuf {#manifestpassthrough.so_rcvbuf}
-
-This is an optional configuration setting used to manage the size (in bytes) of the socket receive buffer.
-The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, you could use the following config:
-
-```json
-{
-    "ManifestPassthrough": {
-        "so_rcvbuf": "524288"
-    }
-}
-```
-
-#### mtu {#manifestpassthrough.mtu}
-
-This is an optional configuration setting that changes the _MTU_ (Maximum Transmission Unit) size of the network interface(s).
-This **doesn't** affect _TUN_ interface(s).
-
-```json
-{
-    "ManifestPassthrough": {
-        "mtu": "1420"
-    }
-}
-```
-
 #### expected_exit_code {#manifestpassthrough.expected_exit_code}
 
 This is an optional configuration setting that changes the program _exit code_ to _0_, if a match is found on the configuration.
@@ -1411,6 +1328,104 @@ Some possible configurations:
 {
     "ManifestPassthrough": {
         "expected_exit_code": "*"
+    }
+}
+```
+
+#### Mmap Min Address {#manifestpassthrough.mmap_min_addr}
+
+This is an optional configuration setting that defines the minimum virtual address that a process is allowed to mmap. If set to zero, allow zero-page mappings to occur.
+
+```json
+{
+    "ManifestPassthrough": {
+        "mmap_min_addr": "0"
+    }
+}
+```
+
+#### Program Overwrite Protection {#program_overwrite}
+
+By default, the user application is not allowed to overwrite the **program** binary file (and **interpreter**, if present).
+This default behavior can be overridden by inserting a `program_overwrite` attribute in the root tuple of the manifest.
+
+```json
+{
+    "ManifestPassthrough": {
+        "program_overwrite": "t"
+    }
+}
+```
+
+
+#### ltrace {#manifestpassthrough.ltrace}
+
+This enables tracing calls made by the application binary to dynamic library functions.
+It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
+
+```json
+{
+    "ManifestPassthrough": {
+        "ltrace": {}
+    }
+}
+```
+
+#### mtu {#manifestpassthrough.mtu}
+
+This is an optional configuration setting that changes the _MTU_ (Maximum Transmission Unit) size of the network interface(s).
+This **doesn't** affect _TUN_ interface(s).
+
+```json
+{
+    "ManifestPassthrough": {
+        "mtu": "1420"
+    }
+}
+```
+
+#### so_rcvbuf {#manifestpassthrough.so_rcvbuf}
+
+This is an optional configuration setting used to manage the size (in bytes) of the socket receive buffer.
+The default buffer size is _208 KB_, so to change the size to, say, _512 KB_, you could use the following config:
+
+```json
+{
+    "ManifestPassthrough": {
+        "so_rcvbuf": "524288"
+    }
+}
+```
+
+#### static_map_program {#manifestpassthrough.static_map_program}
+
+This is an optional configuration setting that will disable demand
+paging. This is overriden when ltrace is in use.
+
+```json
+{
+  "ManifestPassthrough": {
+    "static_map_program": "t"
+  }
+}
+```
+
+#### trace {#manifestpassthrough.trace}
+
+This is an optional configuration setting that allows specifying trace flags (i.e. a comma-delimited set of trace message types) in the `trace` symbol of the root tuple.
+_A given trace message is output only if its message type is enabled in the trace flags._
+
+* `pf` - page-fault-related messages - sets `TRACE_PAGE_FAULT`
+* `threadrun` - messages output when returning to user threads - sets `TRACE_THREAD_RUN`
+* `all` - all tracing messages are enabled
+* for backward compatibility, **any unknown trace flag** _enables all messages output via calls to thread_log()_. - sets `TRACE_OTHER`
+
+_Example_: a `"trace:pf,other"` value in the manifest enables page-fault-related messages and messages classified as "other".
+
+```json
+{
+    "ManifestPassthrough": {
+        "trace:pf,threadrun,all": {}
     }
 }
 ```
