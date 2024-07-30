@@ -319,6 +319,24 @@ See further instructions about the cloud provider in dedicated documentation pag
 }
 ```
 
+#### RootVolume {#cloudconfig.root_volume}
+
+`RootVolume` is an optional set of options one can apply to the
+root/base volume of an instance on AWS. These settings include the name,
+typeof, iops, size, and throughput.
+
+For more information see the [AWS](aws.md) page.
+
+```json
+{
+    "RootVolume": {
+      "Name": "my-root-volume",
+      "Typeof":"gp3",
+      "Size": 10
+    }
+}
+```
+
 #### SecurityGroup {#cloudconfig.security_group}
 
 `SecurityGroup` allows an instance to use an existing security group in the cloud provider.
