@@ -25,6 +25,11 @@ power all public cloud computing infrastructure such as Amazon EC2 and Google Cl
 this lets your services run cheaper, more securely and with finer control than
 with a full general purpose operating system such as Linux.
 
+Unlike containers that add layers to the stack unikernels go the other
+way and remove/compress layers of the stack:
+
+![vms vs containers vs unikernels](vm-vs-uni.png)
+
 ##### Improved Security
 Unikernels reduce the amount of code deployed, which reduces the attack surface,
 and results in improved security. They also do not allow you to SSH into them
@@ -45,6 +50,17 @@ and greater pairing with the kernel.
 ##### Fast Boot
 Unikernels can boot extremely quickly, with boot times measured in milliseconds
 if you are running on servers you control.
+
+### Architecture
+
+Unikernels are typically deployed diretly to the cloud as native disk
+images. For example on AWS when you do an 'ops image create' we create a
+new AWS AMI every single time. That AMI when you spin it up with 'ops
+instnace create' spins up a new ec2 instance. This removes the need for
+a complex orchestration system that you might be used to using with
+something like kubernetes.
+
+![unikernel architecture](linux-to-aws.png)
 
 #### How do I Get Started?
 To get started, go to the [Getting Started](getting_started.md) section.

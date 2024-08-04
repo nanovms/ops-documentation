@@ -1,6 +1,8 @@
 Examples
 ========
 
+Check out this [list of examples here](#examples).
+
 ## Deploying a Static File Server
 Lets start with a basic go static file server, copy-and-paste below to `server.go`:
 ```golang
@@ -84,6 +86,8 @@ curl http://localhost:8080/hello.html
 ```
 
 To learn more about various config options visit [OPS GitHub repository](https://github.com/nanovms/ops).
+
+### Examples
 
 More examples can be found from the [`ops-examples` repository](https://github.com/nanovms/ops-examples).
 - [ada](https://github.com/nanovms/ops-examples/tree/master/ada)
