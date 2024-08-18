@@ -1544,6 +1544,21 @@ The default is set to "Nanos" for the sysname field, and
 }
 ```
 
+#### transparent_hugepage {#manifestpassthrough.transparent_hugepage}
+
+Transparent HugePage Support (THP) is *enabled* by default on nanos.
+
+To *disable* THP support set `"transparent_hugepage"` to `"never"`.
+Any other value, will keep THP *enabled*.
+
+```json
+{
+  "ManifestPassthrough": {
+    "transparent_hugepage": "never"
+  }
+}
+```
+
 ### Debugflags {#debugflags}
 
 `Debugflags` adds additional debug flags to the runtime.
