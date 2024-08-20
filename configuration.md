@@ -593,7 +593,7 @@ See further instructions about volumes in dedicated [documentation](volumes.md) 
 
 ```json
 {
-    "NanosVersion": ["nightly"]
+    "NanosVersion": "nightly"
 }
 ```
 
