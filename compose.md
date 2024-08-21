@@ -1,4 +1,5 @@
-# OPS Compose
+OPS Compose
+===========
 
 OPS has 'docker-compose' style functionality where you can orchestrate
 locally many unikernels. This allows you to bring up a set of services
