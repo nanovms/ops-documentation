@@ -11,6 +11,8 @@ enable it manually. We highly recommend using the installer if you can.
 
 If you run into any issue please let us know via the ops github.
 
+## Special Instructions for Source
+
 If you aren't using the official installer you'll need to do the
 following:
 
@@ -37,6 +39,8 @@ go build -ldflags "-X github.com/nanovms/ops/qemu.OPSD=true"
 
 This is to ensure a seamless experience for those using or not using
 this feature.
+
+## Basics
 
 Now you create a compose.yaml file. For example we have 2 packages in
 our local ~/.ops/local_packages/amd64:
@@ -106,7 +110,7 @@ It is important to note that this feature is currently only for Mac. OPS
 has had normal bridge support for linux for a while now but allows the
 end-user to define that.
 
-### Examples
+## Examples
 
 While you can certainly find compose examples on
 [https://repo.ops.city](https://repo.ops.city) we have [compose
