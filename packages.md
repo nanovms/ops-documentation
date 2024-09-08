@@ -345,3 +345,25 @@ strace myprogram 2>&1 | grep -E '^open(at)?\(.*\.so' > /tmp/dlopen
 Once you find the missing library you can create the proper directory in
 your package and copy it in or put it into a local directory structure
 if just using 'ops run'.
+
+### Manual Tips:
+
+If you have a large number of libraries to copy you may try something
+like this:
+
+```
+ldd /usr/bin/php8.2 | awk {'print $3'} | xargs cp -t ~/.ops/packages/amd64/eyberg/wordpress_6.6.1/sysroot/usr/lib/x86_64-linux-gnu/
+```
+
+Another useful way of doing this is like so:
+
+```
+ldd nntpit | grep usr/lib/x86_64-linux-gnu | awk {'print $3'} | xargs -I {} cp {} sysroot/usr/lib/x86_64-linux-gnu/.
+```
+
+Note: You may wish to replace any symlinks with copies of those files
+using something like:
+
+```
+cp -L /etc/myfolder/symlinks .
+```
