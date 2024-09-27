@@ -73,3 +73,5 @@
     <> * [Install Git](prerequisites.md#git)
     <> * [Install Golang](prerequisites.md#go)
 * [Install from Source](source-installation.md)
+
+![i](https://static.scarf.sh/a.png?x-pxid=bff3c95b-9a16-4f96-bc19-027d480ac889)
