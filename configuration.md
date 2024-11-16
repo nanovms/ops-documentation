@@ -1371,6 +1371,22 @@ It works on both _pie_ and _no-pie_ programs, and also works with _aslr_.
 }
 ```
 
+#### log_level {#manifestpassthrough.log_level}
+
+Setting a different log level will print to the console if the level is
+equal to or lower than the user-provided setting.
+
+The default log level is 'err'. You may adjust this to 'err', 'warn', or
+'info'.
+
+```json
+{
+    "ManifestPassthrough": {
+        "log_level": "info"
+    }
+}
+```
+
 #### mtu {#manifestpassthrough.mtu}
 
 This is an optional configuration setting that changes the _MTU_ (Maximum Transmission Unit) size of the network interface(s).
