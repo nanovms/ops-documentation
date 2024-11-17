@@ -3,7 +3,7 @@ OPS Compose
 
 OPS has 'docker-compose' style functionality where you can orchestrate
 locally many unikernels. This allows you to bring up a set of services
-together and utilize service discovery. This is currently for macs.
+together and utilize service discovery.
 
 You can either download the official installer from
 https://ops.city/downloads with the functionality turned on or you can
@@ -106,9 +106,12 @@ You can turn them off via:
 ops compose down
 ```
 
-It is important to note that this feature is currently only for Mac. OPS
-has had normal bridge support for linux for a while now but allows the
+OPS has had normal bridge support for linux for a while now but allows the
 end-user to define that.
+
+On MacOS vmnet-bridged is used. On Linux a new bridge is created
+automatically and all instances are given taps to listen on that bridge.
+Upon 'compose down' the bridge group is taken down.
 
 ## Examples
 
