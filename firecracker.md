@@ -172,6 +172,50 @@ echo "Reader exiting"
  ./read_fifo.sh log.fifo
 ```
 
+### Ballooning
+
+For the most current documentation please see
+https://github.com/firecracker-microvm/firecracker/blob/main/docs/ballooning.md
+.
+
+Nanos now has ballooning support for firecracker which utilizes mmio
+transport vs pci with qemu.
+
+To use it with firecracker you'll need to add an appropriate section in
+your config:
+
+```
+  "balloon": {
+    "amount_mib": 0,
+    "deflate_on_oom": false,
+    "stats_polling_interval_s": 1
+  },
+```
+
+Then you may poll using something like this:
+
+```
+#!/bin/sh
+
+curl --unix-socket /tmp/firecracker.socket -i \
+    -X GET 'http://localhost/balloon' \
+    -H 'Accept: application/json'
+```
+
+You may inflate or deflate the balloon by sending a PATCH request:
+
+```
+#!/bin/sh
+
+curl --unix-socket /tmp/firecracker.socket -i \
+    -X PATCH 'http://localhost/balloon' \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d "{
+        \"amount_mib\": "512"
+    }"
+```
+
 ### Configuration
 
 You can now dynamically re-configure your unikernel via the firecracker
@@ -217,8 +261,12 @@ Note the following limitations when running workloads under Firecracker.
 These are *not* Nanos limitations but limitations imposed via
 Firecracker because of its unique setup:
 
+(A lot of this has to do with the lack of PCI but that is one of the
+reasons why it boots much faster.)
+
 * No GPU support.
 * No MQ (multi-queue) taps.
+* No Volume hot-plugging.
 
 Note: If you're interested in using something like firecracker but need
 GPU support check out
