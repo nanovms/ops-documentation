@@ -66,6 +66,17 @@ GOOS=linux go build -o gtest2
 ops image create <elf_file|program> -c config.json -t azure -a gtest2
 ```
 
+The newer version of ops uses Azure Galleries to store images as Azure
+has been moving away from their older image storage now. In fact most
+new instance types require it.
+
+If you wish to override the default gallery name of 'nanos_gallery' you
+can export an env var like so:
+
+```
+export AZURE_GALLERY_NAME="my_new_gallery"
+```
+
 ### List Images
 
 You can list existing images on Azure with `ops image list`.
