@@ -346,6 +346,15 @@ Once you find the missing library you can create the proper directory in
 your package and copy it in or put it into a local directory structure
 if just using 'ops run'.
 
+Sometimes when building a package you'll need to set some env vars that
+are being set via a shell script or some nested scripts. Since Nanos
+doesn't run this you'll want to extract them out. Ltrace comes in handy
+here and can be ran like so:
+
+```
+ltrace -e getenv ./myprogram arg1
+```
+
 ### Manual Tips:
 
 If you have a large number of libraries to copy you may try something
