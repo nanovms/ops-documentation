@@ -355,6 +355,38 @@ here and can be ran like so:
 ltrace -e getenv ./myprogram arg1
 ```
 
+Sometimes you'll have a binary that was built but not installed on the
+local linux system and so is linked to some libraries but they're not
+being found.
+
+For instance here we have a binary with some missing libraries, even
+though we have them:
+
+```
+eyberg@venus:~/kn/knot-dns$ ldd knotd
+        linux-vdso.so.1 (0x00007ffdc37d6000)
+        libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x0000749ebf8ee000)
+        libknot.so.15 => not found
+        libdnssec.so.9 => not found
+        libzscanner.so.4 => not found
+```
+
+If you don't know where the libraries should be you can patch the binary
+using patchelf:
+
+```
+patchelf --replace-needed libknot.so.15 ./libknot.so.15 knotd
+```
+
+Now you'll see that it is finding it:
+
+```
+eyberg@venus:~/kn/knot-dns$ ldd knotd
+        linux-vdso.so.1 (0x00007ffe904a4000)
+        libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007aae3bb17000)
+        ./libknot.so.15 (0x00007aae3bad1000)
+```
+
 ### Manual Tips:
 
 If you have a large number of libraries to copy you may try something
