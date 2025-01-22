@@ -1212,6 +1212,18 @@ Example contents of Ops configuration file:
 }
 ```
 
+* drop all tcp fragments:
+
+```
+  "ManifestPassthrough": {
+    "firewall": {
+      "rules": [
+        {"ip": {"fragment": "y"}, "action": "drop"}
+      ]
+    }
+  }
+```
+
 ## Sandbox
 
 This klib implements a __sandboxing mechanism__ by which the capabilities of the running process can be _restricted_ by _overriding certain syscall handlers_.
