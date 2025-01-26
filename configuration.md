@@ -1076,6 +1076,20 @@ line.
 }
 ```
 
+#### QMP {#runconfig.qmp}
+
+Enables the QMP monitor for onprem targets. This must be enabled for
+various operations such as stats, volumes and rebooting when running
+against the onprem target.
+
+```json
+{
+    "RunConfig": {
+        "QMP": true
+    }
+}
+```
+
 #### ShowDebug {#runconfig.show_debug}
 
 Enables printing more details about what ops is doing at the moment. Also, enables the printing of warnings and errors.
