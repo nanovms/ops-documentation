@@ -18,10 +18,10 @@ You can create an image with the following command.
 $ ops image create <elf_file> -i <image_name> -t vbox
 ```
 
-For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
+For creating an image using a particular package, you need to provide the package name to `ops image create` command with `--package` option.
 
 ```sh
-$ ops image create -c config.json -p node_v14.2.0 -a ex.js -i <image_name> -t vbox
+$ ops image create -c config.json --package eyberg/node:20.5.0 -a hi.js -i js -t vbox
 ```
 
 The Ops CLI will store the image in the directory `vdi-images` inside Ops default directory.
