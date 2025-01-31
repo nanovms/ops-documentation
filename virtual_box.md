@@ -74,7 +74,9 @@ $ ops instance list -t vbox
 
 ### Get Logs for Instance
 
-Work in progress.
+```sh
+ops instance logs -t vbox js-1738285116
+```
 
 ### Delete Instance
 
