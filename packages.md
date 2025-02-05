@@ -355,6 +355,12 @@ here and can be ran like so:
 ltrace -e getenv ./myprogram arg1
 ```
 
+Another way to get some env vars is to look at proc like so:
+
+```
+  xargs -n 1 -0 < /proc/<pid>/environ
+```
+
 Sometimes you'll have a binary that was built but not installed on the
 local linux system and so is linked to some libraries but they're not
 being found.
@@ -386,6 +392,11 @@ eyberg@venus:~/kn/knot-dns$ ldd knotd
         libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007aae3bb17000)
         ./libknot.so.15 (0x00007aae3bad1000)
 ```
+
+Sometimes scripts will change your working directory silently. To detect
+that on the host try running ```pwdx <pid>``` and this will show you the
+CWD of the process - which you can then change in ops by setting
+https://docs.ops.city/ops/configuration#manifestpassthrough.cwd .
 
 ### Manual Tips:
 
