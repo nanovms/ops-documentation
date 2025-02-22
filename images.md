@@ -17,7 +17,11 @@ running them. This can help provide debugging support.
 
 ```ops image ls myimage```
 
-Provides a 'ls' style listing of files in a local (on-prem) image.
+Provides a 'ls' style listing of files in a local (on-prem) image from **rootfs** partition.
+
+```ops image ls myimage --bootfs```
+
+Provides a 'ls' style listing of files in a local (on-prem) image from **bootfs** partition.
 
 ### cat
 
@@ -29,14 +33,25 @@ Cats the file out of an image.
 
 ```ops image cp -r redis-server lib .```
 
-Recursively copies the output of the folder '/lib' into the host from
-the image 'redis-server'.
+Recursively copies the output of the folder '/lib' into the host from the image 'redis-server' **rootfs** partition.
+
+```ops image cp redis-server kernel . --bootfs```
+
+Copies the 'kernel' into the host from the image 'redis-server' **bootfs** partition.
+
+```ops image cp -r redis-server klib .```
+
+Recursively copies the output of the folder '/klib' into the host from the image 'redis-server' **bootfs** partition.
 
 ### tree
 
 ```ops image tree redis-server```
 
-Displays the tree output of local (on-prem) image.
+Displays the tree output of local (on-prem) image from **rootfs** partition.
+
+```ops image tree redis-server --bootfs```
+
+Displays the tree output of local (on-prem) image from **bootfs** partition.
 
 ### env
 
