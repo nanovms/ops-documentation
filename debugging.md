@@ -15,8 +15,9 @@ and study the bottom you can tell if it is in user or kernel:
 
 Clearly in this example we see a GPF in user.
 
-At this moment, we do not have interactive debugging support with ops, but we
-plan on integrating it soon. For now if you wish to have symbol access within
+### Debugging the user program
+
+If you wish to have symbol access within
 your user program the following conditions must be met:
 
 * Ensure your program is statically linked.
@@ -55,70 +56,34 @@ We compile with debugging symbols and link statically:
 cc main.c -static -g -o main
 ```
 
-First (since we are missing interactive debug support in ops) you need
-to modify ops to manually add the noaslr flag in lepton/image.go:
+If we run this example program with OPS (`ops run main`), we can see that it
+crashes soon after starting:
 
 ```
-m.AddDebugFlag("noaslr", 't')
+running local instance
+booting /home/user/.ops/images/main ...
+[0.087239] en1: assigned 10.0.2.15
+about to die
+
+*** signal 11 received by tid 2, errno 0, code 1
+    fault address 0x0
 ```
 
-This is important because otherwise we randomize the location of the
-.text and other parts of your program.
-
-Next, we'll run without accel support:
+Next, we'll run with the debug flag turned on:
 
 ```
-ops run --accel=false main
-```
-
-Then we let it crash.
-
-Now let's manually start qemu with gdb support:
-(Not all of this is necessary but definitely ensure your 'drive file'
-line matches where your disk image is)
-
-Also the '-s -S' starts the remote gdb debugger:
-```
-qemu-system-x86_64 \
--device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=on,addr=0x3 \
--device pcie-root-port,port=0x11,chassis=2,id=pci.2,bus=pcie.0,addr=0x3.0x1 \
--device pcie-root-port,port=0x12,chassis=3,id=pci.3,bus=pcie.0,addr=0x3.0x2 \
--device virtio-scsi-pci,bus=pci.2,addr=0x0,id=scsi0 \
--device scsi-hd,bus=scsi0.0,drive=hd0 -no-reboot -cpu max -machine q35 \
--device isa-debug-exit -m 2G \
--drive file=/home/eyberg/.ops/images/main.img,format=raw,if=none,id=hd0 \
--device virtio-net,bus=pci.3,addr=0x0,netdev=n0 \
--netdev user,id=n0,hostfwd=tcp::8080-:8080,hostfwd=tcp::9090-:9090,hostfwd=udp::5309-:5309 \
--display none -serial stdio -s -S
+ops run -d main
 ```
 
 This will pause waiting on a gdb to attach to it.
 
-In another window, we'll launch gdb pointing it at whatever kernel you are using:
+In another window, we'll launch gdb pointing it at the executable file:
 
 ```
-gdb ~/.ops/0.1.27/kernel.img
+gdb main
 ```
 
-We'll connect to qemu by specifying the remote:
-
-```
-(gdb) target remote localhost:1234
-Remote debugging using localhost:1234
-0x000000000000fff0 in ?? ()
-```
-
-Great - now we are connected.
-
-Now we load the symbols for our program:
-
-```
-(gdb) symbol-file main
-Load new symbol table from "main"? (y or n) y
-Reading symbols from main...
-```
-
-You can see the source now:
+You can see the source via the `list` gdb command:
 
 ```
 (gdb) list
@@ -132,6 +97,16 @@ You can see the source now:
 8         printf("about to die\n");
 9        *(int*)0 = 0;
 ```
+
+We'll connect to the target VM by specifying the remote:
+
+```
+(gdb) target remote localhost:1234
+Remote debugging using localhost:1234
+0x000000000000fff0 in ?? ()
+```
+
+Great - now we are connected.
 
 Let's set a breakpoint for 'mybad':
 
@@ -150,11 +125,11 @@ Breakpoint 1, mybad () at main.c:4
 4       void mybad() {
 ```
 
-You should see in your other window (where you started qemu) that the
+You should see in your other window (where you started OPS) that the
 program starts:
 
 ```
-assigned: 10.0.2.15
+[0.225679] assigned: 10.0.2.15
 ```
 
 Now if we single step through the program we can print out various
@@ -196,6 +171,65 @@ Does this work on the nightly build? Running '-n' will run ops with
 whatever was in the master branch last night.
 
 Reproducible steps
+
+### Debugging the Nanos kernel
+
+The Nanos kernel implements address space layout randomization not only for the
+user program, but also for the kernel itself (KASLR). To easily debug a running
+kernel, we need to disable KASLR, and to do so we have to re-compile the
+kernel from source: download the Nanos source code from
+<https://github.com/nanovms/nanos/>, then in a terminal window go to the source
+code folder and build the kernel with the 'no-kaslr' configuration option:
+
+```
+make KCONFIG=no-kaslr
+```
+
+The newly built kernel file will be located (assuming we are using an Intel or
+AMD machine) in the output/platform/pc/bin directory.
+To run an image with the re-compiled kernel, we first move to the folder where
+the user program is located, then create a JSON configuration file specifying
+the path of the kernel file (adjust it to match the actual path on your machine):
+
+```
+{
+  "Kernel": "/usr/src/nanos/output/platform/pc/bin/kernel.img"
+}
+```
+
+Then, we can build and run an image containing our debug-friendly kernel and the
+user program with the following OPS command:
+
+```
+ops run -c config.json -d main
+```
+
+In the above command line, `config.json` is the name of the JSON configuration
+file, `-d` is the debug flag, and `main` is the executable file of the user
+program. The VM is now paused waiting for gdb to attach to it. In another
+window, move to the folder containing the Nanos kernel source, then start gdb:
+
+```
+gdb -ix .gdbinit-x86-64
+```
+
+The gdb initialization file in the above command line automates the process of
+loading the kernel file symbols (with the appropriate offset) and connecting gdb
+to the VM. We can now debug the kernel (e.g. set breakpoints, single-step,
+display variables, etc.) using standard gdb commands.
+
+Note: in the early boot phase, the kernel image is located in the guest VM
+memory at an address that does not correspond to the final runtime address; only
+after the boot code executes the `kaslr()` kernel function, the kernel is
+located at its runtime address; therefore, debugging with the default settings
+in the above gdb initialization file works only for code executed after the
+`kaslr()` function.
+If we want to debug early boot code, we must first reset the symbol offset with
+the following gdb command:
+
+```
+symbol-file output/platform/pc/bin/kernel.elf
+```
 
 ## GUI Debugger in VSCode
 This part of the debugging guide shows how to use the GNU Debugger (GDB)
