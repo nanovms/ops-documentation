@@ -259,6 +259,18 @@ ops pkg from-docker bob -n bob --file ls
 ops pkg load --local bob
 ```
 
+You might be using a 'distroless' image. In this case you can try something like:
+
+```
+ops pkg from-docker gcr.io/distroless/python3-debian12:debug --nodiscover --copy --file python3.11
+ops pkg load --local gcr.io/distroless/python3-debian12_debug -a hi.py
+```
+
+The nodiscover flag instructs ops not to try and discover libraries via
+ldd. Instead we copy the entire filesystem over using '--copy', however
+we still want to know which binary from the container we are interested
+in running.
+
 ### Create a Package from 'ops run' style
 
 You can create a local package in the same style you use `ops run`
