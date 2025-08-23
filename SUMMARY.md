@@ -20,6 +20,7 @@
     <> * [RunConfig](configuration.md#runconfig)
     <> * [Sample Configuration File](configuration.md#sample)
 * [Examples](examples.md)
+* [Crons](crons.md)
 * [Images](images.md)
 * [Instances](instances.md)
 * [Volumes](volumes.md)
