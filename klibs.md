@@ -1384,6 +1384,59 @@ There are 2 npm packages published and ready for use.
 - `pledge` - https://www.npmjs.com/package/nanos-pledge
 - `unveil` - https://www.npmjs.com/package/nanos-unveil
 
+## shmem
+
+```
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char* shm_name = "/myshm";
+    const char* message = "Hello from tmpfs in Nanos!";
+    int shm_fd;
+    void* ptr;
+
+    shm_fd = shm_open(shm_name, O_CREAT | O_RDWR, 0666);
+    if (shm_fd == -1) {
+        perror("shm_open");
+        return 1;
+    }
+
+    if (ftruncate(shm_fd, 4096) == -1) {
+        perror("ftruncate");
+        return 1;
+    }
+
+    ptr = mmap(0, 4096, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    if (ptr == MAP_FAILED) {
+        perror("mmap");
+        return 1;
+    }
+
+    size_t len = strlen(message);
+    memcpy(ptr, message, len + 1);
+
+    printf("Written to tmpfs: %s\n", (char*)ptr);
+
+    munmap(ptr, 4096);
+    close(shm_fd);
+    shm_unlink(shm_name);
+
+    return 0;
+}
+```
+
+```
+{
+  "Dirs": ["dev"],
+  "Klibs": ["shmem", "tmpfs"]
+}
+```
+
 ## Out-of-tree klibs
 
 In addition to the above klibs, whose source code is included in the Nanos kernel source tree, out-of-tree klibs can also be created to enhance Nanos with additional functionality. Provided that such klibs are compiled against the exact version of the kernel being used, they can be added to a given image and will be loaded by the kernel during initialization just like in-tree klibs.
