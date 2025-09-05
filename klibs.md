@@ -1430,6 +1430,12 @@ int main() {
 }
 ```
 
+create a stub /dev/shm:
+
+```
+mkdir -p dev/shm
+```
+
 ```
 {
   "Dirs": ["dev"],
