@@ -16,7 +16,7 @@ This is a project that is being actively developed
 and sponsored by [NanoVMs](https://www.nanovms.com).
 
 #### What are Unikernels?
-Unikernels are specialised single process operating systems.
+Unikernels are specialized single process operating systems.
 
 Unikernels dramatically shrink the attack surface and resource footprint of
 cloud services while providing a much better isolation model. They are machine
@@ -43,7 +43,7 @@ Unikernel images are often orders of magnitude smaller than traditional OS
 deployments. You can create and deploy sub-megabyte unikernels depending on
 what you want/need.
 
-##### Highly Optimised
+##### Highly Optimized
 Unikernels can achieve greater performance from their single process nature
 and greater pairing with the kernel.
 
@@ -53,10 +53,10 @@ if you are running on servers you control.
 
 ### Architecture
 
-Unikernels are typically deployed diretly to the cloud as native disk
+Unikernels are typically deployed directly to the cloud as native disk
 images. For example on AWS when you do an 'ops image create' we create a
 new AWS AMI every single time. That AMI when you spin it up with 'ops
-instnace create' spins up a new ec2 instance. This removes the need for
+instance create' spins up a new ec2 instance. This removes the need for
 a complex orchestration system that you might be used to using with
 something like kubernetes.
 
