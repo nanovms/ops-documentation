@@ -22,7 +22,7 @@ OPS can run on Microsoft Azure assuming your environment is setup.
 5. Create a role using the clientID as the assignee inside quickstart.auth:
 
     ```sh
-      az role assignment create --assignee dead-beef-feed-face --role Contributor
+        az role assignment create --assignee client-id-goes-here --role Contributor --scope /subscriptions/sub-id-goes-here/resourceGroups/resource-group-name
     ```
 
 Most of the environment variables you need will be found in this json file.
