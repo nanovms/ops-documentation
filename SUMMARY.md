@@ -35,6 +35,7 @@
 * [AWS](aws.md)
 * [Digital Ocean](digital_ocean.md)
 * [Google Cloud Integration](google_cloud.md)
+* [Hetzner](hetzner.md)
 * [IBM](ibm.md)
 * [Linode](linode.md)
 * [OCI](oci.md)
