@@ -4,14 +4,20 @@ Kubernetes (K8S) Integration
 ## Security Warning
 
 Running unikernels under kubernetes diminishes some of their security
-benefits.
+benefits, however, a lot of organizations still have heavy kubernetes
+installations so these are some ways you can still run unikernels in
+k8s.
 
 ## Pre-requisites
 
-You need access to hardware virtualization. That means a real computer
-or nested virtualization but nested virtualization is not recommended.
-It's unclear if these instructions would work on AWS "metal" instances
-yet as that has not been tried.
+You need access to hardware virtualization. If you are in the cloud the
+best way to get that is through [NanoVMs Inception](https://nanovms.com/inception) available on the AWS market.
+[https://aws.amazon.com/marketplace/pp/prodview-lwk72eg6wfo3i](https://aws.amazon.com/marketplace/pp/prodview-lwk72eg6wfo3i).
+This will allow you to run kube-virt on plain old normal ec2 instances
+like an ec2.small without having to resort to expensive metal instances.
+
+If you don't want to do that you'll either need a real physical computer
+or use metal instances.
 
 ## Installing K8s / Initial Setup
 
