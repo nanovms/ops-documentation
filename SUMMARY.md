@@ -47,6 +47,7 @@
 * [Compose](compose.md)
 * [Docker](docker.md)
 * [Firecracker](firecracker.md)
+* [Inception](inception.md)
 * [OpenVMM](openvmm.md)
 * [Hyper-V](hyper-v.md)
 * [Onprem](onprem.md)
