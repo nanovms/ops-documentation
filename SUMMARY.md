@@ -39,6 +39,7 @@
 * [IBM](ibm.md)
 * [Linode](linode.md)
 * [OCI](oci.md)
+* [Scaleway](scaleway.md)
 * [UpCloud](upcloud.md)
 * [Vultr](vultr.md)
 
