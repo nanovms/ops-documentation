@@ -24,6 +24,7 @@ As of Nanos [9dc963b](https://github.com/nanovms/nanos/commit/9dc963bb2773b7a3dc
   filesystem at an arbitrary place in the root filesystem
 * __tun__ - supports tun devices (eg: vpn gateways)
 * __umcg__ - User-Managed Concurrency Groups (used for user-mode threading)
+* __userdata_env__ - User Data
 * __test__ - a simple test/template klib
 
 Not all of these are available to be included in your config (__cloud_azure__, __aws__).
@@ -1440,6 +1441,28 @@ mkdir -p dev/shm
 {
   "Dirs": ["dev"],
   "Klibs": ["shmem", "tmpfs"]
+}
+```
+
+## User Data
+
+The User Data klib allows you to populate data from the IMDS datastore
+at instance creation time. Unlike the existing cloud_init klib this
+doens't need an external datastore as you can provision using the meta
+data store found on many instances instead. You also do not need to
+include these env vars at image build time.
+
+Separate each env var name pair with a carriage return && newline and
+the key/values with the equals operator.
+
+You may use this simple config as an example:
+
+```
+{
+    "CloudConfig": {
+        "UserData": "BOB=something\r\nTOM=something-else"
+    },
+    "Klibs": ["userdata_env", "tls"]
 }
 ```
 
