@@ -436,7 +436,7 @@ On **GCP** (_only_) there is also an extended configuration `attribute` that can
 `UserData` allows you to populate data from the IMDS datastore at instance creation time.
 This allows to create a single image and deliver specific configuration data to each deployed instance.
 
-__Note__: cloud providers have different endpoints for IMDS, even though it ios always served from the 169.254.169.254 address which is *only* reachable from the instance. Since nanos does not have any concept of users or other processes running on an instance this can be used to deliver configuration data safely to an instance.
+__Note__: cloud providers have different endpoints for IMDS, even though the data is always served from the 169.254.169.254 address which is *only* reachable from the instance. Since nanos does not have any concept of users or other processes running on an instance this can be used to deliver configuration data safely to an instance.
 
 There is also klib (`userdata_env`) that can set the environment variables on an instance, taking care of the specifics for most cloud providers such as the endpoint to use and whether to base64 decode the data.
 
