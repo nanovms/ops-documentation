@@ -67,7 +67,31 @@ quicker manner.
 
 ### Benchmarking with Apache Bench
 
+You should note that without using keep-alive you might quickly run into
+issues with time wait.
+
+ab uses a range of ~14k ports when opening new connections and when that
+is used up the ports start being reused, however you can't accept new
+connections from the port until the TIME_WAIT period expires (default is
+2 minutes).
+
+```
+ab -c 10 -n 100 -k http://host:port/
+ab -c 10 -n 1000 -k http://host:port/
+```
+
 ### Benchmarking with Wrk
+
+Generally speaking wrk is a better tool to use here as it is
+multi-threaded. You are almost guaranteed to see better results for a
+variety of reasons but mainly cause of the threaded approach.
+
+```
+ wrk http://host:port/
+```
+
+As with all benchmarking your results could vary quite a bit from
+workload to workload.
 
 ### Benchmarking with FIO
 
