@@ -431,6 +431,34 @@ On **GCP** (_only_) there is also an extended configuration `attribute` that can
 }
 ```
 
+### UserData {#cloudconfig.userdata}
+
+`UserData` allows you to populate data from the IMDS datastore at instance creation time.
+This allows to create a single image and deliver specific configuration data to each deployed instance.
+
+__Note__: cloud providers have different endpoints for IMDS, even though the data is always served from the 169.254.169.254 address which is *only* reachable from the instance. Since nanos does not have any concept of users or other processes running on an instance this can be used to deliver configuration data safely to an instance.
+
+There is also klib (`userdata_env`) that can set the environment variables on an instance, taking care of the specifics for most cloud providers such as the endpoint to use and whether to base64 decode the data.
+
+```json
+{
+    "CloudConfig": {
+        "UserData": "BOB=something\nTOM=something-else"
+    },
+    "Klibs": ["userdata_env", "tls"]
+}
+```
+
+Example setting a json configuration fragment as `UserData`, the application must fetch it from the IMDS endpoint and parse it:
+
+```json
+{
+    "CloudConfig":{
+        "UserData":"{\"Port\":8080,\"Endpoint\":\"/my/api/endpoint\"}"
+    }
+}
+```
+
 #### VPC {#cloudconfig.vpc}
 
 `VPC` allows instance to use an existing vpc in the cloud provider.
