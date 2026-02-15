@@ -55,7 +55,7 @@ Once, you have updated `config.json` you can create an image in AWS with the fol
 For creating an image using a particular package, you need to provide the package name to `ops image create` command with `-p` option.
 
 ```sh
-$ ops image create -t aws -c config.json -p node_v14.2.0 -a ex.js
+$ ops image create -t aws -c config.json -p node_20.5.0 -a ex.js
 ```
 
 ### List Images
@@ -83,7 +83,7 @@ $ ops image list -t aws -z us-west-1
 `ops image delete -i <imagename>` can be used to delete an image from AWS.
 
 ```sh
-$ ops delete image -i nanos-main-image
+$ ops image delete -i nanos-main-image
 ```
 
 ## Instance Operations
