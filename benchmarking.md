@@ -120,8 +120,7 @@ In order to use fio you'll need to make two changes:
  }
 ```
 
-For now Nanos does not support direct io so you'll need to set
-'direct=0'. A sample config might look like so:
+A sample config might look like so:
 
 ```
 :~/$ cat testnew.fio
@@ -150,6 +149,16 @@ idle_on_exit:
  "ManifestPassthrough": {
   "idle_on_exit": "*"
   }
+```
+
+Otherwise you can simply use a sample json like:
+
+```
+{
+  "BaseVolumeSz": "800m",
+  "Args": ["testnew.fio"],
+  "Files": ["testnew.fio"]
+}
 ```
 
 You may also wish to prevent fio from starting immediately:
