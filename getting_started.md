@@ -11,7 +11,7 @@ need Node installed for this as ops will automatically download a Node
 package for you:
 
 ```sh
-$ ops pkg load eyberg/node:20.5.0 -p 8083 -f -n -a hi.js
+$ ops pkg load eyberg/node:20.5.0 -p 8083 -f -n -a hi.js -m 256
 ```
 
 Note: We have a list of pre-made Node packages on the
