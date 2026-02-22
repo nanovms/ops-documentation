@@ -54,29 +54,41 @@ Package description provides common assumptions and settings required for runnin
 with help of package. You can get package description using `ops pkg describe <package_name>` command.
 
 ```sh
-$ ops pkg describe nginx_1.15.6
-Information for nginx_1.15.6 package:
-Sample Readme for Nginx Application
+$ ops pkg describe eyberg/nginx:1.15.6
+Information for eyberg/nginx:1.15.6 package:
+this is a test readme
 ```
 
 ### Contents of Package
 If you want see contents of a package, you can use `ops pkg contents <package_name>` command.
 
 ```sh
-$ ops pkg contents perl_5.22.1
+$ ops pkg contents eyberg/nginx:1.15.6
+File :/README.md
+File :/nginx
 File :/package.manifest
-File :/perl
 Dir :/sysroot
+Dir :/sysroot/etc
+File :/sysroot/etc/group
+File :/sysroot/etc/passwd
 Dir :/sysroot/lib
 Dir :/sysroot/lib/x86_64-linux-gnu
 File :/sysroot/lib/x86_64-linux-gnu/libc.so.6
 File :/sysroot/lib/x86_64-linux-gnu/libcrypt.so.1
 File :/sysroot/lib/x86_64-linux-gnu/libdl.so.2
-File :/sysroot/lib/x86_64-linux-gnu/libm.so.6
-File :/sysroot/lib/x86_64-linux-gnu/libnss_dns.so.2
+File :/sysroot/lib/x86_64-linux-gnu/libnss_files.so.2
+File :/sysroot/lib/x86_64-linux-gnu/libpcre.so.3
 File :/sysroot/lib/x86_64-linux-gnu/libpthread.so.0
+File :/sysroot/lib/x86_64-linux-gnu/libz.so.1
 Dir :/sysroot/lib64
 File :/sysroot/lib64/ld-linux-x86-64.so.2
+Dir :/sysroot/usr
+Dir :/sysroot/usr/local
+Dir :/sysroot/usr/local/nginx
+Dir :/sysroot/usr/local/nginx/conf
+File :/sysroot/usr/local/nginx/conf/nginx.conf
+Dir :/sysroot/usr/local/nginx/logs
+File :/sysroot/usr/local/nginx/logs/error.log
 ```
 
 ### Removing local packages
