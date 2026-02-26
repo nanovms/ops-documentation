@@ -217,7 +217,7 @@ ops pkg load eyberg/node:v18.9.0 -c config.json -p 8080
 You can create a new package from this config like so:
 
 ```sh
-ops pkg from-pkg eyberg/node:v18.9.0 -c config.json -n mypkg -v 0.0.1
+ops pkg from-pkg eyberg/node:v18.9.0 -c config.json --name mypkg --version 0.0.1
 ```
 
 and use it:
@@ -267,7 +267,7 @@ docker build -t bob .
 ```
 
 ```
-ops pkg from-docker bob -n bob --file ls
+ops pkg from-docker bob --name bob --file ls
 ops pkg load --local bob
 ```
 
