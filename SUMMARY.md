@@ -60,6 +60,9 @@
 * [Terraform](terraform.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
+
+### Other
+
 * [Integrations](integrations.md)
 * [Debugging](debugging.md)
 * [CrossBuilding](crossbuilding.md)
@@ -67,6 +70,7 @@
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
 * [Benchmarking](benchmarking.md)
+* [Browsers](browsers.md)
 
 ### Tools
 * [Visual Studio Code Extension](vscode.md)
