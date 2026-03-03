@@ -95,11 +95,11 @@ For the sas token ensure you've allowed the proper resource types:
 
 You've set a proper expiry:
 
-![expiration]((expiry.png)
+![expiration](expiry.png)
 
 and you are using the right SAS token:
 
-![sas token] (sas-token.png)
+![sas token](sas-token.png)
 
 ### Metrics Data
 
