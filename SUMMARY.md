@@ -57,6 +57,7 @@
 * [Virtual Box](virtual_box.md)
 * [VSphere](vsphere.md)
 * [WorkStation](workstation.md)
+* [Pulumi](pulumi.md)
 * [Terraform](terraform.md)
 * [Kubernetes](k8s.md)
 * [Bare Metal](bare_metal.md)
