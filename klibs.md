@@ -91,15 +91,15 @@ The Azure klib is configured in the manifest options via an `azure` tuple. Diagn
 
 For the sas token ensure you've allowed the proper resource types:
 
-(allowed-resource.png)
+![allowed resources](allowed-resource.png)
 
 You've set a proper expiry:
 
-(expiry.png)
+![expiration]((expiry.png)
 
 and you are using the right SAS token:
 
-(sas-token.png)
+![sas token] (sas-token.png)
 
 ### Metrics Data
 
