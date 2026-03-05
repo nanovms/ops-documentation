@@ -129,7 +129,7 @@ name=fio-rand-write
 filename=fio-rand-write
 rw=randwrite
 bs=4K
-direct=0
+direct=1
 numjobs=4
 time_based=1
 runtime=10
@@ -141,6 +141,10 @@ size=500m
 ioengine=libaio
 iodepth=16
 ```
+
+Note: If using libaio you'll want direct=1 otherwise you might end up
+just testing the page cache. If you want to use direct=0 you'll want to
+test using other engines.
 
 If you are testing remotely (eg: in the cloud) you may wish to turn on
 idle_on_exit:
