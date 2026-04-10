@@ -66,6 +66,7 @@
 
 * [Integrations](integrations.md)
 * [Debugging](debugging.md)
+* [Monitoring](monitoring.md)
 * [CrossBuilding](crossbuilding.md)
 * [MacOS](mac.md)
 * [Deploy](deploy.md)
