@@ -69,6 +69,7 @@
 * [Monitoring](monitoring.md)
 * [CrossBuilding](crossbuilding.md)
 * [MacOS](mac.md)
+* [Windows](windows.md)
 * [Deploy](deploy.md)
 * [FAQ](faq.md)
 * [Benchmarking](benchmarking.md)
