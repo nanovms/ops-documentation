@@ -845,8 +845,6 @@ where `<auth-scheme>` and  `<authorization-parameters>` are configurable.
 Certain caveats to be aware of:
 
 * Only direct download links are supported today. (no redirects)
-* HTTP chunked transfer encoding is not supported, (don't try to download a movie).
-  If the source server uses this encoding, a file download may never complete.
 * When cloud_init cannot download one or more files, the kernel does not start the user program.
   The rationale for this is that we want all files to be ready and accessible when the program starts.
 * When used to populate the user environment, only string-valued attributes are converted to environment variables (**non-string-valued attributes are ignored**).
@@ -1235,6 +1233,24 @@ Example contents of Ops configuration file:
         {"ip": {"fragment": "y"}, "action": "drop"}
       ]
     }
+  }
+```
+
+### Dynamic Firewall Rules
+
+In addition to static firewall rules defined in the configuration manifest, the firewall can retrieve dynamic rules from Radar (this requires a Radar API key).
+When this functionality is enabled, the firewall downloads from the Radar server a list of IP addresses that are known sources of spam or other abusive behavior, and automatically adds a set of rules that block all network traffic originating from those addresses.
+
+Example contents of Ops configuration file to retrieve firewall rules from Radar:
+
+```
+  "ManifestPassthrough": {
+    "firewall": {
+      "dynamic_rules":["radar"]
+    }
+  },
+  "Env": {
+    "RADAR_KEY": "my_radar_api_key"
   }
 ```
 
