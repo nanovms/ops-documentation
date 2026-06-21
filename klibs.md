@@ -845,8 +845,6 @@ where `<auth-scheme>` and  `<authorization-parameters>` are configurable.
 Certain caveats to be aware of:
 
 * Only direct download links are supported today. (no redirects)
-* HTTP chunked transfer encoding is not supported, (don't try to download a movie).
-  If the source server uses this encoding, a file download may never complete.
 * When cloud_init cannot download one or more files, the kernel does not start the user program.
   The rationale for this is that we want all files to be ready and accessible when the program starts.
 * When used to populate the user environment, only string-valued attributes are converted to environment variables (**non-string-valued attributes are ignored**).
