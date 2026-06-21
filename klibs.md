@@ -1236,6 +1236,24 @@ Example contents of Ops configuration file:
   }
 ```
 
+### Dynamic Firewall Rules
+
+In addition to static firewall rules defined in the configuration manifest, the firewall can retrieve dynamic rules from Radar (this requires a Radar API key).
+When this functionality is enabled, the firewall downloads from the Radar server a list of IP addresses that are known sources of spam or other abusive behavior, and automatically adds a set of rules that block all network traffic originating from those addresses.
+
+Example contents of Ops configuration file to retrieve firewall rules from Radar:
+
+```
+  "ManifestPassthrough": {
+    "firewall": {
+      "dynamic_rules":["radar"]
+    }
+  },
+  "Env": {
+    "RADAR_KEY": "my_radar_api_key"
+  }
+```
+
 ## Sandbox
 
 This klib implements a __sandboxing mechanism__ by which the capabilities of the running process can be _restricted_ by _overriding certain syscall handlers_.
