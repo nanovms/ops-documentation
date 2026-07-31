@@ -64,6 +64,12 @@ ops image list -t proxmox
 
 ### Create Instance
 
+First ensure that you have set local storage to allow disk images to be
+stored as by default it's not allowed.
+
+When running proxmox 9.X and up you'll need to use ticket based auth for
+instance creation (at least for the time being).
+
 ```sh
 export API_URL="https://172.16.41.133:8006"
 export TOKEN_ID="myuser@pam!tokenid"
