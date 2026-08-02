@@ -45,6 +45,7 @@ func main() {
 export API_URL="https://172.16.41.133:8006"
 export TOKEN_ID="myuser@pam!tokenid"
 export SECRET="some-uuid-goes-here"
+export NODE_NAME="proxmox"
 ops image create g -t proxmox -c config.json
 ```
 
