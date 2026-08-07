@@ -15,6 +15,7 @@ As of Nanos [9dc963b](https://github.com/nanovms/nanos/commit/9dc963bb2773b7a3dc
 * __gcp__ - logging and memory metrics for GCP
 * __ntp__ - used for clock syncing
 * __radar__ - telemetry/crash data report using the external [Radar](https://nanovms.com/radar) APM service
+* __s3fs__ - allows mounting of s3 buckets to the localy filesystem
 * __sandbox__ - provides OpenBSD-style [pledge](https://man.openbsd.org/pledge.2) and [unveil](https://man.openbsd.org/unveil.2) syscalls
 * __shmem__ provides shared memory features; specifically memfd_create functionality; this relies on the tmpfs klib
 * __special_files__ provides nanos-specific pseudo-files
@@ -1252,6 +1253,34 @@ Example contents of Ops configuration file to retrieve firewall rules from Radar
   "Env": {
     "RADAR_KEY": "my_radar_api_key"
   }
+```
+
+## s3fs
+
+The s3fs klib allows one to mount a s3 bucket to the local filesystem so
+that you can read and write to it simply without further additional
+client config. This can all be done at image build time allowing you to
+apply the configuration completely separate from the code.
+
+For files over 4kb in size you'll need to use O_DIRECT.
+
+```
+{
+ "Klibs": ["s3fs", "tls"],
+  "ManifestPassthrough": {
+    "s3fs": {
+      "region": "us-west-1",
+      "access_key": "MY_ACCESS_KEY",
+      "secret": "my_secret",
+      "buckets": [
+        {
+          "name": "my-bucket",
+          "mount": "/mnt"
+        }
+      ]
+    }
+  }
+}
 ```
 
 ## Sandbox
