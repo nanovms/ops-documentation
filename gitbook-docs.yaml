@@ -3,7 +3,7 @@ site:
   structure:
     - type: space
       key: my-docs-space
-      title: OPS Documentation
+      title: Documentation
       path: ops
       content:
         directory: ./
