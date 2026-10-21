@@ -1,9 +1,4 @@
-gitbook: ">= 3.0.0"
+root: ./
 structure:
-    readme: "introduction.md"
-redirects:
-    configuration/files: ./configuration.md#files
-    configuration/dirs: ./configuration.md#dirs
-    configuration/args: ./configuration.md#args
-    configuration/env: ./configuration.md#env
-    configuration/sample: ./configuration.md#sample
+  readme: INTRODUCTION.md
+  summary: SUMMARY.md

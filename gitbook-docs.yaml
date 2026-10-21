@@ -1,4 +1,2 @@
-root: ./
-structure:
-  readme: INTRODUCTION.md
-  summary: SUMMARY.md
+site:
+  title: OPS Documentation
