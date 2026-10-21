@@ -46,7 +46,9 @@ we'll auto-include the cloud_init and tls klibs.
 
 The acme klib allows you to automate your TLS certificate renewals.
 It'll request a new certificate if there is no existing certificate or
-if the certificate is near the renewal date.
+if the certificate is near the renewal date (less than 1/3rd life left).
+
+The klib takes several attributes:
 
 __attributes__
 
@@ -63,7 +65,12 @@ cert_chain: public certificate file
 private_key: the private key for the certificate
 domains: an array of FQDNs for the certificate
 
+```
+ ops pkg load eyberg/nginx_1.28.3 -c config.json -n -p 8083 -p 4443
+```
+
 sample nginx config:
+
 ```
   "Klibs": ["acme", "tls"],
   "ManifestPassthrough": {
@@ -83,6 +90,9 @@ sample nginx config:
     "log_level": "info"
   }
 ```
+
+For live certs (for instance against letsencrypt) you will need to
+expose the domain publically to prove control.
 
 ## Azure
 
