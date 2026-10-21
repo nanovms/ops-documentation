@@ -52,18 +52,15 @@ The klib takes several attributes:
 
 __attributes__
 
-server: the server of which to renew your certificates from
-web_dir: the directory of which the running webserver can serve static
-files (challenge responses) from.
-email: optional email setting for the ACME server to send renewal
-reminders to
-reload: optional signal handler that can be invoked to reload the
-certificate (SIGHUP or SIGUSR1)
-certificates: an array of certificate pairs that should be managed by
-the acme client
-cert_chain: public certificate file
-private_key: the private key for the certificate
-domains: an array of FQDNs for the certificate
+- server: the server of which to renew your certificates from
+- web_dir: the directory of which the running webserver can serve static
+- files (challenge responses) from.
+- email: optional email setting for the ACME server to send renewal reminders to
+- reload: optional signal handler that can be invoked to reload the certificate (SIGHUP or SIGUSR1)
+- certificates: an array of certificate pairs that should be managed by the acme client
+- cert_chain: public certificate file
+- private_key: the private key for the certificate
+- domains: an array of FQDNs for the certificate
 
 ```
  ops pkg load eyberg/nginx_1.28.3 -c config.json -n -p 8083 -p 4443
