@@ -7,6 +7,7 @@ As of Nanos [9dc963b](https://github.com/nanovms/nanos/commit/9dc963bb2773b7a3dc
 
 * __cloud_init__ - used for Azure && env config init
   * __cloud_azure__ - implements the Azure VM agent (not available in config, auto-included by __cloud_init__)
+* __acme__ - allows automatic tls certificate renewal via ACME
 * __azure__ - memory metrics for azure
 * __cloudwatch__ - use to implement cloudwatch agent for AWS
   * __aws__ - not available in config (auto-included by __cloudwatch__)
@@ -40,6 +41,58 @@ by certain clouds/hypervisors. You should only include a klib if you
 think you need it. The ones that are required for certain functionality
 will be auto-included by ops. For instance if you are deploying to Azure
 we'll auto-include the cloud_init and tls klibs.
+
+## acme
+
+The acme klib allows you to automate your TLS certificate renewals.
+It'll request a new certificate if there is no existing certificate or
+if the certificate is near the renewal date (less than 1/3rd life left).
+
+The klib takes several attributes:
+
+__attributes__
+
+server: the server of which to renew your certificates from
+web_dir: the directory of which the running webserver can serve static
+files (challenge responses) from.
+email: optional email setting for the ACME server to send renewal
+reminders to
+reload: optional signal handler that can be invoked to reload the
+certificate (SIGHUP or SIGUSR1)
+certificates: an array of certificate pairs that should be managed by
+the acme client
+cert_chain: public certificate file
+private_key: the private key for the certificate
+domains: an array of FQDNs for the certificate
+
+```
+ ops pkg load eyberg/nginx_1.28.3 -c config.json -n -p 8083 -p 4443
+```
+
+sample nginx config:
+
+```
+  "Klibs": ["acme", "tls"],
+  "ManifestPassthrough": {
+    "acme": {
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "web_dir": "/",
+      "email": "ddd@ex.com",
+      "reload": "SIGHUP",
+      "certificates": [
+        {
+          "cert_chain": "/etc/ssl/certs/server.crt",
+          "private_key": "/etc/ssl/private/server.key",
+          "domains": ["exampl.com"]
+        }
+      ]
+    },
+    "log_level": "info"
+  }
+```
+
+For live certs (for instance against letsencrypt) you will need to
+expose the domain publically to prove control.
 
 ## Azure
 
