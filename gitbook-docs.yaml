@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: Ops
+  structure:
+    - type: space
+      key: space-1
+      title: Ops
+      path: ops
+      default: true
+      content:
+        directory: ./ops
