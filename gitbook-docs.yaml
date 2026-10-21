@@ -3,7 +3,8 @@ site:
   title: Documentation
   structure:
     - type: space
-      key: my-docs-space
+      default: true
+      key: docs
       title: Documentation
       path: ops
       content:
