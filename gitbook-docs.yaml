@@ -1,2 +1,9 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: OPS Documentation
+  structure:
+    - type: space
+      key: my-docs-space
+      title: OPS Documentation
+      path: ops
+      content:
+        directory: ./
