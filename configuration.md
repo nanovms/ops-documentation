@@ -1617,6 +1617,23 @@ Any other value, will keep THP *enabled*.
 }
 ```
 
+#### uid / gid {#manifestpassthrough.uid}
+
+You may set an optional uid/gid override for programs that expect
+certain values. By default nanos will return 0 which means root. It is
+important to note, however, that nanos has no notion of users so these
+are merely stubbed values and are not supported for privilege
+separation. It is only for ease of use to get around uid checks.
+
+Do not rely on these for security purposes.
+
+```json
+  "ManifestPassthrough": {
+    "uid": "1000",
+    "gid": "1000"
+  }
+```
+
 ### Debugflags {#debugflags}
 
 `Debugflags` adds additional debug flags to the runtime.
