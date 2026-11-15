@@ -113,6 +113,24 @@ On MacOS vmnet-bridged is used. On Linux a new bridge is created
 automatically and all instances are given taps to listen on that bridge.
 Upon 'compose down' the bridge group is taken down.
 
+If you wish you may add a search domain. By default records will be
+resolved as host.service. You can for instance add a dns_sarch in in
+your compose file so that you can use short names instead:
+
+```
+packages:
+    - pkg: test
+      name: eyberg/test:0.0.1
+      arch: amd64
+    - pkg: host
+      name: eyberg/host:0.0.1
+      arch: amd64
+dns_search:
+    - service
+```
+
+Now both 'test' and 'test.service' will resolve appropriately.
+
 ## Examples
 
 While you can certainly find compose examples on
