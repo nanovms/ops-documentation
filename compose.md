@@ -114,8 +114,7 @@ automatically and all instances are given taps to listen on that bridge.
 Upon 'compose down' the bridge group is taken down.
 
 If you wish you may add a search domain. By default records will be
-resolved as host.service. You can for instance add a dns_sarch in in
-your compose file so that you can use short names instead:
+resolved as host.service. You can for instance add a dns_search in your compose file so that you can use short names instead:
 
 ```
 packages:
